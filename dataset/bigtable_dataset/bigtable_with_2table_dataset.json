@@ -1,0 +1,752 @@
+[
+    {
+        "id": "50",
+        "question": "Please list the lowest three eligible free rates for students aged 5-17 in continuation schools.",
+        "new_question": "Please list the mailing address of all the charter schools in Livermore Valley Joint Unified.In the database, Charter schools refers to `Charter School (Y/N)` = 1 in the table fprm.",
+        "source": "bird_question_2",
+        "gt_table": [
+            "frpm",
+            "schools"
+        ],
+        "query": "SELECT `Free Meal Count (Ages 5-17)` / `Enrollment (Ages 5-17)` FROM frpm WHERE `Educational Option Type` = 'Continuation School' AND `Free Meal Count (Ages 5-17)` / `Enrollment (Ages 5-17)` IS NOT NULL ORDER BY `Free Meal Count (Ages 5-17)` / `Enrollment (Ages 5-17)` ASC LIMIT 3",
+        "new_query": "SELECT T2.MailStreet FROM frpm AS T1 INNER JOIN schools AS T2 ON T1.CDSCode = T2.CDSCode WHERE T1.`District Name` = 'Livermore Valley Joint Unified' AND T1.`Charter School (Y/N)` = 1",
+        "db_id": "california_schools",
+        "simplified_ddl": "#frpm(CDSCode, Academic Year, County Code, District Code, School Code, County Name, District Name, School Name, District Type, School Type, Educational Option Type, NSLP Provision Status, Charter School (Y/N), Charter School Number, Charter Funding Type, IRC, Low Grade, High Grade, Enrollment (K-12), Free Meal Count (K-12), Percent (%) Eligible Free (K-12), FRPM Count (K-12), Percent (%) Eligible FRPM (K-12), Enrollment (Ages 5-17), Free Meal Count (Ages 5-17), Percent (%) Eligible Free (Ages 5-17), FRPM Count (Ages 5-17), Percent (%) Eligible FRPM (Ages 5-17), 2013-14 CALPADS Fall 1 Certification Status);\n#satscores(cds, rtype, sname, dname, cname, enroll12, NumTstTakr, AvgScrRead, AvgScrMath, AvgScrWrite, NumGE1500);\n#schools(CDSCode, NCESDist, NCESSchool, StatusType, County, District, School, Street, StreetAbr, City, Zip, State, MailStreet, MailStrAbr, MailCity, MailZip, MailState, Phone, Ext, Website, OpenDate, ClosedDate, Charter, CharterNum, FundingType, DOC, DOCType, SOC, SOCType, EdOpsCode, EdOpsName, EILCode, EILName, GSoffered, GSserved, Virtual, Magnet, Latitude, Longitude, AdmFName1, AdmLName1, AdmEmail1, AdmFName2, AdmLName2, AdmEmail2, AdmFName3, AdmLName3, AdmEmail3, LastUpdate).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "51",
+        "question": "What is the unabbreviated mailing address of the school with the highest FRPM count for K-12 students?",
+        "new_question": "What is the type the school with the highest FRPM count for K-12 students?",
+        "source": "bird_question_3",
+        "gt_table": [
+            "frpm",
+            "schools"
+        ],
+        "query": "SELECT T2.MailStreet FROM frpm AS T1 INNER JOIN schools AS T2 ON T1.CDSCode = T2.CDSCode ORDER BY T1.`FRPM Count (K-12)` DESC LIMIT 1",
+        "new_query": "SELECT T2.School Type FROM frpm AS T1 INNER JOIN schools AS T2 ON T1.CDSCode = T2.CDSCode ORDER BY T1.`FRPM Count (K-12)` DESC LIMIT 1",
+        "db_id": "california_schools",
+        "simplified_ddl": "#frpm(CDSCode, Academic Year, County Code, District Code, School Code, County Name, District Name, School Name, District Type, School Type, Educational Option Type, NSLP Provision Status, Charter School (Y/N), Charter School Number, Charter Funding Type, IRC, Low Grade, High Grade, Enrollment (K-12), Free Meal Count (K-12), Percent (%) Eligible Free (K-12), FRPM Count (K-12), Percent (%) Eligible FRPM (K-12), Enrollment (Ages 5-17), Free Meal Count (Ages 5-17), Percent (%) Eligible Free (Ages 5-17), FRPM Count (Ages 5-17), Percent (%) Eligible FRPM (Ages 5-17), 2013-14 CALPADS Fall 1 Certification Status);\n#satscores(cds, rtype, sname, dname, cname, enroll12, NumTstTakr, AvgScrRead, AvgScrMath, AvgScrWrite, NumGE1500);\n#schools(CDSCode, NCESDist, NCESSchool, StatusType, County, District, School, Street, StreetAbr, City, Zip, State, MailStreet, MailStrAbr, MailCity, MailZip, MailState, Phone, Ext, Website, OpenDate, ClosedDate, Charter, CharterNum, FundingType, DOC, DOCType, SOC, SOCType, EdOpsCode, EdOpsName, EILCode, EILName, GSoffered, GSserved, Virtual, Magnet, Latitude, Longitude, AdmFName1, AdmLName1, AdmEmail1, AdmFName2, AdmLName2, AdmEmail2, AdmFName3, AdmLName3, AdmEmail3, LastUpdate).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "52",
+        "question": "Please list the phone numbers of the direct charter-funded schools that are opened after 2000/1/1.",
+        "new_question": "Please list the phone numbers of the direct charter-funded schools that are opened before 1985/1/1.In the database, Charter schools refers to `Charter School (Y/N)` = 1 in the frpm.",
+        "source": "bird_question_4",
+        "gt_table": [
+            "frpm",
+            "schools"
+        ],
+        "query": "SELECT T2.Phone FROM frpm AS T1 INNER JOIN schools AS T2 ON T1.CDSCode = T2.CDSCode WHERE T1.`Charter Funding Type` = 'Directly funded' AND T1.`Charter School (Y/N)` = 1 AND T2.OpenDate > '2000-01-01'",
+        "new_query": "SELECT T2.Phone FROM frpm AS T1 INNER JOIN schools AS T2 ON T1.CDSCode = T2.CDSCode WHERE T1.`Charter Funding Type` = 'Directly funded' AND T1.`Charter School (Y/N)` = 1 AND T2.OpenDate < '1985-01-01'",
+        "db_id": "california_schools",
+        "simplified_ddl": "#frpm(CDSCode, Academic Year, County Code, District Code, School Code, County Name, District Name, School Name, District Type, School Type, Educational Option Type, NSLP Provision Status, Charter School (Y/N), Charter School Number, Charter Funding Type, IRC, Low Grade, High Grade, Enrollment (K-12), Free Meal Count (K-12), Percent (%) Eligible Free (K-12), FRPM Count (K-12), Percent (%) Eligible FRPM (K-12), Enrollment (Ages 5-17), Free Meal Count (Ages 5-17), Percent (%) Eligible Free (Ages 5-17), FRPM Count (Ages 5-17), Percent (%) Eligible FRPM (Ages 5-17), 2013-14 CALPADS Fall 1 Certification Status);\n#satscores(cds, rtype, sname, dname, cname, enroll12, NumTstTakr, AvgScrRead, AvgScrMath, AvgScrWrite, NumGE1500);\n#schools(CDSCode, NCESDist, NCESSchool, StatusType, County, District, School, Street, StreetAbr, City, Zip, State, MailStreet, MailStrAbr, MailCity, MailZip, MailState, Phone, Ext, Website, OpenDate, ClosedDate, Charter, CharterNum, FundingType, DOC, DOCType, SOC, SOCType, EdOpsCode, EdOpsName, EILCode, EILName, GSoffered, GSserved, Virtual, Magnet, Latitude, Longitude, AdmFName1, AdmLName1, AdmEmail1, AdmFName2, AdmLName2, AdmEmail2, AdmFName3, AdmLName3, AdmEmail3, LastUpdate).\n",
+        "difficulty": "moderate"
+    },
+    {
+        "id": "53",
+        "question": "How many schools with an average score in Math under 400 in the SAT test are exclusively virtual?",
+        "new_question": "Please list the schools with an average score in Write above 450 in the SAT test are exclusively virtual?In the database, Exclusively virtual refers to Virtual = 'F'.",
+        "source": "bird_question_5",
+        "gt_table": [
+            "satscores",
+            "schools"
+        ],
+        "query": "SELECT COUNT(DISTINCT T2.School) FROM satscores AS T1 INNER JOIN schools AS T2 ON T1.cds = T2.CDSCode WHERE T2.Virtual = 'F' AND T1.AvgScrMath < 400",
+        "new_query": "SELECT DISTINCT T2.School FROM satscores AS T1 INNER JOIN schools AS T2 ON T1.cds = T2.CDSCode WHERE T2.Virtual = 'F' AND T1.AvgScrWrite > 450",
+        "db_id": "california_schools",
+        "simplified_ddl": "#frpm(CDSCode, Academic Year, County Code, District Code, School Code, County Name, District Name, School Name, District Type, School Type, Educational Option Type, NSLP Provision Status, Charter School (Y/N), Charter School Number, Charter Funding Type, IRC, Low Grade, High Grade, Enrollment (K-12), Free Meal Count (K-12), Percent (%) Eligible Free (K-12), FRPM Count (K-12), Percent (%) Eligible FRPM (K-12), Enrollment (Ages 5-17), Free Meal Count (Ages 5-17), Percent (%) Eligible Free (Ages 5-17), FRPM Count (Ages 5-17), Percent (%) Eligible FRPM (Ages 5-17), 2013-14 CALPADS Fall 1 Certification Status);\n#satscores(cds, rtype, sname, dname, cname, enroll12, NumTstTakr, AvgScrRead, AvgScrMath, AvgScrWrite, NumGE1500);\n#schools(CDSCode, NCESDist, NCESSchool, StatusType, County, District, School, Street, StreetAbr, City, Zip, State, MailStreet, MailStrAbr, MailCity, MailZip, MailState, Phone, Ext, Website, OpenDate, ClosedDate, Charter, CharterNum, FundingType, DOC, DOCType, SOC, SOCType, EdOpsCode, EdOpsName, EILCode, EILName, GSoffered, GSserved, Virtual, Magnet, Latitude, Longitude, AdmFName1, AdmLName1, AdmEmail1, AdmFName2, AdmLName2, AdmEmail2, AdmFName3, AdmLName3, AdmEmail3, LastUpdate).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "54",
+        "question": "Among the schools with the SAT test takers of over 500, please list the schools that are magnet schools or offer a magnet program.",
+        "new_question": "Among the schools with the SAT test takers of over 400, what is the number of schools that are magnet schools or offer a magnet program.In the database, Magnet schools or offer a magnet program means that Magnet = 1.",
+        "source": "bird_question_6",
+        "gt_table": [
+            "satscores",
+            "schools"
+        ],
+        "query": "SELECT T2.School FROM satscores AS T1 INNER JOIN schools AS T2 ON T1.cds = T2.CDSCode WHERE T2.Magnet = 1 AND T1.NumTstTakr > 500",
+        "new_query": "SELECT COUNT(T2.School) FROM satscores AS T1 INNER JOIN schools AS T2 ON T1.cds = T2.CDSCode WHERE T2.Magnet = 1 AND T1.NumTstTakr > 400",
+        "db_id": "california_schools",
+        "simplified_ddl": "#frpm(CDSCode, Academic Year, County Code, District Code, School Code, County Name, District Name, School Name, District Type, School Type, Educational Option Type, NSLP Provision Status, Charter School (Y/N), Charter School Number, Charter Funding Type, IRC, Low Grade, High Grade, Enrollment (K-12), Free Meal Count (K-12), Percent (%) Eligible Free (K-12), FRPM Count (K-12), Percent (%) Eligible FRPM (K-12), Enrollment (Ages 5-17), Free Meal Count (Ages 5-17), Percent (%) Eligible Free (Ages 5-17), FRPM Count (Ages 5-17), Percent (%) Eligible FRPM (Ages 5-17), 2013-14 CALPADS Fall 1 Certification Status);\n#satscores(cds, rtype, sname, dname, cname, enroll12, NumTstTakr, AvgScrRead, AvgScrMath, AvgScrWrite, NumGE1500);\n#schools(CDSCode, NCESDist, NCESSchool, StatusType, County, District, School, Street, StreetAbr, City, Zip, State, MailStreet, MailStrAbr, MailCity, MailZip, MailState, Phone, Ext, Website, OpenDate, ClosedDate, Charter, CharterNum, FundingType, DOC, DOCType, SOC, SOCType, EdOpsCode, EdOpsName, EILCode, EILName, GSoffered, GSserved, Virtual, Magnet, Latitude, Longitude, AdmFName1, AdmLName1, AdmEmail1, AdmFName2, AdmLName2, AdmEmail2, AdmFName3, AdmLName3, AdmEmail3, LastUpdate).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "55",
+        "question": "What is the phone number of the school that has the highest number of test takers with an SAT score of over 1500?",
+        "new_question": "What is the the mailing address of the school that has the highest number of test takers with an SAT score of over 1500?",
+        "source": "bird_question_7",
+        "gt_table": [
+            "satscores",
+            "schools"
+        ],
+        "query": "SELECT T2.Phone FROM satscores AS T1 INNER JOIN schools AS T2 ON T1.cds = T2.CDSCode ORDER BY T1.NumGE1500 DESC LIMIT 1",
+        "new_query": "SELECT T2.MailStreet FROM satscores AS T1 INNER JOIN schools AS T2 ON T1.cds = T2.CDSCode ORDER BY T1.NumGE1500 DESC LIMIT 1",
+        "db_id": "california_schools",
+        "simplified_ddl": "#frpm(CDSCode, Academic Year, County Code, District Code, School Code, County Name, District Name, School Name, District Type, School Type, Educational Option Type, NSLP Provision Status, Charter School (Y/N), Charter School Number, Charter Funding Type, IRC, Low Grade, High Grade, Enrollment (K-12), Free Meal Count (K-12), Percent (%) Eligible Free (K-12), FRPM Count (K-12), Percent (%) Eligible FRPM (K-12), Enrollment (Ages 5-17), Free Meal Count (Ages 5-17), Percent (%) Eligible Free (Ages 5-17), FRPM Count (Ages 5-17), Percent (%) Eligible FRPM (Ages 5-17), 2013-14 CALPADS Fall 1 Certification Status);\n#satscores(cds, rtype, sname, dname, cname, enroll12, NumTstTakr, AvgScrRead, AvgScrMath, AvgScrWrite, NumGE1500);\n#schools(CDSCode, NCESDist, NCESSchool, StatusType, County, District, School, Street, StreetAbr, City, Zip, State, MailStreet, MailStrAbr, MailCity, MailZip, MailState, Phone, Ext, Website, OpenDate, ClosedDate, Charter, CharterNum, FundingType, DOC, DOCType, SOC, SOCType, EdOpsCode, EdOpsName, EILCode, EILName, GSoffered, GSserved, Virtual, Magnet, Latitude, Longitude, AdmFName1, AdmLName1, AdmEmail1, AdmFName2, AdmLName2, AdmEmail2, AdmFName3, AdmLName3, AdmEmail3, LastUpdate).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "56",
+        "question": "What is the number of SAT test takers of the schools with the highest FRPM count for K-12 students?",
+        "new_question": "What is the number of SAT test takers of the schools with the highest FRPM count for students aged 5-17?",
+        "source": "bird_question_8",
+        "gt_table": [
+            "satscores",
+            "frpm"
+        ],
+        "query": "SELECT NumTstTakr FROM satscores WHERE cds = ( SELECT CDSCode FROM frpm ORDER BY `FRPM Count (K-12)` DESC LIMIT 1 )",
+        "new_query": "SELECT NumTstTakr FROM satscores WHERE cds = ( SELECT CDSCode FROM frpm ORDER BY `FRPM Count (Ages 5-17)` DESC LIMIT 1 )",
+        "db_id": "california_schools",
+        "simplified_ddl": "#frpm(CDSCode, Academic Year, County Code, District Code, School Code, County Name, District Name, School Name, District Type, School Type, Educational Option Type, NSLP Provision Status, Charter School (Y/N), Charter School Number, Charter Funding Type, IRC, Low Grade, High Grade, Enrollment (K-12), Free Meal Count (K-12), Percent (%) Eligible Free (K-12), FRPM Count (K-12), Percent (%) Eligible FRPM (K-12), Enrollment (Ages 5-17), Free Meal Count (Ages 5-17), Percent (%) Eligible Free (Ages 5-17), FRPM Count (Ages 5-17), Percent (%) Eligible FRPM (Ages 5-17), 2013-14 CALPADS Fall 1 Certification Status);\n#satscores(cds, rtype, sname, dname, cname, enroll12, NumTstTakr, AvgScrRead, AvgScrMath, AvgScrWrite, NumGE1500);\n#schools(CDSCode, NCESDist, NCESSchool, StatusType, County, District, School, Street, StreetAbr, City, Zip, State, MailStreet, MailStrAbr, MailCity, MailZip, MailState, Phone, Ext, Website, OpenDate, ClosedDate, Charter, CharterNum, FundingType, DOC, DOCType, SOC, SOCType, EdOpsCode, EdOpsName, EILCode, EILName, GSoffered, GSserved, Virtual, Magnet, Latitude, Longitude, AdmFName1, AdmLName1, AdmEmail1, AdmFName2, AdmLName2, AdmEmail2, AdmFName3, AdmLName3, AdmEmail3, LastUpdate).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "57",
+        "question": "Among the schools with an SAT excellence rate of over 0.3, what is the highest eligible free rate for students aged 5-17?",
+        "new_question": "Among the schools with an SAT excellence rate of over 0.9, what is the lowest eligible free rate for students aged 5-17?In the database, Excellence rate = NumGE1500 / NumTstTakr; Eligible free rates for students aged 5-17 = `Free Meal Count (Ages 5-17)` / `Enrollment (Ages 5-17)`.",
+        "source": "bird_question_12",
+        "gt_table": [
+            "frpm",
+            "satscores"
+        ],
+        "query": "SELECT MAX(CAST(T1.`Free Meal Count (Ages 5-17)` AS REAL) / T1.`Enrollment (Ages 5-17)`) FROM frpm AS T1 INNER JOIN satscores AS T2 ON T1.CDSCode = T2.cds WHERE CAST(T2.NumGE1500 AS REAL) / T2.NumTstTakr > 0.3",
+        "new_query": "SELECT MIN(CAST(T1.`Free Meal Count (Ages 5-17)` AS REAL) / T1.`Enrollment (Ages 5-17)`) FROM frpm AS T1 INNER JOIN satscores AS T2 ON T1.CDSCode = T2.cds WHERE CAST(T2.NumGE1500 AS REAL) / T2.NumTstTakr > 0.9",
+        "db_id": "california_schools",
+        "simplified_ddl": "#frpm(CDSCode, Academic Year, County Code, District Code, School Code, County Name, District Name, School Name, District Type, School Type, Educational Option Type, NSLP Provision Status, Charter School (Y/N), Charter School Number, Charter Funding Type, IRC, Low Grade, High Grade, Enrollment (K-12), Free Meal Count (K-12), Percent (%) Eligible Free (K-12), FRPM Count (K-12), Percent (%) Eligible FRPM (K-12), Enrollment (Ages 5-17), Free Meal Count (Ages 5-17), Percent (%) Eligible Free (Ages 5-17), FRPM Count (Ages 5-17), Percent (%) Eligible FRPM (Ages 5-17), 2013-14 CALPADS Fall 1 Certification Status);\n#satscores(cds, rtype, sname, dname, cname, enroll12, NumTstTakr, AvgScrRead, AvgScrMath, AvgScrWrite, NumGE1500);\n#schools(CDSCode, NCESDist, NCESSchool, StatusType, County, District, School, Street, StreetAbr, City, Zip, State, MailStreet, MailStrAbr, MailCity, MailZip, MailState, Phone, Ext, Website, OpenDate, ClosedDate, Charter, CharterNum, FundingType, DOC, DOCType, SOC, SOCType, EdOpsCode, EdOpsName, EILCode, EILName, GSoffered, GSserved, Virtual, Magnet, Latitude, Longitude, AdmFName1, AdmLName1, AdmEmail1, AdmFName2, AdmLName2, AdmEmail2, AdmFName3, AdmLName3, AdmEmail3, LastUpdate).\n",
+        "difficulty": "moderate"
+    },
+    {
+        "id": "58",
+        "question": "Please list the phone numbers of the schools with the top 3 SAT excellence rate.",
+        "new_question": "Please list the number of SAT test takers of the schools with the top 3 SAT excellence rate.In the database, Excellence rate = NumGE1500 / NumTstTakr.",
+        "source": "bird_question_13",
+        "gt_table": [
+            "schools",
+            "satscores"
+        ],
+        "query": "SELECT T1.Phone FROM schools AS T1 INNER JOIN satscores AS T2 ON T1.CDSCode = T2.cds ORDER BY CAST(T2.NumGE1500 AS REAL) / T2.NumTstTakr DESC LIMIT 3",
+        "new_query": "SELECT T2.NumTstTakr FROM schools AS T1 INNER JOIN satscores AS T2 ON T1.CDSCode = T2.cds ORDER BY CAST(T2.NumGE1500 AS REAL) / T2.NumTstTakr DESC LIMIT 3",
+        "db_id": "california_schools",
+        "simplified_ddl": "#frpm(CDSCode, Academic Year, County Code, District Code, School Code, County Name, District Name, School Name, District Type, School Type, Educational Option Type, NSLP Provision Status, Charter School (Y/N), Charter School Number, Charter Funding Type, IRC, Low Grade, High Grade, Enrollment (K-12), Free Meal Count (K-12), Percent (%) Eligible Free (K-12), FRPM Count (K-12), Percent (%) Eligible FRPM (K-12), Enrollment (Ages 5-17), Free Meal Count (Ages 5-17), Percent (%) Eligible Free (Ages 5-17), FRPM Count (Ages 5-17), Percent (%) Eligible FRPM (Ages 5-17), 2013-14 CALPADS Fall 1 Certification Status);\n#satscores(cds, rtype, sname, dname, cname, enroll12, NumTstTakr, AvgScrRead, AvgScrMath, AvgScrWrite, NumGE1500);\n#schools(CDSCode, NCESDist, NCESSchool, StatusType, County, District, School, Street, StreetAbr, City, Zip, State, MailStreet, MailStrAbr, MailCity, MailZip, MailState, Phone, Ext, Website, OpenDate, ClosedDate, Charter, CharterNum, FundingType, DOC, DOCType, SOC, SOCType, EdOpsCode, EdOpsName, EILCode, EILName, GSoffered, GSserved, Virtual, Magnet, Latitude, Longitude, AdmFName1, AdmLName1, AdmEmail1, AdmFName2, AdmLName2, AdmEmail2, AdmFName3, AdmLName3, AdmEmail3, LastUpdate).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "59",
+        "question": "List the top five schools, by descending order, from the highest to the lowest, the most number of Enrollment (Ages 5-17). Please give their NCES school identification number.",
+        "new_question": "List the top three schools, by descending order, from the highest to the lowest, the most number of free meal (Ages 5-17). Please give their NCES school identification number.",
+        "source": "bird_question_14",
+        "gt_table": [
+            "schools",
+            "frpm"
+        ],
+        "query": "SELECT T1.NCESSchool FROM schools AS T1 INNER JOIN frpm AS T2 ON T1.CDSCode = T2.CDSCode ORDER BY T2.`Enrollment (Ages 5-17)` DESC LIMIT 5",
+        "new_query": "SELECT T1.NCESSchool FROM schools AS T1 INNER JOIN frpm AS T2 ON T1.CDSCode = T2.CDSCode ORDER BY T2.`Free Meal Count (Ages 5-17)` DESC LIMIT 3",
+        "db_id": "california_schools",
+        "simplified_ddl": "#frpm(CDSCode, Academic Year, County Code, District Code, School Code, County Name, District Name, School Name, District Type, School Type, Educational Option Type, NSLP Provision Status, Charter School (Y/N), Charter School Number, Charter Funding Type, IRC, Low Grade, High Grade, Enrollment (K-12), Free Meal Count (K-12), Percent (%) Eligible Free (K-12), FRPM Count (K-12), Percent (%) Eligible FRPM (K-12), Enrollment (Ages 5-17), Free Meal Count (Ages 5-17), Percent (%) Eligible Free (Ages 5-17), FRPM Count (Ages 5-17), Percent (%) Eligible FRPM (Ages 5-17), 2013-14 CALPADS Fall 1 Certification Status);\n#satscores(cds, rtype, sname, dname, cname, enroll12, NumTstTakr, AvgScrRead, AvgScrMath, AvgScrWrite, NumGE1500);\n#schools(CDSCode, NCESDist, NCESSchool, StatusType, County, District, School, Street, StreetAbr, City, Zip, State, MailStreet, MailStrAbr, MailCity, MailZip, MailState, Phone, Ext, Website, OpenDate, ClosedDate, Charter, CharterNum, FundingType, DOC, DOCType, SOC, SOCType, EdOpsCode, EdOpsName, EILCode, EILName, GSoffered, GSserved, Virtual, Magnet, Latitude, Longitude, AdmFName1, AdmLName1, AdmEmail1, AdmFName2, AdmLName2, AdmEmail2, AdmFName3, AdmLName3, AdmEmail3, LastUpdate).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "60",
+        "question": "Which active district has the highest average score in Reading?",
+        "new_question": "Which active district has the highest average score in Math?",
+        "source": "bird_question_15",
+        "gt_table": [
+            "schools",
+            "satscores"
+        ],
+        "query": "SELECT T1.District FROM schools AS T1 INNER JOIN satscores AS T2 ON T1.CDSCode = T2.cds WHERE T1.StatusType = 'Active' ORDER BY T2.AvgScrRead DESC LIMIT 1",
+        "new_query": "SELECT T1.District FROM schools AS T1 INNER JOIN satscores AS T2 ON T1.CDSCode = T2.cds WHERE T1.StatusType = 'Active' ORDER BY T2.AvgScrMath DESC LIMIT 1",
+        "db_id": "california_schools",
+        "simplified_ddl": "#frpm(CDSCode, Academic Year, County Code, District Code, School Code, County Name, District Name, School Name, District Type, School Type, Educational Option Type, NSLP Provision Status, Charter School (Y/N), Charter School Number, Charter Funding Type, IRC, Low Grade, High Grade, Enrollment (K-12), Free Meal Count (K-12), Percent (%) Eligible Free (K-12), FRPM Count (K-12), Percent (%) Eligible FRPM (K-12), Enrollment (Ages 5-17), Free Meal Count (Ages 5-17), Percent (%) Eligible Free (Ages 5-17), FRPM Count (Ages 5-17), Percent (%) Eligible FRPM (Ages 5-17), 2013-14 CALPADS Fall 1 Certification Status);\n#satscores(cds, rtype, sname, dname, cname, enroll12, NumTstTakr, AvgScrRead, AvgScrMath, AvgScrWrite, NumGE1500);\n#schools(CDSCode, NCESDist, NCESSchool, StatusType, County, District, School, Street, StreetAbr, City, Zip, State, MailStreet, MailStrAbr, MailCity, MailZip, MailState, Phone, Ext, Website, OpenDate, ClosedDate, Charter, CharterNum, FundingType, DOC, DOCType, SOC, SOCType, EdOpsCode, EdOpsName, EILCode, EILName, GSoffered, GSserved, Virtual, Magnet, Latitude, Longitude, AdmFName1, AdmLName1, AdmEmail1, AdmFName2, AdmLName2, AdmEmail2, AdmFName3, AdmLName3, AdmEmail3, LastUpdate).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "61",
+        "question": "What is the administrator's email address for the school with the highest number of test takers who received SAT scores of at least 1500?Provide the name of the school.",
+        "new_question": "What is the number of SAT test takers of the school with the highest number of test takers who received SAT scores of at least 1500?",
+        "source": "bird_question_88",
+        "gt_table": [
+            "satscores",
+            "schools"
+        ],
+        "query": "SELECT T2.AdmEmail1, T2.School FROM satscores AS T1 INNER JOIN schools AS T2 ON T1.cds = T2.CDSCode ORDER BY T1.NumGE1500 DESC LIMIT 1",
+        "new_query": "SELECT T1.NumTstTakr FROM satscores AS T1 INNER JOIN schools AS T2 ON T1.cds = T2.CDSCode ORDER BY T1.NumGE1500 DESC LIMIT 1",
+        "db_id": "california_schools",
+        "simplified_ddl": "#frpm(CDSCode, Academic Year, County Code, District Code, School Code, County Name, District Name, School Name, District Type, School Type, Educational Option Type, NSLP Provision Status, Charter School (Y/N), Charter School Number, Charter Funding Type, IRC, Low Grade, High Grade, Enrollment (K-12), Free Meal Count (K-12), Percent (%) Eligible Free (K-12), FRPM Count (K-12), Percent (%) Eligible FRPM (K-12), Enrollment (Ages 5-17), Free Meal Count (Ages 5-17), Percent (%) Eligible Free (Ages 5-17), FRPM Count (Ages 5-17), Percent (%) Eligible FRPM (Ages 5-17), 2013-14 CALPADS Fall 1 Certification Status);\n#satscores(cds, rtype, sname, dname, cname, enroll12, NumTstTakr, AvgScrRead, AvgScrMath, AvgScrWrite, NumGE1500);\n#schools(CDSCode, NCESDist, NCESSchool, StatusType, County, District, School, Street, StreetAbr, City, Zip, State, MailStreet, MailStrAbr, MailCity, MailZip, MailState, Phone, Ext, Website, OpenDate, ClosedDate, Charter, CharterNum, FundingType, DOC, DOCType, SOC, SOCType, EdOpsCode, EdOpsName, EILCode, EILName, GSoffered, GSserved, Virtual, Magnet, Latitude, Longitude, AdmFName1, AdmLName1, AdmEmail1, AdmFName2, AdmLName2, AdmEmail2, AdmFName3, AdmLName3, AdmEmail3, LastUpdate).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "62",
+        "question": "In the non-carcinogenic molecules, how many contain chlorine atoms?",
+        "new_question": "In the carcinogenic molecules, how many contain chlorine atoms?In the database, carcinogenic molecules refers to label = '+'; chlorine atoms refers to element = 'cl'.",
+        "source": "bird_question_196",
+        "gt_table": [
+            "molecule",
+            "atom"
+        ],
+        "query": "SELECT COUNT(DISTINCT T1.molecule_id) FROM molecule AS T1 INNER JOIN atom AS T2 ON T1.molecule_id = T2.molecule_id WHERE T2.element = 'cl' AND T1.label = '-'",
+        "new_query": "SELECT COUNT(DISTINCT T1.molecule_id) FROM molecule AS T1 INNER JOIN atom AS T2 ON T1.molecule_id = T2.molecule_id WHERE T2.element = 'cl' AND T1.label = '+'",
+        "db_id": "toxicology",
+        "simplified_ddl": "#atom(atom_id, molecule_id, element);\n#bond(bond_id, molecule_id, bond_type);\n#connected(atom_id, atom_id2, bond_id);\n#molecule(molecule_id, label).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "63",
+        "question": "Calculate the average number of oxygen atoms in single-bonded molecules.",
+        "new_question": "Calculate the max number of hydrogen ygen atoms in single-bonded molecules.In the database, single-bonded molecules refers to bond_type = '-' ; average number of hydrogen ygen atom = AVG(element = 'h').",
+        "source": "bird_question_197",
+        "gt_table": [
+            "atom",
+            "bond"
+        ],
+        "query": "SELECT AVG(oxygen_count) FROM (SELECT T1.molecule_id, COUNT(T1.element) AS oxygen_count FROM atom AS T1 INNER JOIN bond AS T2 ON T1.molecule_id = T2.molecule_id  WHERE T2.bond_type = '-' AND T1.element = 'o'  GROUP BY T1.molecule_id) AS oxygen_counts",
+        "new_query": "SELECT MAX(hydrogen_count) FROM (SELECT T1.molecule_id, COUNT(T1.element) AS hydrogen_count FROM atom AS T1 INNER JOIN bond AS T2 ON T1.molecule_id = T2.molecule_id  WHERE T2.bond_type = '-' AND T1.element = 'h'  GROUP BY T1.molecule_id) AS hydrogen_count",
+        "db_id": "toxicology",
+        "simplified_ddl": "#atom(atom_id, molecule_id, element);\n#bond(bond_id, molecule_id, bond_type);\n#connected(atom_id, atom_id2, bond_id);\n#molecule(molecule_id, label).\n",
+        "difficulty": "moderate"
+    },
+    {
+        "id": "64",
+        "question": "In the molecule containing sodium atoms, how many are non-carcinogenic?",
+        "new_question": "In the molecule containing oxygen atoms, how many are carcinogenic?In the database, carcinogenic refers to label = '+'; oxygen atoms refers to element = 'o'.",
+        "source": "bird_question_199",
+        "gt_table": [
+            "atom",
+            "molecule"
+        ],
+        "query": "SELECT COUNT(DISTINCT T2.molecule_id) FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T1.element = 'na' AND T2.label = '-'",
+        "new_query": "SELECT COUNT(DISTINCT T2.molecule_id) FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T1.element = 'o' AND T2.label = '+'",
+        "db_id": "toxicology",
+        "simplified_ddl": "#atom(atom_id, molecule_id, element);\n#bond(bond_id, molecule_id, bond_type);\n#connected(atom_id, atom_id2, bond_id);\n#molecule(molecule_id, label).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "65",
+        "question": "Describe the information about rulings for card named 'Sublime Epiphany' with number 74s.",
+        "new_question": "Describe the date about rulings for card named 'Sublime Epiphany' with number 74s.In the database, 'Sublime Epiphany' is name of cards; number 74s refers to number = '74s'.",
+        "source": "bird_question_348",
+        "gt_table": [
+            "cards",
+            "rulings"
+        ],
+        "query": "SELECT T2.text FROM cards AS T1 INNER JOIN rulings AS T2 ON T1.uuid = T2.uuid WHERE T1.name = 'Sublime Epiphany' AND T1.number = '74s'",
+        "new_query": "SELECT T2.date FROM cards AS T1 INNER JOIN rulings AS T2 ON T1.uuid = T2.uuid WHERE T1.name = 'Sublime Epiphany' AND T1.number = '74s'",
+        "db_id": "card_games",
+        "simplified_ddl": "#cards(id, artist, asciiName, availability, borderColor, cardKingdomFoilId, cardKingdomId, colorIdentity, colorIndicator, colors, convertedManaCost, duelDeck, edhrecRank, faceConvertedManaCost, faceName, flavorName, flavorText, frameEffects, frameVersion, hand, hasAlternativeDeckLimit, hasContentWarning, hasFoil, hasNonFoil, isAlternative, isFullArt, isOnlineOnly, isOversized, isPromo, isReprint, isReserved, isStarter, isStorySpotlight, isTextless, isTimeshifted, keywords, layout, leadershipSkills, life, loyalty, manaCost, mcmId, mcmMetaId, mtgArenaId, mtgjsonV4Id, mtgoFoilId, mtgoId, multiverseId, name, number, originalReleaseDate, originalText, originalType, otherFaceIds, power, printings, promoTypes, purchaseUrls, rarity, scryfallId, scryfallIllustrationId, scryfallOracleId, setCode, side, subtypes, supertypes, tcgplayerProductId, text, toughness, type, types, uuid, variations, watermark);\n#foreign_data(id, flavorText, language, multiverseid, name, text, type, uuid);\n#legalities(id, format, status, uuid);\n#sets(id, baseSetSize, block, booster, code, isFoilOnly, isForeignOnly, isNonFoilOnly, isOnlineOnly, isPartialPreview, keyruneCode, mcmId, mcmIdExtras, mcmName, mtgoCode, name, parentCode, releaseDate, tcgplayerGroupId, totalSetSize, type);\n#set_translations(id, language, setCode, translation);\n#rulings(id, date, text, uuid).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "66",
+        "question": "Name the card and artist with the most ruling information. Also state if the card is a promotional printing.",
+        "new_question": "Name the card and artist with the most ruling information. Also state the border color of card.In the database, with the most ruling information refers to Max(count(rulings.uuid)).",
+        "source": "bird_question_349",
+        "gt_table": [
+            "cards",
+            "rulings"
+        ],
+        "query": "SELECT T1.name, T1.artist, T1.isPromo FROM cards AS T1 INNER JOIN rulings AS T2 ON T1.uuid = T2.uuid WHERE T1.isPromo = 1 GROUP BY T1.artist ORDER BY COUNT(DISTINCT T1.uuid) DESC LIMIT 1",
+        "new_query": "SELECT T1.name, T1.artist, T1.borderColor FROM cards AS T1 INNER JOIN rulings AS T2 ON T1.uuid = T2.uuid WHERE T1.isPromo = 1 GROUP BY T1.artist ORDER BY COUNT(DISTINCT T1.uuid) DESC LIMIT 1",
+        "db_id": "card_games",
+        "simplified_ddl": "#cards(id, artist, asciiName, availability, borderColor, cardKingdomFoilId, cardKingdomId, colorIdentity, colorIndicator, colors, convertedManaCost, duelDeck, edhrecRank, faceConvertedManaCost, faceName, flavorName, flavorText, frameEffects, frameVersion, hand, hasAlternativeDeckLimit, hasContentWarning, hasFoil, hasNonFoil, isAlternative, isFullArt, isOnlineOnly, isOversized, isPromo, isReprint, isReserved, isStarter, isStorySpotlight, isTextless, isTimeshifted, keywords, layout, leadershipSkills, life, loyalty, manaCost, mcmId, mcmMetaId, mtgArenaId, mtgjsonV4Id, mtgoFoilId, mtgoId, multiverseId, name, number, originalReleaseDate, originalText, originalType, otherFaceIds, power, printings, promoTypes, purchaseUrls, rarity, scryfallId, scryfallIllustrationId, scryfallOracleId, setCode, side, subtypes, supertypes, tcgplayerProductId, text, toughness, type, types, uuid, variations, watermark);\n#foreign_data(id, flavorText, language, multiverseid, name, text, type, uuid);\n#legalities(id, format, status, uuid);\n#sets(id, baseSetSize, block, booster, code, isFoilOnly, isForeignOnly, isNonFoilOnly, isOnlineOnly, isPartialPreview, keyruneCode, mcmId, mcmIdExtras, mcmName, mtgoCode, name, parentCode, releaseDate, tcgplayerGroupId, totalSetSize, type);\n#set_translations(id, language, setCode, translation);\n#rulings(id, date, text, uuid).\n",
+        "difficulty": "moderate"
+    },
+    {
+        "id": "67",
+        "question": "State the alternative languages available for card named Annul numbered 29.",
+        "new_question": "State the type for card named Annul numbered 29.In the database, Annul refers to name = 'Annul'; numbered 29 refers to number = '29'.",
+        "source": "bird_question_350",
+        "gt_table": [
+            "cards",
+            "foreign_data"
+        ],
+        "query": "SELECT T2.language FROM cards AS T1 INNER JOIN foreign_data AS T2 ON T1.uuid = T2.uuid WHERE T1.name = 'Annul' AND T1.number = 29",
+        "new_query": "SELECT T2.type FROM cards AS T1 INNER JOIN foreign_data AS T2 ON T1.uuid = T2.uuid WHERE T1.name = 'Annul' AND T1.number = 29",
+        "db_id": "card_games",
+        "simplified_ddl": "#cards(id, artist, asciiName, availability, borderColor, cardKingdomFoilId, cardKingdomId, colorIdentity, colorIndicator, colors, convertedManaCost, duelDeck, edhrecRank, faceConvertedManaCost, faceName, flavorName, flavorText, frameEffects, frameVersion, hand, hasAlternativeDeckLimit, hasContentWarning, hasFoil, hasNonFoil, isAlternative, isFullArt, isOnlineOnly, isOversized, isPromo, isReprint, isReserved, isStarter, isStorySpotlight, isTextless, isTimeshifted, keywords, layout, leadershipSkills, life, loyalty, manaCost, mcmId, mcmMetaId, mtgArenaId, mtgjsonV4Id, mtgoFoilId, mtgoId, multiverseId, name, number, originalReleaseDate, originalText, originalType, otherFaceIds, power, printings, promoTypes, purchaseUrls, rarity, scryfallId, scryfallIllustrationId, scryfallOracleId, setCode, side, subtypes, supertypes, tcgplayerProductId, text, toughness, type, types, uuid, variations, watermark);\n#foreign_data(id, flavorText, language, multiverseid, name, text, type, uuid);\n#legalities(id, format, status, uuid);\n#sets(id, baseSetSize, block, booster, code, isFoilOnly, isForeignOnly, isNonFoilOnly, isOnlineOnly, isPartialPreview, keyruneCode, mcmId, mcmIdExtras, mcmName, mtgoCode, name, parentCode, releaseDate, tcgplayerGroupId, totalSetSize, type);\n#set_translations(id, language, setCode, translation);\n#rulings(id, date, text, uuid).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "68",
+        "question": "Name all the cards which have alternative language in Japanese.",
+        "new_question": "How many cards which have alternative language in Japanese.In the database, 'Japanese' is the language.",
+        "source": "bird_question_351",
+        "gt_table": [
+            "cards",
+            "foreign_data"
+        ],
+        "query": "SELECT T1.name FROM cards AS T1 INNER JOIN foreign_data AS T2 ON T1.uuid = T2.uuid WHERE T2.language = 'Japanese'",
+        "new_query": "SELECT COUNT(*) FROM cards AS T1 INNER JOIN foreign_data AS T2 ON T1.uuid = T2.uuid WHERE T2.language = 'Japanese'",
+        "db_id": "card_games",
+        "simplified_ddl": "#cards(id, artist, asciiName, availability, borderColor, cardKingdomFoilId, cardKingdomId, colorIdentity, colorIndicator, colors, convertedManaCost, duelDeck, edhrecRank, faceConvertedManaCost, faceName, flavorName, flavorText, frameEffects, frameVersion, hand, hasAlternativeDeckLimit, hasContentWarning, hasFoil, hasNonFoil, isAlternative, isFullArt, isOnlineOnly, isOversized, isPromo, isReprint, isReserved, isStarter, isStorySpotlight, isTextless, isTimeshifted, keywords, layout, leadershipSkills, life, loyalty, manaCost, mcmId, mcmMetaId, mtgArenaId, mtgjsonV4Id, mtgoFoilId, mtgoId, multiverseId, name, number, originalReleaseDate, originalText, originalType, otherFaceIds, power, printings, promoTypes, purchaseUrls, rarity, scryfallId, scryfallIllustrationId, scryfallOracleId, setCode, side, subtypes, supertypes, tcgplayerProductId, text, toughness, type, types, uuid, variations, watermark);\n#foreign_data(id, flavorText, language, multiverseid, name, text, type, uuid);\n#legalities(id, format, status, uuid);\n#sets(id, baseSetSize, block, booster, code, isFoilOnly, isForeignOnly, isNonFoilOnly, isOnlineOnly, isPartialPreview, keyruneCode, mcmId, mcmIdExtras, mcmName, mtgoCode, name, parentCode, releaseDate, tcgplayerGroupId, totalSetSize, type);\n#set_translations(id, language, setCode, translation);\n#rulings(id, date, text, uuid).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "69",
+        "question": "Calculate the percentage of the cards availabe in Chinese Simplified.",
+        "new_question": "Calculate the percentage of the cards availabe in Japanese.In the database, 'Japanese' is the language; percentage = Divide(Sum(id where language = 'Japanese'), Count(id)) *100.",
+        "source": "bird_question_352",
+        "gt_table": [
+            "cards",
+            "foreign_data"
+        ],
+        "query": "SELECT CAST(SUM(CASE WHEN T2.language = 'Chinese Simplified' THEN 1 ELSE 0 END) AS REAL) * 100 / COUNT(T1.id) FROM cards AS T1 INNER JOIN foreign_data AS T2 ON T1.uuid = T2.uuid",
+        "new_query": "SELECT CAST(SUM(CASE WHEN T2.language = 'Japanese' THEN 1 ELSE 0 END) AS REAL) * 100 / COUNT(T1.id) FROM cards AS T1 INNER JOIN foreign_data AS T2 ON T1.uuid = T2.uuid",
+        "db_id": "card_games",
+        "simplified_ddl": "#cards(id, artist, asciiName, availability, borderColor, cardKingdomFoilId, cardKingdomId, colorIdentity, colorIndicator, colors, convertedManaCost, duelDeck, edhrecRank, faceConvertedManaCost, faceName, flavorName, flavorText, frameEffects, frameVersion, hand, hasAlternativeDeckLimit, hasContentWarning, hasFoil, hasNonFoil, isAlternative, isFullArt, isOnlineOnly, isOversized, isPromo, isReprint, isReserved, isStarter, isStorySpotlight, isTextless, isTimeshifted, keywords, layout, leadershipSkills, life, loyalty, manaCost, mcmId, mcmMetaId, mtgArenaId, mtgjsonV4Id, mtgoFoilId, mtgoId, multiverseId, name, number, originalReleaseDate, originalText, originalType, otherFaceIds, power, printings, promoTypes, purchaseUrls, rarity, scryfallId, scryfallIllustrationId, scryfallOracleId, setCode, side, subtypes, supertypes, tcgplayerProductId, text, toughness, type, types, uuid, variations, watermark);\n#foreign_data(id, flavorText, language, multiverseid, name, text, type, uuid);\n#legalities(id, format, status, uuid);\n#sets(id, baseSetSize, block, booster, code, isFoilOnly, isForeignOnly, isNonFoilOnly, isOnlineOnly, isPartialPreview, keyruneCode, mcmId, mcmIdExtras, mcmName, mtgoCode, name, parentCode, releaseDate, tcgplayerGroupId, totalSetSize, type);\n#set_translations(id, language, setCode, translation);\n#rulings(id, date, text, uuid).\n",
+        "difficulty": "moderate"
+    },
+    {
+        "id": "70",
+        "question": "List all the sets available in Italian translation. State the total number of cards per set.",
+        "new_question": "List all the sets available in Italian translation. State the type of cards per set.In the database, Italian translation refers to language = 'Italian'.",
+        "source": "bird_question_353",
+        "gt_table": [
+            "sets",
+            "set_translations"
+        ],
+        "query": "SELECT T1.name, T1.totalSetSize FROM sets AS T1 INNER JOIN set_translations AS T2 ON T1.code = T2.setCode WHERE T2.language = 'Italian'",
+        "new_query": "SELECT T1.name, T1.type FROM sets AS T1 INNER JOIN set_translations AS T2 ON T1.code = T2.setCode WHERE T2.language = 'Italian'",
+        "db_id": "card_games",
+        "simplified_ddl": "#cards(id, artist, asciiName, availability, borderColor, cardKingdomFoilId, cardKingdomId, colorIdentity, colorIndicator, colors, convertedManaCost, duelDeck, edhrecRank, faceConvertedManaCost, faceName, flavorName, flavorText, frameEffects, frameVersion, hand, hasAlternativeDeckLimit, hasContentWarning, hasFoil, hasNonFoil, isAlternative, isFullArt, isOnlineOnly, isOversized, isPromo, isReprint, isReserved, isStarter, isStorySpotlight, isTextless, isTimeshifted, keywords, layout, leadershipSkills, life, loyalty, manaCost, mcmId, mcmMetaId, mtgArenaId, mtgjsonV4Id, mtgoFoilId, mtgoId, multiverseId, name, number, originalReleaseDate, originalText, originalType, otherFaceIds, power, printings, promoTypes, purchaseUrls, rarity, scryfallId, scryfallIllustrationId, scryfallOracleId, setCode, side, subtypes, supertypes, tcgplayerProductId, text, toughness, type, types, uuid, variations, watermark);\n#foreign_data(id, flavorText, language, multiverseid, name, text, type, uuid);\n#legalities(id, format, status, uuid);\n#sets(id, baseSetSize, block, booster, code, isFoilOnly, isForeignOnly, isNonFoilOnly, isOnlineOnly, isPartialPreview, keyruneCode, mcmId, mcmIdExtras, mcmName, mtgoCode, name, parentCode, releaseDate, tcgplayerGroupId, totalSetSize, type);\n#set_translations(id, language, setCode, translation);\n#rulings(id, date, text, uuid).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "71",
+        "question": "cards are not directly linked to language but through table 'set'. you need to add set in covered table & rephrase your question\nWhat are the languages available for the set that card 'Angel of Mercy' is in?",
+        "new_question": "What are the translation for the set that card 'Angel of Mercy' is in?In the database, 'Angel of Mercy' is the name of card.",
+        "source": "bird_question_360",
+        "gt_table": [
+            "set_translations",
+            "cards"
+        ],
+        "query": "SELECT language FROM set_translations WHERE id IN ( SELECT id FROM cards WHERE name = 'Angel of Mercy' )",
+        "new_query": "SELECT translation FROM set_translations WHERE id IN ( SELECT id FROM cards WHERE name = 'Angel of Mercy' )",
+        "db_id": "card_games",
+        "simplified_ddl": "#cards(id, artist, asciiName, availability, borderColor, cardKingdomFoilId, cardKingdomId, colorIdentity, colorIndicator, colors, convertedManaCost, duelDeck, edhrecRank, faceConvertedManaCost, faceName, flavorName, flavorText, frameEffects, frameVersion, hand, hasAlternativeDeckLimit, hasContentWarning, hasFoil, hasNonFoil, isAlternative, isFullArt, isOnlineOnly, isOversized, isPromo, isReprint, isReserved, isStarter, isStorySpotlight, isTextless, isTimeshifted, keywords, layout, leadershipSkills, life, loyalty, manaCost, mcmId, mcmMetaId, mtgArenaId, mtgjsonV4Id, mtgoFoilId, mtgoId, multiverseId, name, number, originalReleaseDate, originalText, originalType, otherFaceIds, power, printings, promoTypes, purchaseUrls, rarity, scryfallId, scryfallIllustrationId, scryfallOracleId, setCode, side, subtypes, supertypes, tcgplayerProductId, text, toughness, type, types, uuid, variations, watermark);\n#foreign_data(id, flavorText, language, multiverseid, name, text, type, uuid);\n#legalities(id, format, status, uuid);\n#sets(id, baseSetSize, block, booster, code, isFoilOnly, isForeignOnly, isNonFoilOnly, isOnlineOnly, isPartialPreview, keyruneCode, mcmId, mcmIdExtras, mcmName, mtgoCode, name, parentCode, releaseDate, tcgplayerGroupId, totalSetSize, type);\n#set_translations(id, language, setCode, translation);\n#rulings(id, date, text, uuid).\n",
+        "difficulty": "moderate"
+    },
+    {
+        "id": "72",
+        "question": "What is the status of card \"Cloudchaser Eagle\"?",
+        "new_question": "What is the format of card 'Cloudchaser Eagle'?In the database, 'Cloudchaser Eagle' is the name of card.",
+        "source": "bird_question_364",
+        "gt_table": [
+            "cards",
+            "legalities"
+        ],
+        "query": "SELECT DISTINCT T2.status FROM cards AS T1 INNER JOIN legalities AS T2 ON T1.uuid = T2.uuid WHERE T1.name = 'Cloudchaser Eagle'",
+        "new_query": "SELECT DISTINCT T2.format FROM cards AS T1 INNER JOIN legalities AS T2 ON T1.uuid = T2.uuid WHERE T1.name = 'Cloudchaser Eagle'",
+        "db_id": "card_games",
+        "simplified_ddl": "#cards(id, artist, asciiName, availability, borderColor, cardKingdomFoilId, cardKingdomId, colorIdentity, colorIndicator, colors, convertedManaCost, duelDeck, edhrecRank, faceConvertedManaCost, faceName, flavorName, flavorText, frameEffects, frameVersion, hand, hasAlternativeDeckLimit, hasContentWarning, hasFoil, hasNonFoil, isAlternative, isFullArt, isOnlineOnly, isOversized, isPromo, isReprint, isReserved, isStarter, isStorySpotlight, isTextless, isTimeshifted, keywords, layout, leadershipSkills, life, loyalty, manaCost, mcmId, mcmMetaId, mtgArenaId, mtgjsonV4Id, mtgoFoilId, mtgoId, multiverseId, name, number, originalReleaseDate, originalText, originalType, otherFaceIds, power, printings, promoTypes, purchaseUrls, rarity, scryfallId, scryfallIllustrationId, scryfallOracleId, setCode, side, subtypes, supertypes, tcgplayerProductId, text, toughness, type, types, uuid, variations, watermark);\n#foreign_data(id, flavorText, language, multiverseid, name, text, type, uuid);\n#legalities(id, format, status, uuid);\n#sets(id, baseSetSize, block, booster, code, isFoilOnly, isForeignOnly, isNonFoilOnly, isOnlineOnly, isPartialPreview, keyruneCode, mcmId, mcmIdExtras, mcmName, mtgoCode, name, parentCode, releaseDate, tcgplayerGroupId, totalSetSize, type);\n#set_translations(id, language, setCode, translation);\n#rulings(id, date, text, uuid).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "73",
+        "question": "List down the name of artists for cards in Chinese Simplified.",
+        "new_question": "List down the name of artists for cards in Japanese.In the database, 'Japanese' is the language.",
+        "source": "bird_question_381",
+        "gt_table": [
+            "cards",
+            "foreign_data"
+        ],
+        "query": "SELECT T1.artist FROM cards AS T1 INNER JOIN foreign_data AS T2 ON T1.uuid = T2.uuid WHERE T2.language = 'Chinese Simplified'",
+        "new_query": "SELECT T1.artist FROM cards AS T1 INNER JOIN foreign_data AS T2 ON T1.uuid = T2.uuid WHERE T2.language = 'Japanese'",
+        "db_id": "card_games",
+        "simplified_ddl": "#cards(id, artist, asciiName, availability, borderColor, cardKingdomFoilId, cardKingdomId, colorIdentity, colorIndicator, colors, convertedManaCost, duelDeck, edhrecRank, faceConvertedManaCost, faceName, flavorName, flavorText, frameEffects, frameVersion, hand, hasAlternativeDeckLimit, hasContentWarning, hasFoil, hasNonFoil, isAlternative, isFullArt, isOnlineOnly, isOversized, isPromo, isReprint, isReserved, isStarter, isStorySpotlight, isTextless, isTimeshifted, keywords, layout, leadershipSkills, life, loyalty, manaCost, mcmId, mcmMetaId, mtgArenaId, mtgjsonV4Id, mtgoFoilId, mtgoId, multiverseId, name, number, originalReleaseDate, originalText, originalType, otherFaceIds, power, printings, promoTypes, purchaseUrls, rarity, scryfallId, scryfallIllustrationId, scryfallOracleId, setCode, side, subtypes, supertypes, tcgplayerProductId, text, toughness, type, types, uuid, variations, watermark);\n#foreign_data(id, flavorText, language, multiverseid, name, text, type, uuid);\n#legalities(id, format, status, uuid);\n#sets(id, baseSetSize, block, booster, code, isFoilOnly, isForeignOnly, isNonFoilOnly, isOnlineOnly, isPartialPreview, keyruneCode, mcmId, mcmIdExtras, mcmName, mtgoCode, name, parentCode, releaseDate, tcgplayerGroupId, totalSetSize, type);\n#set_translations(id, language, setCode, translation);\n#rulings(id, date, text, uuid).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "74",
+        "question": "What are the cards that only available in paper and Japanese language?",
+        "new_question": "List down the count of artists for cards that only available in paper and Japanese language?In the database, available in paper refers to availability = 'paper'; 'Japanese' is the language.",
+        "source": "bird_question_382",
+        "gt_table": [
+            "cards",
+            "foreign_data"
+        ],
+        "query": "SELECT T1.name FROM cards AS T1 INNER JOIN foreign_data AS T2 ON T1.uuid = T2.uuid WHERE T1.availability = 'paper' AND T2.language = 'Japanese'",
+        "new_query": "SELECT COUNT(T1.artist) FROM cards AS T1 INNER JOIN foreign_data AS T2 ON T1.uuid = T2.uuid WHERE T1.availability = 'paper' AND T2.language = 'Japanese'",
+        "db_id": "card_games",
+        "simplified_ddl": "#cards(id, artist, asciiName, availability, borderColor, cardKingdomFoilId, cardKingdomId, colorIdentity, colorIndicator, colors, convertedManaCost, duelDeck, edhrecRank, faceConvertedManaCost, faceName, flavorName, flavorText, frameEffects, frameVersion, hand, hasAlternativeDeckLimit, hasContentWarning, hasFoil, hasNonFoil, isAlternative, isFullArt, isOnlineOnly, isOversized, isPromo, isReprint, isReserved, isStarter, isStorySpotlight, isTextless, isTimeshifted, keywords, layout, leadershipSkills, life, loyalty, manaCost, mcmId, mcmMetaId, mtgArenaId, mtgjsonV4Id, mtgoFoilId, mtgoId, multiverseId, name, number, originalReleaseDate, originalText, originalType, otherFaceIds, power, printings, promoTypes, purchaseUrls, rarity, scryfallId, scryfallIllustrationId, scryfallOracleId, setCode, side, subtypes, supertypes, tcgplayerProductId, text, toughness, type, types, uuid, variations, watermark);\n#foreign_data(id, flavorText, language, multiverseid, name, text, type, uuid);\n#legalities(id, format, status, uuid);\n#sets(id, baseSetSize, block, booster, code, isFoilOnly, isForeignOnly, isNonFoilOnly, isOnlineOnly, isPartialPreview, keyruneCode, mcmId, mcmIdExtras, mcmName, mtgoCode, name, parentCode, releaseDate, tcgplayerGroupId, totalSetSize, type);\n#set_translations(id, language, setCode, translation);\n#rulings(id, date, text, uuid).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "75",
+        "question": "How many cards are having future frame version and what are the legality status of these cards?",
+        "new_question": "What are the color of cards that have future frame version and what are the legality status of these cards?In the database, future frame version refers to frameVersion = 'future'.",
+        "source": "bird_question_386",
+        "gt_table": [
+            "cards",
+            "legalities"
+        ],
+        "query": "SELECT COUNT(T1.id) FROM cards AS T1 INNER JOIN legalities AS T2 ON T1.uuid = T2.uuid WHERE T1.frameVersion = 'future'",
+        "new_query": "SELECT colors FROM cards AS T1 INNER JOIN legalities AS T2 ON T1.uuid = T2.uuid WHERE T1.frameVersion = 'future'",
+        "db_id": "card_games",
+        "simplified_ddl": "#cards(id, artist, asciiName, availability, borderColor, cardKingdomFoilId, cardKingdomId, colorIdentity, colorIndicator, colors, convertedManaCost, duelDeck, edhrecRank, faceConvertedManaCost, faceName, flavorName, flavorText, frameEffects, frameVersion, hand, hasAlternativeDeckLimit, hasContentWarning, hasFoil, hasNonFoil, isAlternative, isFullArt, isOnlineOnly, isOversized, isPromo, isReprint, isReserved, isStarter, isStorySpotlight, isTextless, isTimeshifted, keywords, layout, leadershipSkills, life, loyalty, manaCost, mcmId, mcmMetaId, mtgArenaId, mtgjsonV4Id, mtgoFoilId, mtgoId, multiverseId, name, number, originalReleaseDate, originalText, originalType, otherFaceIds, power, printings, promoTypes, purchaseUrls, rarity, scryfallId, scryfallIllustrationId, scryfallOracleId, setCode, side, subtypes, supertypes, tcgplayerProductId, text, toughness, type, types, uuid, variations, watermark);\n#foreign_data(id, flavorText, language, multiverseid, name, text, type, uuid);\n#legalities(id, format, status, uuid);\n#sets(id, baseSetSize, block, booster, code, isFoilOnly, isForeignOnly, isNonFoilOnly, isOnlineOnly, isPartialPreview, keyruneCode, mcmId, mcmIdExtras, mcmName, mtgoCode, name, parentCode, releaseDate, tcgplayerGroupId, totalSetSize, type);\n#set_translations(id, language, setCode, translation);\n#rulings(id, date, text, uuid).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "76",
+        "question": "What are the cards for set OGW? State the colour for these cards.",
+        "new_question": "What are the cards for set OGW? State the artist for these cards.In the database, set OGW refers to setCode = 'OGW'.",
+        "source": "bird_question_387",
+        "gt_table": [
+            "cards",
+            "set_translations"
+        ],
+        "query": "SELECT id, colors FROM cards WHERE id IN ( SELECT id FROM set_translations WHERE setCode = 'OGW' )",
+        "new_query": "SELECT id, artist FROM cards WHERE id IN ( SELECT id FROM set_translations WHERE setCode = 'OGW' )",
+        "db_id": "card_games",
+        "simplified_ddl": "#cards(id, artist, asciiName, availability, borderColor, cardKingdomFoilId, cardKingdomId, colorIdentity, colorIndicator, colors, convertedManaCost, duelDeck, edhrecRank, faceConvertedManaCost, faceName, flavorName, flavorText, frameEffects, frameVersion, hand, hasAlternativeDeckLimit, hasContentWarning, hasFoil, hasNonFoil, isAlternative, isFullArt, isOnlineOnly, isOversized, isPromo, isReprint, isReserved, isStarter, isStorySpotlight, isTextless, isTimeshifted, keywords, layout, leadershipSkills, life, loyalty, manaCost, mcmId, mcmMetaId, mtgArenaId, mtgjsonV4Id, mtgoFoilId, mtgoId, multiverseId, name, number, originalReleaseDate, originalText, originalType, otherFaceIds, power, printings, promoTypes, purchaseUrls, rarity, scryfallId, scryfallIllustrationId, scryfallOracleId, setCode, side, subtypes, supertypes, tcgplayerProductId, text, toughness, type, types, uuid, variations, watermark);\n#foreign_data(id, flavorText, language, multiverseid, name, text, type, uuid);\n#legalities(id, format, status, uuid);\n#sets(id, baseSetSize, block, booster, code, isFoilOnly, isForeignOnly, isNonFoilOnly, isOnlineOnly, isPartialPreview, keyruneCode, mcmId, mcmIdExtras, mcmName, mtgoCode, name, parentCode, releaseDate, tcgplayerGroupId, totalSetSize, type);\n#set_translations(id, language, setCode, translation);\n#rulings(id, date, text, uuid).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "77",
+        "question": "What are the cards in set 10E with converted mana of 5 have translation and what are the languages?",
+        "new_question": "What are the cards in set 10E with converted mana of 5 have translation and what are the translation?In the database, set 10E refers to setCode = '10E'; converted mana of 5 refers to convertedManaCost = 5.",
+        "source": "bird_question_388",
+        "gt_table": [
+            "set_translations",
+            "cards"
+        ],
+        "query": "SELECT id, language FROM set_translations WHERE id = ( SELECT id FROM cards WHERE convertedManaCost = 5 ) AND setCode = '10E'",
+        "new_query": "SELECT id, translation FROM set_translations WHERE id = ( SELECT id FROM cards WHERE convertedManaCost = 5 ) AND setCode = '10E'",
+        "db_id": "card_games",
+        "simplified_ddl": "#cards(id, artist, asciiName, availability, borderColor, cardKingdomFoilId, cardKingdomId, colorIdentity, colorIndicator, colors, convertedManaCost, duelDeck, edhrecRank, faceConvertedManaCost, faceName, flavorName, flavorText, frameEffects, frameVersion, hand, hasAlternativeDeckLimit, hasContentWarning, hasFoil, hasNonFoil, isAlternative, isFullArt, isOnlineOnly, isOversized, isPromo, isReprint, isReserved, isStarter, isStorySpotlight, isTextless, isTimeshifted, keywords, layout, leadershipSkills, life, loyalty, manaCost, mcmId, mcmMetaId, mtgArenaId, mtgjsonV4Id, mtgoFoilId, mtgoId, multiverseId, name, number, originalReleaseDate, originalText, originalType, otherFaceIds, power, printings, promoTypes, purchaseUrls, rarity, scryfallId, scryfallIllustrationId, scryfallOracleId, setCode, side, subtypes, supertypes, tcgplayerProductId, text, toughness, type, types, uuid, variations, watermark);\n#foreign_data(id, flavorText, language, multiverseid, name, text, type, uuid);\n#legalities(id, format, status, uuid);\n#sets(id, baseSetSize, block, booster, code, isFoilOnly, isForeignOnly, isNonFoilOnly, isOnlineOnly, isPartialPreview, keyruneCode, mcmId, mcmIdExtras, mcmName, mtgoCode, name, parentCode, releaseDate, tcgplayerGroupId, totalSetSize, type);\n#set_translations(id, language, setCode, translation);\n#rulings(id, date, text, uuid).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "78",
+        "question": "List down the name of cards with original types of Creature - Elf and the date of rulings for these cards.",
+        "new_question": "List down the name of cards with original types of Creature - Elf and the information of rulings for these cards.In the database, Creature - Elf is the originalType.",
+        "source": "bird_question_389",
+        "gt_table": [
+            "cards",
+            "rulings"
+        ],
+        "query": "SELECT T1.id, T2.date FROM cards AS T1 INNER JOIN rulings AS T2 ON T1.uuid = T2.uuid WHERE T1.originalType = 'Creature - Elf'",
+        "new_query": "SELECT T1.id, T2.text FROM cards AS T1 INNER JOIN rulings AS T2 ON T1.uuid = T2.uuid WHERE T1.originalType = 'Creature - Elf'",
+        "db_id": "card_games",
+        "simplified_ddl": "#cards(id, artist, asciiName, availability, borderColor, cardKingdomFoilId, cardKingdomId, colorIdentity, colorIndicator, colors, convertedManaCost, duelDeck, edhrecRank, faceConvertedManaCost, faceName, flavorName, flavorText, frameEffects, frameVersion, hand, hasAlternativeDeckLimit, hasContentWarning, hasFoil, hasNonFoil, isAlternative, isFullArt, isOnlineOnly, isOversized, isPromo, isReprint, isReserved, isStarter, isStorySpotlight, isTextless, isTimeshifted, keywords, layout, leadershipSkills, life, loyalty, manaCost, mcmId, mcmMetaId, mtgArenaId, mtgjsonV4Id, mtgoFoilId, mtgoId, multiverseId, name, number, originalReleaseDate, originalText, originalType, otherFaceIds, power, printings, promoTypes, purchaseUrls, rarity, scryfallId, scryfallIllustrationId, scryfallOracleId, setCode, side, subtypes, supertypes, tcgplayerProductId, text, toughness, type, types, uuid, variations, watermark);\n#foreign_data(id, flavorText, language, multiverseid, name, text, type, uuid);\n#legalities(id, format, status, uuid);\n#sets(id, baseSetSize, block, booster, code, isFoilOnly, isForeignOnly, isNonFoilOnly, isOnlineOnly, isPartialPreview, keyruneCode, mcmId, mcmIdExtras, mcmName, mtgoCode, name, parentCode, releaseDate, tcgplayerGroupId, totalSetSize, type);\n#set_translations(id, language, setCode, translation);\n#rulings(id, date, text, uuid).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "79",
+        "question": "What are the colors of cards from ID 1-20? What are the format of these cards?",
+        "new_question": "What are the border color text of cards from ID 1-20? What are the format of these cards?In the database, ID 1-20 refers to id BETWEEN 1 AND 20.",
+        "source": "bird_question_390",
+        "gt_table": [
+            "cards",
+            "legalities"
+        ],
+        "query": "SELECT T1.colors, T2.format FROM cards AS T1 INNER JOIN legalities AS T2 ON T1.uuid = T2.uuid WHERE T1.id BETWEEN 1 AND 20",
+        "new_query": "SELECT T1.borderColor, T2.format FROM cards AS T1 INNER JOIN legalities AS T2 ON T1.uuid = T2.uuid WHERE T1.id BETWEEN 1 AND 20",
+        "db_id": "card_games",
+        "simplified_ddl": "#cards(id, artist, asciiName, availability, borderColor, cardKingdomFoilId, cardKingdomId, colorIdentity, colorIndicator, colors, convertedManaCost, duelDeck, edhrecRank, faceConvertedManaCost, faceName, flavorName, flavorText, frameEffects, frameVersion, hand, hasAlternativeDeckLimit, hasContentWarning, hasFoil, hasNonFoil, isAlternative, isFullArt, isOnlineOnly, isOversized, isPromo, isReprint, isReserved, isStarter, isStorySpotlight, isTextless, isTimeshifted, keywords, layout, leadershipSkills, life, loyalty, manaCost, mcmId, mcmMetaId, mtgArenaId, mtgjsonV4Id, mtgoFoilId, mtgoId, multiverseId, name, number, originalReleaseDate, originalText, originalType, otherFaceIds, power, printings, promoTypes, purchaseUrls, rarity, scryfallId, scryfallIllustrationId, scryfallOracleId, setCode, side, subtypes, supertypes, tcgplayerProductId, text, toughness, type, types, uuid, variations, watermark);\n#foreign_data(id, flavorText, language, multiverseid, name, text, type, uuid);\n#legalities(id, format, status, uuid);\n#sets(id, baseSetSize, block, booster, code, isFoilOnly, isForeignOnly, isNonFoilOnly, isOnlineOnly, isPartialPreview, keyruneCode, mcmId, mcmIdExtras, mcmName, mtgoCode, name, parentCode, releaseDate, tcgplayerGroupId, totalSetSize, type);\n#set_translations(id, language, setCode, translation);\n#rulings(id, date, text, uuid).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "80",
+        "question": "Pick 3 cards with rarity of uncommon, list down name these cards according to ascending order of it's ruling date.",
+        "new_question": "Pick 3 cards with rarity of uncommon, list down the artists for these cards according to ascending order of it's ruling date.In the database, uncommon refers to rarity = 'uncommon'.",
+        "source": "bird_question_392",
+        "gt_table": [
+            "cards",
+            "rulings"
+        ],
+        "query": "SELECT DISTINCT T1.name FROM cards AS T1 INNER JOIN rulings AS T2 ON T1.uuid = T2.uuid WHERE T1.rarity = 'uncommon' ORDER BY T2.date ASC LIMIT 3",
+        "new_query": "SELECT DISTINCT T1.artist FROM cards AS T1 INNER JOIN rulings AS T2 ON T1.uuid = T2.uuid WHERE T1.rarity = 'uncommon' ORDER BY T2.date ASC LIMIT 3",
+        "db_id": "card_games",
+        "simplified_ddl": "#cards(id, artist, asciiName, availability, borderColor, cardKingdomFoilId, cardKingdomId, colorIdentity, colorIndicator, colors, convertedManaCost, duelDeck, edhrecRank, faceConvertedManaCost, faceName, flavorName, flavorText, frameEffects, frameVersion, hand, hasAlternativeDeckLimit, hasContentWarning, hasFoil, hasNonFoil, isAlternative, isFullArt, isOnlineOnly, isOversized, isPromo, isReprint, isReserved, isStarter, isStorySpotlight, isTextless, isTimeshifted, keywords, layout, leadershipSkills, life, loyalty, manaCost, mcmId, mcmMetaId, mtgArenaId, mtgjsonV4Id, mtgoFoilId, mtgoId, multiverseId, name, number, originalReleaseDate, originalText, originalType, otherFaceIds, power, printings, promoTypes, purchaseUrls, rarity, scryfallId, scryfallIllustrationId, scryfallOracleId, setCode, side, subtypes, supertypes, tcgplayerProductId, text, toughness, type, types, uuid, variations, watermark);\n#foreign_data(id, flavorText, language, multiverseid, name, text, type, uuid);\n#legalities(id, format, status, uuid);\n#sets(id, baseSetSize, block, booster, code, isFoilOnly, isForeignOnly, isNonFoilOnly, isOnlineOnly, isPartialPreview, keyruneCode, mcmId, mcmIdExtras, mcmName, mtgoCode, name, parentCode, releaseDate, tcgplayerGroupId, totalSetSize, type);\n#set_translations(id, language, setCode, translation);\n#rulings(id, date, text, uuid).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "81",
+        "question": "Lists all types of cards in German.",
+        "new_question": "Lists availability of cards in German.In the database, German refer to language; availability refer to the availability where subtypes is not null AND supertypes is not null",
+        "source": "bird_question_407",
+        "gt_table": [
+            "cards",
+            "foreign_data"
+        ],
+        "query": "SELECT T1.subtypes, T1.supertypes FROM cards AS T1 INNER JOIN foreign_data AS T2 ON T1.uuid = T2.uuid WHERE T2.language = 'German' AND T1.subtypes IS NOT NULL AND T1.supertypes IS NOT NULL",
+        "new_query": "SELECT T1.availability FROM cards AS T1 INNER JOIN foreign_data AS T2 ON T1.uuid = T2.uuid WHERE T2.language = 'German' AND T1.subtypes IS NOT NULL AND T1.supertypes IS NOT NULL",
+        "db_id": "card_games",
+        "simplified_ddl": "#cards(id, artist, asciiName, availability, borderColor, cardKingdomFoilId, cardKingdomId, colorIdentity, colorIndicator, colors, convertedManaCost, duelDeck, edhrecRank, faceConvertedManaCost, faceName, flavorName, flavorText, frameEffects, frameVersion, hand, hasAlternativeDeckLimit, hasContentWarning, hasFoil, hasNonFoil, isAlternative, isFullArt, isOnlineOnly, isOversized, isPromo, isReprint, isReserved, isStarter, isStorySpotlight, isTextless, isTimeshifted, keywords, layout, leadershipSkills, life, loyalty, manaCost, mcmId, mcmMetaId, mtgArenaId, mtgjsonV4Id, mtgoFoilId, mtgoId, multiverseId, name, number, originalReleaseDate, originalText, originalType, otherFaceIds, power, printings, promoTypes, purchaseUrls, rarity, scryfallId, scryfallIllustrationId, scryfallOracleId, setCode, side, subtypes, supertypes, tcgplayerProductId, text, toughness, type, types, uuid, variations, watermark);\n#foreign_data(id, flavorText, language, multiverseid, name, text, type, uuid);\n#legalities(id, format, status, uuid);\n#sets(id, baseSetSize, block, booster, code, isFoilOnly, isForeignOnly, isNonFoilOnly, isOnlineOnly, isPartialPreview, keyruneCode, mcmId, mcmIdExtras, mcmName, mtgoCode, name, parentCode, releaseDate, tcgplayerGroupId, totalSetSize, type);\n#set_translations(id, language, setCode, translation);\n#rulings(id, date, text, uuid).\n",
+        "difficulty": "moderate"
+    },
+    {
+        "id": "82",
+        "question": "Is there any card from Erica Yang artist in pauper format and available in paper? If so, indicate its ID.",
+        "new_question": "Is there any card from Erica Yang artist in pauper format and available in paper? If so, indicate its all types.In the database, available in paper refers to availability = 'paper'.",
+        "source": "bird_question_410",
+        "gt_table": [
+            "cards",
+            "legalities"
+        ],
+        "query": "SELECT T1.id FROM cards AS T1 INNER JOIN legalities AS T2 ON T1.uuid = T2.uuid WHERE T1.artist = 'Erica Yang' AND T2.format = 'pauper' AND T1.availability = 'paper'",
+        "new_query": "SELECT T1.subtypes, T1.supertypes FROM cards AS T1 INNER JOIN legalities AS T2 ON T1.uuid = T2.uuid WHERE T1.artist = 'Erica Yang' AND T2.format = 'pauper' AND T1.availability = 'paper'",
+        "db_id": "card_games",
+        "simplified_ddl": "#cards(id, artist, asciiName, availability, borderColor, cardKingdomFoilId, cardKingdomId, colorIdentity, colorIndicator, colors, convertedManaCost, duelDeck, edhrecRank, faceConvertedManaCost, faceName, flavorName, flavorText, frameEffects, frameVersion, hand, hasAlternativeDeckLimit, hasContentWarning, hasFoil, hasNonFoil, isAlternative, isFullArt, isOnlineOnly, isOversized, isPromo, isReprint, isReserved, isStarter, isStorySpotlight, isTextless, isTimeshifted, keywords, layout, leadershipSkills, life, loyalty, manaCost, mcmId, mcmMetaId, mtgArenaId, mtgjsonV4Id, mtgoFoilId, mtgoId, multiverseId, name, number, originalReleaseDate, originalText, originalType, otherFaceIds, power, printings, promoTypes, purchaseUrls, rarity, scryfallId, scryfallIllustrationId, scryfallOracleId, setCode, side, subtypes, supertypes, tcgplayerProductId, text, toughness, type, types, uuid, variations, watermark);\n#foreign_data(id, flavorText, language, multiverseid, name, text, type, uuid);\n#legalities(id, format, status, uuid);\n#sets(id, baseSetSize, block, booster, code, isFoilOnly, isForeignOnly, isNonFoilOnly, isOnlineOnly, isPartialPreview, keyruneCode, mcmId, mcmIdExtras, mcmName, mtgoCode, name, parentCode, releaseDate, tcgplayerGroupId, totalSetSize, type);\n#set_translations(id, language, setCode, translation);\n#rulings(id, date, text, uuid).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "83",
+        "question": "What is the foreign name of the card in French of type Creature, normal layout and black border color, by artist Matthew D. Wilson?",
+        "new_question": "What is the foreign text of the card in French of type Creature, normal layout and black border color, by artist Matthew D. Wilson?In the database, in French refers to language = 'French'; black border color refers to borderColor = 'black'.",
+        "source": "bird_question_412",
+        "gt_table": [
+            "foreign_data",
+            "cards"
+        ],
+        "query": "SELECT name FROM foreign_data WHERE uuid IN ( SELECT uuid FROM cards WHERE types = 'Creature' AND layout = 'normal' AND borderColor = 'black' AND artist = 'Matthew D. Wilson' ) AND language = 'French'",
+        "new_query": "SELECT text FROM foreign_data WHERE uuid IN ( SELECT uuid FROM cards WHERE types = 'Creature' AND layout = 'normal' AND borderColor = 'black' AND artist = 'Matthew D. Wilson' ) AND language = 'French'",
+        "db_id": "card_games",
+        "simplified_ddl": "#cards(id, artist, asciiName, availability, borderColor, cardKingdomFoilId, cardKingdomId, colorIdentity, colorIndicator, colors, convertedManaCost, duelDeck, edhrecRank, faceConvertedManaCost, faceName, flavorName, flavorText, frameEffects, frameVersion, hand, hasAlternativeDeckLimit, hasContentWarning, hasFoil, hasNonFoil, isAlternative, isFullArt, isOnlineOnly, isOversized, isPromo, isReprint, isReserved, isStarter, isStorySpotlight, isTextless, isTimeshifted, keywords, layout, leadershipSkills, life, loyalty, manaCost, mcmId, mcmMetaId, mtgArenaId, mtgjsonV4Id, mtgoFoilId, mtgoId, multiverseId, name, number, originalReleaseDate, originalText, originalType, otherFaceIds, power, printings, promoTypes, purchaseUrls, rarity, scryfallId, scryfallIllustrationId, scryfallOracleId, setCode, side, subtypes, supertypes, tcgplayerProductId, text, toughness, type, types, uuid, variations, watermark);\n#foreign_data(id, flavorText, language, multiverseid, name, text, type, uuid);\n#legalities(id, format, status, uuid);\n#sets(id, baseSetSize, block, booster, code, isFoilOnly, isForeignOnly, isNonFoilOnly, isOnlineOnly, isPartialPreview, keyruneCode, mcmId, mcmIdExtras, mcmName, mtgoCode, name, parentCode, releaseDate, tcgplayerGroupId, totalSetSize, type);\n#set_translations(id, language, setCode, translation);\n#rulings(id, date, text, uuid).\n",
+        "difficulty": "moderate"
+    },
+    {
+        "id": "84",
+        "question": "What language is the set of 180 cards that belongs to the Ravnica block translated into?",
+        "new_question": "What translation is the set of 180 cards that belongs to the Ravnica block translated into?In the database, set of 180 cards refers to baseSetSize = 180.",
+        "source": "bird_question_414",
+        "gt_table": [
+            "sets",
+            "set_translations"
+        ],
+        "query": "SELECT T2.language FROM sets AS T1 INNER JOIN set_translations AS T2 ON T1.code = T2.setCode WHERE T1.block = 'Ravnica' AND T1.baseSetSize = 180",
+        "new_query": "SELECT T2.translation FROM sets AS T1 INNER JOIN set_translations AS T2 ON T1.code = T2.setCode WHERE T1.block = 'Ravnica' AND T1.baseSetSize = 180",
+        "db_id": "card_games",
+        "simplified_ddl": "#cards(id, artist, asciiName, availability, borderColor, cardKingdomFoilId, cardKingdomId, colorIdentity, colorIndicator, colors, convertedManaCost, duelDeck, edhrecRank, faceConvertedManaCost, faceName, flavorName, flavorText, frameEffects, frameVersion, hand, hasAlternativeDeckLimit, hasContentWarning, hasFoil, hasNonFoil, isAlternative, isFullArt, isOnlineOnly, isOversized, isPromo, isReprint, isReserved, isStarter, isStorySpotlight, isTextless, isTimeshifted, keywords, layout, leadershipSkills, life, loyalty, manaCost, mcmId, mcmMetaId, mtgArenaId, mtgjsonV4Id, mtgoFoilId, mtgoId, multiverseId, name, number, originalReleaseDate, originalText, originalType, otherFaceIds, power, printings, promoTypes, purchaseUrls, rarity, scryfallId, scryfallIllustrationId, scryfallOracleId, setCode, side, subtypes, supertypes, tcgplayerProductId, text, toughness, type, types, uuid, variations, watermark);\n#foreign_data(id, flavorText, language, multiverseid, name, text, type, uuid);\n#legalities(id, format, status, uuid);\n#sets(id, baseSetSize, block, booster, code, isFoilOnly, isForeignOnly, isNonFoilOnly, isOnlineOnly, isPartialPreview, keyruneCode, mcmId, mcmIdExtras, mcmName, mtgoCode, name, parentCode, releaseDate, tcgplayerGroupId, totalSetSize, type);\n#set_translations(id, language, setCode, translation);\n#rulings(id, date, text, uuid).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "85",
+        "question": "What is the name of set number 5 and its translation?",
+        "new_question": "What is the code of set number 5 and its translation?In the database, set number 5 refers to id = 5.",
+        "source": "bird_question_428",
+        "gt_table": [
+            "sets",
+            "set_translations"
+        ],
+        "query": "SELECT T1.name, T2.translation FROM sets AS T1 INNER JOIN set_translations AS T2 ON T1.code = T2.setCode WHERE T2.id = 5 GROUP BY T1.name, T2.translation",
+        "new_query": "SELECT T1.code, T2.translation FROM sets AS T1 INNER JOIN set_translations AS T2 ON T1.code = T2.setCode WHERE T2.id = 5 GROUP BY T1.name, T2.translation",
+        "db_id": "card_games",
+        "simplified_ddl": "#cards(id, artist, asciiName, availability, borderColor, cardKingdomFoilId, cardKingdomId, colorIdentity, colorIndicator, colors, convertedManaCost, duelDeck, edhrecRank, faceConvertedManaCost, faceName, flavorName, flavorText, frameEffects, frameVersion, hand, hasAlternativeDeckLimit, hasContentWarning, hasFoil, hasNonFoil, isAlternative, isFullArt, isOnlineOnly, isOversized, isPromo, isReprint, isReserved, isStarter, isStorySpotlight, isTextless, isTimeshifted, keywords, layout, leadershipSkills, life, loyalty, manaCost, mcmId, mcmMetaId, mtgArenaId, mtgjsonV4Id, mtgoFoilId, mtgoId, multiverseId, name, number, originalReleaseDate, originalText, originalType, otherFaceIds, power, printings, promoTypes, purchaseUrls, rarity, scryfallId, scryfallIllustrationId, scryfallOracleId, setCode, side, subtypes, supertypes, tcgplayerProductId, text, toughness, type, types, uuid, variations, watermark);\n#foreign_data(id, flavorText, language, multiverseid, name, text, type, uuid);\n#legalities(id, format, status, uuid);\n#sets(id, baseSetSize, block, booster, code, isFoilOnly, isForeignOnly, isNonFoilOnly, isOnlineOnly, isPartialPreview, keyruneCode, mcmId, mcmIdExtras, mcmName, mtgoCode, name, parentCode, releaseDate, tcgplayerGroupId, totalSetSize, type);\n#set_translations(id, language, setCode, translation);\n#rulings(id, date, text, uuid).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "86",
+        "question": "What is the language and expansion type of set number 206?",
+        "new_question": "What is the translation and expansion type of set number 206?In the database, set number 206 refers to id = 206.",
+        "source": "bird_question_429",
+        "gt_table": [
+            "sets",
+            "set_translations"
+        ],
+        "query": "SELECT T2.language, T1.type FROM sets AS T1 INNER JOIN set_translations AS T2 ON T1.code = T2.setCode WHERE T2.id = 206",
+        "new_query": "SELECT T2.translation, T1.type FROM sets AS T1 INNER JOIN set_translations AS T2 ON T1.code = T2.setCode WHERE T2.id = 206",
+        "db_id": "card_games",
+        "simplified_ddl": "#cards(id, artist, asciiName, availability, borderColor, cardKingdomFoilId, cardKingdomId, colorIdentity, colorIndicator, colors, convertedManaCost, duelDeck, edhrecRank, faceConvertedManaCost, faceName, flavorName, flavorText, frameEffects, frameVersion, hand, hasAlternativeDeckLimit, hasContentWarning, hasFoil, hasNonFoil, isAlternative, isFullArt, isOnlineOnly, isOversized, isPromo, isReprint, isReserved, isStarter, isStorySpotlight, isTextless, isTimeshifted, keywords, layout, leadershipSkills, life, loyalty, manaCost, mcmId, mcmMetaId, mtgArenaId, mtgjsonV4Id, mtgoFoilId, mtgoId, multiverseId, name, number, originalReleaseDate, originalText, originalType, otherFaceIds, power, printings, promoTypes, purchaseUrls, rarity, scryfallId, scryfallIllustrationId, scryfallOracleId, setCode, side, subtypes, supertypes, tcgplayerProductId, text, toughness, type, types, uuid, variations, watermark);\n#foreign_data(id, flavorText, language, multiverseid, name, text, type, uuid);\n#legalities(id, format, status, uuid);\n#sets(id, baseSetSize, block, booster, code, isFoilOnly, isForeignOnly, isNonFoilOnly, isOnlineOnly, isPartialPreview, keyruneCode, mcmId, mcmIdExtras, mcmName, mtgoCode, name, parentCode, releaseDate, tcgplayerGroupId, totalSetSize, type);\n#set_translations(id, language, setCode, translation);\n#rulings(id, date, text, uuid).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "87",
+        "question": "Please list top two sets of cards with their IDs that have Italian-language cards and are located in the Shadowmoor block in alphabetical order.",
+        "new_question": "Please list top two sets of cards with their release date that have Italian-language cards and are located in the Shadowmoor block in alphabetical order.",
+        "source": "bird_question_430",
+        "gt_table": [
+            "sets",
+            "set_translations"
+        ],
+        "query": "SELECT T1.name, T1.id FROM sets AS T1 INNER JOIN set_translations AS T2 ON T1.code = T2.setCode WHERE T1.block = 'Shadowmoor' AND T2.language = 'Italian' ORDER BY T1.id LIMIT 2",
+        "new_query": "SELECT T1.name, T1.releaseDate FROM sets AS T1 INNER JOIN set_translations AS T2 ON T1.code = T2.setCode WHERE T1.block = 'Shadowmoor' AND T2.language = 'Italian' ORDER BY T1.id LIMIT 2",
+        "db_id": "card_games",
+        "simplified_ddl": "#cards(id, artist, asciiName, availability, borderColor, cardKingdomFoilId, cardKingdomId, colorIdentity, colorIndicator, colors, convertedManaCost, duelDeck, edhrecRank, faceConvertedManaCost, faceName, flavorName, flavorText, frameEffects, frameVersion, hand, hasAlternativeDeckLimit, hasContentWarning, hasFoil, hasNonFoil, isAlternative, isFullArt, isOnlineOnly, isOversized, isPromo, isReprint, isReserved, isStarter, isStorySpotlight, isTextless, isTimeshifted, keywords, layout, leadershipSkills, life, loyalty, manaCost, mcmId, mcmMetaId, mtgArenaId, mtgjsonV4Id, mtgoFoilId, mtgoId, multiverseId, name, number, originalReleaseDate, originalText, originalType, otherFaceIds, power, printings, promoTypes, purchaseUrls, rarity, scryfallId, scryfallIllustrationId, scryfallOracleId, setCode, side, subtypes, supertypes, tcgplayerProductId, text, toughness, type, types, uuid, variations, watermark);\n#foreign_data(id, flavorText, language, multiverseid, name, text, type, uuid);\n#legalities(id, format, status, uuid);\n#sets(id, baseSetSize, block, booster, code, isFoilOnly, isForeignOnly, isNonFoilOnly, isOnlineOnly, isPartialPreview, keyruneCode, mcmId, mcmIdExtras, mcmName, mtgoCode, name, parentCode, releaseDate, tcgplayerGroupId, totalSetSize, type);\n#set_translations(id, language, setCode, translation);\n#rulings(id, date, text, uuid).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "88",
+        "question": "Which set is not available outside of the United States and has foil cards with Japanese writing on them? Please include the set ID in your response.",
+        "new_question": "Which set is not available outside of the United States and has foil cards with Japanese writing on them? Please include the set release date in your response.In the database, available outside of the United States refers to isForeignOnly = 1; has foil cards refers to isFoilOnly = 1; with Japanese writing on them refers to language = 'Japanese'.",
+        "source": "bird_question_431",
+        "gt_table": [
+            "sets",
+            "set_translations"
+        ],
+        "query": "SELECT T1.name, T1.id FROM sets AS T1 INNER JOIN set_translations AS T2 ON T1.code = T2.setCode WHERE T2.language = 'Japanese' AND T1.isFoilOnly = 1 AND T1.isForeignOnly = 0",
+        "new_query": "SELECT T1.name, T1.releaseDate FROM sets AS T1 INNER JOIN set_translations AS T2 ON T1.code = T2.setCode WHERE T2.language = 'Japanese' AND T1.isFoilOnly = 1 AND T1.isForeignOnly = 0",
+        "db_id": "card_games",
+        "simplified_ddl": "#cards(id, artist, asciiName, availability, borderColor, cardKingdomFoilId, cardKingdomId, colorIdentity, colorIndicator, colors, convertedManaCost, duelDeck, edhrecRank, faceConvertedManaCost, faceName, flavorName, flavorText, frameEffects, frameVersion, hand, hasAlternativeDeckLimit, hasContentWarning, hasFoil, hasNonFoil, isAlternative, isFullArt, isOnlineOnly, isOversized, isPromo, isReprint, isReserved, isStarter, isStorySpotlight, isTextless, isTimeshifted, keywords, layout, leadershipSkills, life, loyalty, manaCost, mcmId, mcmMetaId, mtgArenaId, mtgjsonV4Id, mtgoFoilId, mtgoId, multiverseId, name, number, originalReleaseDate, originalText, originalType, otherFaceIds, power, printings, promoTypes, purchaseUrls, rarity, scryfallId, scryfallIllustrationId, scryfallOracleId, setCode, side, subtypes, supertypes, tcgplayerProductId, text, toughness, type, types, uuid, variations, watermark);\n#foreign_data(id, flavorText, language, multiverseid, name, text, type, uuid);\n#legalities(id, format, status, uuid);\n#sets(id, baseSetSize, block, booster, code, isFoilOnly, isForeignOnly, isNonFoilOnly, isOnlineOnly, isPartialPreview, keyruneCode, mcmId, mcmIdExtras, mcmName, mtgoCode, name, parentCode, releaseDate, tcgplayerGroupId, totalSetSize, type);\n#set_translations(id, language, setCode, translation);\n#rulings(id, date, text, uuid).\n",
+        "difficulty": "challenging"
+    },
+    {
+        "id": "89",
+        "question": "State the set code of the set with release date of 07/13/2007?",
+        "new_question": "State the name of the set with release date of 07/13/2007?",
+        "source": "bird_question_441",
+        "gt_table": [
+            "sets",
+            "set_translations"
+        ],
+        "query": "SELECT T2.setCode FROM sets AS T1 INNER JOIN set_translations AS T2 ON T2.setCode = T1.code WHERE T1.releaseDate = '2007-07-13'",
+        "new_query": "SELECT T1.name FROM sets AS T1 INNER JOIN set_translations AS T2 ON T2.setCode = T1.code WHERE T1.releaseDate = '2007-07-13'",
+        "db_id": "card_games",
+        "simplified_ddl": "#cards(id, artist, asciiName, availability, borderColor, cardKingdomFoilId, cardKingdomId, colorIdentity, colorIndicator, colors, convertedManaCost, duelDeck, edhrecRank, faceConvertedManaCost, faceName, flavorName, flavorText, frameEffects, frameVersion, hand, hasAlternativeDeckLimit, hasContentWarning, hasFoil, hasNonFoil, isAlternative, isFullArt, isOnlineOnly, isOversized, isPromo, isReprint, isReserved, isStarter, isStorySpotlight, isTextless, isTimeshifted, keywords, layout, leadershipSkills, life, loyalty, manaCost, mcmId, mcmMetaId, mtgArenaId, mtgjsonV4Id, mtgoFoilId, mtgoId, multiverseId, name, number, originalReleaseDate, originalText, originalType, otherFaceIds, power, printings, promoTypes, purchaseUrls, rarity, scryfallId, scryfallIllustrationId, scryfallOracleId, setCode, side, subtypes, supertypes, tcgplayerProductId, text, toughness, type, types, uuid, variations, watermark);\n#foreign_data(id, flavorText, language, multiverseid, name, text, type, uuid);\n#legalities(id, format, status, uuid);\n#sets(id, baseSetSize, block, booster, code, isFoilOnly, isForeignOnly, isNonFoilOnly, isOnlineOnly, isPartialPreview, keyruneCode, mcmId, mcmIdExtras, mcmName, mtgoCode, name, parentCode, releaseDate, tcgplayerGroupId, totalSetSize, type);\n#set_translations(id, language, setCode, translation);\n#rulings(id, date, text, uuid).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "90",
+        "question": "Mention the base set size and set code of the set that was in block named \"Masques\" and \"Mirage\".",
+        "new_question": "Mention the base set size and translation of the set that was in block named 'Masques' and 'Mirage'.",
+        "source": "bird_question_442",
+        "gt_table": [
+            "sets",
+            "set_translations"
+        ],
+        "query": "SELECT DISTINCT T1.baseSetSize, T2.setCode FROM sets AS T1 INNER JOIN set_translations AS T2 ON T2.setCode = T1.code WHERE T1.block IN ('Masques', 'Mirage')",
+        "new_query": "SELECT DISTINCT T1.baseSetSize, T2.translation FROM sets AS T1 INNER JOIN set_translations AS T2 ON T2.setCode = T1.code WHERE T1.block IN ('Masques', 'Mirage')",
+        "db_id": "card_games",
+        "simplified_ddl": "#cards(id, artist, asciiName, availability, borderColor, cardKingdomFoilId, cardKingdomId, colorIdentity, colorIndicator, colors, convertedManaCost, duelDeck, edhrecRank, faceConvertedManaCost, faceName, flavorName, flavorText, frameEffects, frameVersion, hand, hasAlternativeDeckLimit, hasContentWarning, hasFoil, hasNonFoil, isAlternative, isFullArt, isOnlineOnly, isOversized, isPromo, isReprint, isReserved, isStarter, isStorySpotlight, isTextless, isTimeshifted, keywords, layout, leadershipSkills, life, loyalty, manaCost, mcmId, mcmMetaId, mtgArenaId, mtgjsonV4Id, mtgoFoilId, mtgoId, multiverseId, name, number, originalReleaseDate, originalText, originalType, otherFaceIds, power, printings, promoTypes, purchaseUrls, rarity, scryfallId, scryfallIllustrationId, scryfallOracleId, setCode, side, subtypes, supertypes, tcgplayerProductId, text, toughness, type, types, uuid, variations, watermark);\n#foreign_data(id, flavorText, language, multiverseid, name, text, type, uuid);\n#legalities(id, format, status, uuid);\n#sets(id, baseSetSize, block, booster, code, isFoilOnly, isForeignOnly, isNonFoilOnly, isOnlineOnly, isPartialPreview, keyruneCode, mcmId, mcmIdExtras, mcmName, mtgoCode, name, parentCode, releaseDate, tcgplayerGroupId, totalSetSize, type);\n#set_translations(id, language, setCode, translation);\n#rulings(id, date, text, uuid).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "91",
+        "question": "Give the code of sets have expansion type of 'expansion'?",
+        "new_question": "Give the code of sets have expansion type of 'box'?In the database, code of sets refers to setCode.",
+        "source": "bird_question_443",
+        "gt_table": [
+            "sets",
+            "set_translations"
+        ],
+        "query": "SELECT T2.setCode FROM sets AS T1 INNER JOIN set_translations AS T2 ON T2.setCode = T1.code WHERE T1.type = 'expansion' GROUP BY T2.setCode",
+        "new_query": "SELECT T2.setCode FROM sets AS T1 INNER JOIN set_translations AS T2 ON T2.setCode = T1.code WHERE T1.type = 'box' GROUP BY T2.setCode",
+        "db_id": "card_games",
+        "simplified_ddl": "#cards(id, artist, asciiName, availability, borderColor, cardKingdomFoilId, cardKingdomId, colorIdentity, colorIndicator, colors, convertedManaCost, duelDeck, edhrecRank, faceConvertedManaCost, faceName, flavorName, flavorText, frameEffects, frameVersion, hand, hasAlternativeDeckLimit, hasContentWarning, hasFoil, hasNonFoil, isAlternative, isFullArt, isOnlineOnly, isOversized, isPromo, isReprint, isReserved, isStarter, isStorySpotlight, isTextless, isTimeshifted, keywords, layout, leadershipSkills, life, loyalty, manaCost, mcmId, mcmMetaId, mtgArenaId, mtgjsonV4Id, mtgoFoilId, mtgoId, multiverseId, name, number, originalReleaseDate, originalText, originalType, otherFaceIds, power, printings, promoTypes, purchaseUrls, rarity, scryfallId, scryfallIllustrationId, scryfallOracleId, setCode, side, subtypes, supertypes, tcgplayerProductId, text, toughness, type, types, uuid, variations, watermark);\n#foreign_data(id, flavorText, language, multiverseid, name, text, type, uuid);\n#legalities(id, format, status, uuid);\n#sets(id, baseSetSize, block, booster, code, isFoilOnly, isForeignOnly, isNonFoilOnly, isOnlineOnly, isPartialPreview, keyruneCode, mcmId, mcmIdExtras, mcmName, mtgoCode, name, parentCode, releaseDate, tcgplayerGroupId, totalSetSize, type);\n#set_translations(id, language, setCode, translation);\n#rulings(id, date, text, uuid).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "92",
+        "question": "Name the foreign name of the card that has boros watermark? List out the type of this card.",
+        "new_question": "Name the artist for the card that has boros watermark? List out the type of this card.",
+        "source": "bird_question_444",
+        "gt_table": [
+            "cards",
+            "foreign_data"
+        ],
+        "query": "SELECT DISTINCT T1.name, T1.type FROM cards AS T1 INNER JOIN foreign_data AS T2 ON T2.uuid = T1.uuid WHERE T1.watermark = 'boros'",
+        "new_query": "SELECT DISTINCT T1.artist, T1.type FROM cards AS T1 INNER JOIN foreign_data AS T2 ON T2.uuid = T1.uuid WHERE T1.watermark = 'boros'",
+        "db_id": "card_games",
+        "simplified_ddl": "#cards(id, artist, asciiName, availability, borderColor, cardKingdomFoilId, cardKingdomId, colorIdentity, colorIndicator, colors, convertedManaCost, duelDeck, edhrecRank, faceConvertedManaCost, faceName, flavorName, flavorText, frameEffects, frameVersion, hand, hasAlternativeDeckLimit, hasContentWarning, hasFoil, hasNonFoil, isAlternative, isFullArt, isOnlineOnly, isOversized, isPromo, isReprint, isReserved, isStarter, isStorySpotlight, isTextless, isTimeshifted, keywords, layout, leadershipSkills, life, loyalty, manaCost, mcmId, mcmMetaId, mtgArenaId, mtgjsonV4Id, mtgoFoilId, mtgoId, multiverseId, name, number, originalReleaseDate, originalText, originalType, otherFaceIds, power, printings, promoTypes, purchaseUrls, rarity, scryfallId, scryfallIllustrationId, scryfallOracleId, setCode, side, subtypes, supertypes, tcgplayerProductId, text, toughness, type, types, uuid, variations, watermark);\n#foreign_data(id, flavorText, language, multiverseid, name, text, type, uuid);\n#legalities(id, format, status, uuid);\n#sets(id, baseSetSize, block, booster, code, isFoilOnly, isForeignOnly, isNonFoilOnly, isOnlineOnly, isPartialPreview, keyruneCode, mcmId, mcmIdExtras, mcmName, mtgoCode, name, parentCode, releaseDate, tcgplayerGroupId, totalSetSize, type);\n#set_translations(id, language, setCode, translation);\n#rulings(id, date, text, uuid).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "93",
+        "question": "What is the language and flavor text of the card that has colorpie watermark? List out the type of this card.",
+        "new_question": "What is the language and type of the card that has colorpie watermark? List out the type of this card.",
+        "source": "bird_question_445",
+        "gt_table": [
+            "cards",
+            "foreign_data"
+        ],
+        "query": "SELECT DISTINCT T2.language, T2.flavorText FROM cards AS T1 INNER JOIN foreign_data AS T2 ON T2.uuid = T1.uuid WHERE T1.watermark = 'colorpie'",
+        "new_query": "SELECT DISTINCT T2.language, T2.type FROM cards AS T1 INNER JOIN foreign_data AS T2 ON T2.uuid = T1.uuid WHERE T1.watermark = 'colorpie'",
+        "db_id": "card_games",
+        "simplified_ddl": "#cards(id, artist, asciiName, availability, borderColor, cardKingdomFoilId, cardKingdomId, colorIdentity, colorIndicator, colors, convertedManaCost, duelDeck, edhrecRank, faceConvertedManaCost, faceName, flavorName, flavorText, frameEffects, frameVersion, hand, hasAlternativeDeckLimit, hasContentWarning, hasFoil, hasNonFoil, isAlternative, isFullArt, isOnlineOnly, isOversized, isPromo, isReprint, isReserved, isStarter, isStorySpotlight, isTextless, isTimeshifted, keywords, layout, leadershipSkills, life, loyalty, manaCost, mcmId, mcmMetaId, mtgArenaId, mtgjsonV4Id, mtgoFoilId, mtgoId, multiverseId, name, number, originalReleaseDate, originalText, originalType, otherFaceIds, power, printings, promoTypes, purchaseUrls, rarity, scryfallId, scryfallIllustrationId, scryfallOracleId, setCode, side, subtypes, supertypes, tcgplayerProductId, text, toughness, type, types, uuid, variations, watermark);\n#foreign_data(id, flavorText, language, multiverseid, name, text, type, uuid);\n#legalities(id, format, status, uuid);\n#sets(id, baseSetSize, block, booster, code, isFoilOnly, isForeignOnly, isNonFoilOnly, isOnlineOnly, isPartialPreview, keyruneCode, mcmId, mcmIdExtras, mcmName, mtgoCode, name, parentCode, releaseDate, tcgplayerGroupId, totalSetSize, type);\n#set_translations(id, language, setCode, translation);\n#rulings(id, date, text, uuid).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "94",
+        "question": "Give the code of sets have expansion commander type?",
+        "new_question": "Give the translation of sets have expansion commander type?In the database, translation of sets refers to translation.",
+        "source": "bird_question_447",
+        "gt_table": [
+            "sets",
+            "set_translations"
+        ],
+        "query": "SELECT T2.setCode FROM sets AS T1 INNER JOIN set_translations AS T2 ON T2.setCode = T1.code WHERE T1.type = 'commander'",
+        "new_query": "SELECT T2.translation FROM sets AS T1 INNER JOIN set_translations AS T2 ON T2.setCode = T1.code WHERE T1.type = 'commander'",
+        "db_id": "card_games",
+        "simplified_ddl": "#cards(id, artist, asciiName, availability, borderColor, cardKingdomFoilId, cardKingdomId, colorIdentity, colorIndicator, colors, convertedManaCost, duelDeck, edhrecRank, faceConvertedManaCost, faceName, flavorName, flavorText, frameEffects, frameVersion, hand, hasAlternativeDeckLimit, hasContentWarning, hasFoil, hasNonFoil, isAlternative, isFullArt, isOnlineOnly, isOversized, isPromo, isReprint, isReserved, isStarter, isStorySpotlight, isTextless, isTimeshifted, keywords, layout, leadershipSkills, life, loyalty, manaCost, mcmId, mcmMetaId, mtgArenaId, mtgjsonV4Id, mtgoFoilId, mtgoId, multiverseId, name, number, originalReleaseDate, originalText, originalType, otherFaceIds, power, printings, promoTypes, purchaseUrls, rarity, scryfallId, scryfallIllustrationId, scryfallOracleId, setCode, side, subtypes, supertypes, tcgplayerProductId, text, toughness, type, types, uuid, variations, watermark);\n#foreign_data(id, flavorText, language, multiverseid, name, text, type, uuid);\n#legalities(id, format, status, uuid);\n#sets(id, baseSetSize, block, booster, code, isFoilOnly, isForeignOnly, isNonFoilOnly, isOnlineOnly, isPartialPreview, keyruneCode, mcmId, mcmIdExtras, mcmName, mtgoCode, name, parentCode, releaseDate, tcgplayerGroupId, totalSetSize, type);\n#set_translations(id, language, setCode, translation);\n#rulings(id, date, text, uuid).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "95",
+        "question": "Name the foreign name of the card that has abzan watermark? List out the type of this card.",
+        "new_question": "Name the foreign name of the card that has abzan watermark? List out the artist of this card.",
+        "source": "bird_question_448",
+        "gt_table": [
+            "cards",
+            "foreign_data"
+        ],
+        "query": "SELECT DISTINCT T1.name, T1.type FROM cards AS T1 INNER JOIN foreign_data AS T2 ON T2.uuid = T1.uuid WHERE T1.watermark = 'abzan'",
+        "new_query": "SELECT DISTINCT T1.name, T1.artist FROM cards AS T1 INNER JOIN foreign_data AS T2 ON T2.uuid = T1.uuid WHERE T1.watermark = 'abzan'",
+        "db_id": "card_games",
+        "simplified_ddl": "#cards(id, artist, asciiName, availability, borderColor, cardKingdomFoilId, cardKingdomId, colorIdentity, colorIndicator, colors, convertedManaCost, duelDeck, edhrecRank, faceConvertedManaCost, faceName, flavorName, flavorText, frameEffects, frameVersion, hand, hasAlternativeDeckLimit, hasContentWarning, hasFoil, hasNonFoil, isAlternative, isFullArt, isOnlineOnly, isOversized, isPromo, isReprint, isReserved, isStarter, isStorySpotlight, isTextless, isTimeshifted, keywords, layout, leadershipSkills, life, loyalty, manaCost, mcmId, mcmMetaId, mtgArenaId, mtgjsonV4Id, mtgoFoilId, mtgoId, multiverseId, name, number, originalReleaseDate, originalText, originalType, otherFaceIds, power, printings, promoTypes, purchaseUrls, rarity, scryfallId, scryfallIllustrationId, scryfallOracleId, setCode, side, subtypes, supertypes, tcgplayerProductId, text, toughness, type, types, uuid, variations, watermark);\n#foreign_data(id, flavorText, language, multiverseid, name, text, type, uuid);\n#legalities(id, format, status, uuid);\n#sets(id, baseSetSize, block, booster, code, isFoilOnly, isForeignOnly, isNonFoilOnly, isOnlineOnly, isPartialPreview, keyruneCode, mcmId, mcmIdExtras, mcmName, mtgoCode, name, parentCode, releaseDate, tcgplayerGroupId, totalSetSize, type);\n#set_translations(id, language, setCode, translation);\n#rulings(id, date, text, uuid).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "96",
+        "question": "For the owner user of post No. 65041, what is his/her reputation points?",
+        "new_question": "For the owner user of post No. 65041, what is his/her last access date?In the database, post No. 65041 refers to Id = '65041'; last access date refers to LastAccessDate.",
+        "source": "bird_question_566",
+        "gt_table": [
+            "users",
+            "posts"
+        ],
+        "query": "SELECT T1.Reputation FROM users AS T1 INNER JOIN posts AS T2 ON T1.Id = T2.OwnerUserId WHERE T2.Id = 65041",
+        "new_query": "SELECT T1.LastAccessDate FROM users AS T1 INNER JOIN posts AS T2 ON T1.Id = T2.OwnerUserId WHERE T2.Id = 65041",
+        "db_id": "codebase_community",
+        "simplified_ddl": "#badges(Id, UserId, Name, Date);\n#comments(Id, PostId, Score, Text, CreationDate, UserId, UserDisplayName);\n#postHistory(Id, PostHistoryTypeId, PostId, RevisionGUID, CreationDate, UserId, Text, Comment, UserDisplayName);\n#postLinks(Id, CreationDate, PostId, RelatedPostId, LinkTypeId);\n#posts(Id, PostTypeId, AcceptedAnswerId, CreaionDate, Score, ViewCount, Body, OwnerUserId, LasActivityDate, Title, Tags, AnswerCount, CommentCount, FavoriteCount, LastEditorUserId, LastEditDate, CommunityOwnedDate, ParentId, ClosedDate, OwnerDisplayName, LastEditorDisplayName);\n#tags(Id, TagName, Count, ExcerptPostId, WikiPostId);\n#users(Id, Reputation, CreationDate, DisplayName, LastAccessDate, WebsiteUrl, Location, AboutMe, Views, UpVotes, DownVotes, AccountId, Age, ProfileImageUrl);\n#votes(Id, PostId, VoteTypeId, CreationDate, UserId, BountyAmount).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "97",
+        "question": "For the user whose display name is \"DatEpicCoderGuyWhoPrograms\", what is his/her badge's name?",
+        "new_question": "For the user whose display name is 'DatEpicCoderGuyWhoPrograms', what is his/her badge's user id?In the database, 'DatEpicCoderGuyWhoPrograms' is the DisplayName.",
+        "source": "bird_question_570",
+        "gt_table": [
+            "users",
+            "badges"
+        ],
+        "query": "SELECT T2.Name FROM users AS T1 INNER JOIN badges AS T2 ON T1.Id = T2.UserId WHERE T1.DisplayName = 'DatEpicCoderGuyWhoPrograms'",
+        "new_query": "SELECT T2.UserId FROM users AS T1 INNER JOIN badges AS T2 ON T1.Id = T2.UserId WHERE T1.DisplayName = 'DatEpicCoderGuyWhoPrograms'",
+        "db_id": "codebase_community",
+        "simplified_ddl": "#badges(Id, UserId, Name, Date);\n#comments(Id, PostId, Score, Text, CreationDate, UserId, UserDisplayName);\n#postHistory(Id, PostHistoryTypeId, PostId, RevisionGUID, CreationDate, UserId, Text, Comment, UserDisplayName);\n#postLinks(Id, CreationDate, PostId, RelatedPostId, LinkTypeId);\n#posts(Id, PostTypeId, AcceptedAnswerId, CreaionDate, Score, ViewCount, Body, OwnerUserId, LasActivityDate, Title, Tags, AnswerCount, CommentCount, FavoriteCount, LastEditorUserId, LastEditDate, CommunityOwnedDate, ParentId, ClosedDate, OwnerDisplayName, LastEditorDisplayName);\n#tags(Id, TagName, Count, ExcerptPostId, WikiPostId);\n#users(Id, Reputation, CreationDate, DisplayName, LastAccessDate, WebsiteUrl, Location, AboutMe, Views, UpVotes, DownVotes, AccountId, Age, ProfileImageUrl);\n#votes(Id, PostId, VoteTypeId, CreationDate, UserId, BountyAmount).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "98",
+        "question": "What is the attacking work rate of the football playerr Franco Zennaro?",
+        "new_question": "What is the overall rating of the football player Franco Zennaro?",
+        "source": "bird_question_1045",
+        "gt_table": [
+            "Player",
+            "Player_Attributes"
+        ],
+        "query": "SELECT DISTINCT t2.attacking_work_rate FROM Player AS t1 INNER JOIN Player_Attributes AS t2 ON t1.player_api_id = t2.player_api_id WHERE t1.player_name = 'Franco Zennaro'",
+        "new_query": "SELECT DISTINCT t2.overall_rating FROM Player AS t1 INNER JOIN Player_Attributes AS t2 ON t1.player_api_id = t2.player_api_id WHERE t1.player_name = 'Franco Zennaro'",
+        "db_id": "european_football_2",
+        "simplified_ddl": "#Player_Attributes(id, player_fifa_api_id, player_api_id, date, overall_rating, potential, preferred_foot, attacking_work_rate, defensive_work_rate, crossing, finishing, heading_accuracy, short_passing, volleys, dribbling, curve, free_kick_accuracy, long_passing, ball_control, acceleration, sprint_speed, agility, reactions, balance, shot_power, jumping, stamina, strength, long_shots, aggression, interceptions, positioning, vision, penalties, marking, standing_tackle, sliding_tackle, gk_diving, gk_handling, gk_kicking, gk_positioning, gk_reflexes);\n#Player(id, player_api_id, player_name, player_fifa_api_id, birthday, height, weight);\n#League(id, country_id, name);\n#Country(id, name);\n#Team(id, team_api_id, team_fifa_api_id, team_long_name, team_short_name);\n#Team_Attributes(id, team_fifa_api_id, team_api_id, date, buildUpPlaySpeed, buildUpPlaySpeedClass, buildUpPlayDribbling, buildUpPlayDribblingClass, buildUpPlayPassing, buildUpPlayPassingClass, buildUpPlayPositioningClass, chanceCreationPassing, chanceCreationPassingClass, chanceCreationCrossing, chanceCreationCrossingClass, chanceCreationShooting, chanceCreationShootingClass, chanceCreationPositioningClass, defencePressure, defencePressureClass, defenceAggression, defenceAggressionClass, defenceTeamWidth, defenceTeamWidthClass, defenceDefenderLineClass);\n#Match(id, country_id, league_id, season, stage, date, match_api_id, home_team_api_id, away_team_api_id, home_team_goal, away_team_goal, home_player_X1, home_player_X2, home_player_X3, home_player_X4, home_player_X5, home_player_X6, home_player_X7, home_player_X8, home_player_X9, home_player_X10, home_player_X11, away_player_X1, away_player_X2, away_player_X3, away_player_X4, away_player_X5, away_player_X6, away_player_X7, away_player_X8, away_player_X9, away_player_X10, away_player_X11, home_player_Y1, home_player_Y2, home_player_Y3, home_player_Y4, home_player_Y5, home_player_Y6, home_player_Y7, home_player_Y8, home_player_Y9, home_player_Y10, home_player_Y11, away_player_Y1, away_player_Y2, away_player_Y3, away_player_Y4, away_player_Y5, away_player_Y6, away_player_Y7, away_player_Y8, away_player_Y9, away_player_Y10, away_player_Y11, home_player_1, home_player_2, home_player_3, home_player_4, home_player_5, home_player_6, home_player_7, home_player_8, home_player_9, home_player_10, home_player_11, away_player_1, away_player_2, away_player_3, away_player_4, away_player_5, away_player_6, away_player_7, away_player_8, away_player_9, away_player_10, away_player_11, goal, shoton, shotoff, foulcommit, card, cross, corner, possession, B365H, B365D, B365A, BWH, BWD, BWA, IWH, IWD, IWA, LBH, LBD, LBA, PSH, PSD, PSA, WHH, WHD, WHA, SJH, SJD, SJA, VCH, VCD, VCA, GBH, GBD, GBA, BSH, BSD, BSA).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "99",
+        "question": "Which of these players performs the best in crossing actions, Alexis, Ariel Borysiuk or Arouna Kone?",
+        "new_question": "Which of these players performs the best in heading accuracy, Alexis, Ariel Borysiuk or Arouna Kone? List the corresponding values.",
+        "source": "bird_question_1085",
+        "gt_table": [
+            "Player",
+            "Player_Attributes"
+        ],
+        "query": "SELECT t1.player_name, t2.crossing FROM Player AS t1 INNER JOIN Player_Attributes AS t2 ON t1.player_api_id = t2.player_api_id WHERE t1.player_name IN ('Alexis', 'Ariel Borysiuk', 'Arouna Kone') ORDER BY t2.crossing DESC LIMIT 1",
+        "new_query": "SELECT t1.player_name, t2.heading_accuracy FROM Player AS t1 INNER JOIN Player_Attributes AS t2 ON t1.player_api_id = t2.player_api_id WHERE t1.player_name IN ('Alexis', 'Ariel Borysiuk', 'Arouna Kone') ORDER BY t2.crossing DESC LIMIT 1",
+        "db_id": "european_football_2",
+        "simplified_ddl": "#Player_Attributes(id, player_fifa_api_id, player_api_id, date, overall_rating, potential, preferred_foot, attacking_work_rate, defensive_work_rate, crossing, finishing, heading_accuracy, short_passing, volleys, dribbling, curve, free_kick_accuracy, long_passing, ball_control, acceleration, sprint_speed, agility, reactions, balance, shot_power, jumping, stamina, strength, long_shots, aggression, interceptions, positioning, vision, penalties, marking, standing_tackle, sliding_tackle, gk_diving, gk_handling, gk_kicking, gk_positioning, gk_reflexes);\n#Player(id, player_api_id, player_name, player_fifa_api_id, birthday, height, weight);\n#League(id, country_id, name);\n#Country(id, name);\n#Team(id, team_api_id, team_fifa_api_id, team_long_name, team_short_name);\n#Team_Attributes(id, team_fifa_api_id, team_api_id, date, buildUpPlaySpeed, buildUpPlaySpeedClass, buildUpPlayDribbling, buildUpPlayDribblingClass, buildUpPlayPassing, buildUpPlayPassingClass, buildUpPlayPositioningClass, chanceCreationPassing, chanceCreationPassingClass, chanceCreationCrossing, chanceCreationCrossingClass, chanceCreationShooting, chanceCreationShootingClass, chanceCreationPositioningClass, defencePressure, defencePressureClass, defenceAggression, defenceAggressionClass, defenceTeamWidth, defenceTeamWidthClass, defenceDefenderLineClass);\n#Match(id, country_id, league_id, season, stage, date, match_api_id, home_team_api_id, away_team_api_id, home_team_goal, away_team_goal, home_player_X1, home_player_X2, home_player_X3, home_player_X4, home_player_X5, home_player_X6, home_player_X7, home_player_X8, home_player_X9, home_player_X10, home_player_X11, away_player_X1, away_player_X2, away_player_X3, away_player_X4, away_player_X5, away_player_X6, away_player_X7, away_player_X8, away_player_X9, away_player_X10, away_player_X11, home_player_Y1, home_player_Y2, home_player_Y3, home_player_Y4, home_player_Y5, home_player_Y6, home_player_Y7, home_player_Y8, home_player_Y9, home_player_Y10, home_player_Y11, away_player_Y1, away_player_Y2, away_player_Y3, away_player_Y4, away_player_Y5, away_player_Y6, away_player_Y7, away_player_Y8, away_player_Y9, away_player_Y10, away_player_Y11, home_player_1, home_player_2, home_player_3, home_player_4, home_player_5, home_player_6, home_player_7, home_player_8, home_player_9, home_player_10, home_player_11, away_player_1, away_player_2, away_player_3, away_player_4, away_player_5, away_player_6, away_player_7, away_player_8, away_player_9, away_player_10, away_player_11, goal, shoton, shotoff, foulcommit, card, cross, corner, possession, B365H, B365D, B365A, BWH, BWD, BWA, IWH, IWD, IWA, LBH, LBD, LBA, PSH, PSD, PSA, WHH, WHD, WHA, SJH, SJD, SJA, VCH, VCD, VCA, GBH, GBD, GBA, BSH, BSD, BSA).\n",
+        "difficulty": "moderate"
+    }
+]

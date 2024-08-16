@@ -1,0 +1,702 @@
+[
+    {
+        "id": "0",
+        "question": "What is the short name of the football Team Queens Park Rangers?",
+        "new_question": "What is the short name and fifa ID for Queens Park Rangers Football Team?In the database, short name of the football team refers to team_short_name; Queens Park Rangers refers to team_long_name = 'Queens Park Rangers';fifa ID refers to team_fifa_api_id.",
+        "source": "bird_question_1043",
+        "gt_table": [
+            "Team"
+        ],
+        "query": "SELECT Team_short_name FROM Team WHERE Team_long_name = 'Queens Park Rangers'",
+        "new_query": "SELECT Team_short_name, team_fifa_api_id FROM Team WHERE Team_long_name = 'Queens Park Rangers'",
+        "db_id": "european_football_2",
+        "simplified_ddl": "#Player_Attributes(id, player_fifa_api_id, player_api_id, date, overall_rating, potential, preferred_foot, attacking_work_rate, defensive_work_rate, crossing, finishing, heading_accuracy, short_passing, volleys, dribbling, curve, free_kick_accuracy, long_passing, ball_control, acceleration, sprint_speed, agility, reactions, balance, shot_power, jumping, stamina, strength, long_shots, aggression, interceptions, positioning, vision, penalties, marking, standing_tackle, sliding_tackle, gk_diving, gk_handling, gk_kicking, gk_positioning, gk_reflexes);\n#Player(id, player_api_id, player_name, player_fifa_api_id, birthday, height, weight);\n#League(id, country_id, name);\n#Country(id, name);\n#Team(id, team_api_id, team_fifa_api_id, team_long_name, team_short_name);\n#Team_Attributes(id, team_fifa_api_id, team_api_id, date, buildUpPlaySpeed, buildUpPlaySpeedClass, buildUpPlayDribbling, buildUpPlayDribblingClass, buildUpPlayPassing, buildUpPlayPassingClass, buildUpPlayPositioningClass, chanceCreationPassing, chanceCreationPassingClass, chanceCreationCrossing, chanceCreationCrossingClass, chanceCreationShooting, chanceCreationShootingClass, chanceCreationPositioningClass, defencePressure, defencePressureClass, defenceAggression, defenceAggressionClass, defenceTeamWidth, defenceTeamWidthClass, defenceDefenderLineClass);\n#Match(id, country_id, league_id, season, stage, date, match_api_id, home_team_api_id, away_team_api_id, home_team_goal, away_team_goal, home_player_X1, home_player_X2, home_player_X3, home_player_X4, home_player_X5, home_player_X6, home_player_X7, home_player_X8, home_player_X9, home_player_X10, home_player_X11, away_player_X1, away_player_X2, away_player_X3, away_player_X4, away_player_X5, away_player_X6, away_player_X7, away_player_X8, away_player_X9, away_player_X10, away_player_X11, home_player_Y1, home_player_Y2, home_player_Y3, home_player_Y4, home_player_Y5, home_player_Y6, home_player_Y7, home_player_Y8, home_player_Y9, home_player_Y10, home_player_Y11, away_player_Y1, away_player_Y2, away_player_Y3, away_player_Y4, away_player_Y5, away_player_Y6, away_player_Y7, away_player_Y8, away_player_Y9, away_player_Y10, away_player_Y11, home_player_1, home_player_2, home_player_3, home_player_4, home_player_5, home_player_6, home_player_7, home_player_8, home_player_9, home_player_10, home_player_11, away_player_1, away_player_2, away_player_3, away_player_4, away_player_5, away_player_6, away_player_7, away_player_8, away_player_9, away_player_10, away_player_11, goal, shoton, shotoff, foulcommit, card, cross, corner, possession, B365H, B365D, B365A, BWH, BWD, BWA, IWH, IWD, IWA, LBH, LBD, LBA, PSH, PSD, PSA, WHH, WHD, WHA, SJH, SJD, SJA, VCH, VCD, VCA, GBH, GBD, GBA, BSH, BSD, BSA).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "1",
+        "question": "What is the highest eligible free rate for K-12 students in the schools in Alameda County?",
+        "new_question": "What is the eligible free rate for K-12 students in Maya Lin School? In the database, eligible free rate for K-12 = `Free Meal Count (K-12)` / `Enrollment (K-12)`",
+        "source": "bird_question_0",
+        "gt_table": [
+            "frpm"
+        ],
+        "query": "SELECT `Free Meal Count (K-12)` / `Enrollment (K-12)` FROM frpm WHERE `County Name` = 'Alameda' ORDER BY (CAST(`Free Meal Count (K-12)` AS REAL) / `Enrollment (K-12)`) DESC LIMIT 1",
+        "new_query": "SELECT `Free Meal Count (K-12)` / `Enrollment (K-12)` FROM frpm WHERE `School Name` = 'Maya Lin'",
+        "db_id": "california_schools",
+        "simplified_ddl": "#frpm(CDSCode, Academic Year, County Code, District Code, School Code, County Name, District Name, School Name, District Type, School Type, Educational Option Type, NSLP Provision Status, Charter School (Y/N), Charter School Number, Charter Funding Type, IRC, Low Grade, High Grade, Enrollment (K-12), Free Meal Count (K-12), Percent (%) Eligible Free (K-12), FRPM Count (K-12), Percent (%) Eligible FRPM (K-12), Enrollment (Ages 5-17), Free Meal Count (Ages 5-17), Percent (%) Eligible Free (Ages 5-17), FRPM Count (Ages 5-17), Percent (%) Eligible FRPM (Ages 5-17), 2013-14 CALPADS Fall 1 Certification Status);\n#satscores(cds, rtype, sname, dname, cname, enroll12, NumTstTakr, AvgScrRead, AvgScrMath, AvgScrWrite, NumGE1500);\n#schools(CDSCode, NCESDist, NCESSchool, StatusType, County, District, School, Street, StreetAbr, City, Zip, State, MailStreet, MailStrAbr, MailCity, MailZip, MailState, Phone, Ext, Website, OpenDate, ClosedDate, Charter, CharterNum, FundingType, DOC, DOCType, SOC, SOCType, EdOpsCode, EdOpsName, EILCode, EILName, GSoffered, GSserved, Virtual, Magnet, Latitude, Longitude, AdmFName1, AdmLName1, AdmEmail1, AdmFName2, AdmLName2, AdmEmail2, AdmFName3, AdmLName3, AdmEmail3, LastUpdate).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "2",
+        "question": "Please list the lowest three eligible free rates for students aged 5-17 in continuation schools.",
+        "new_question": "Please list the lowest three eligible free rates for K-12 students in continuation schools.In the database, Eligible free rate for K-12 = `Free Meal Count (K-12)` / `Enrollment (K-12)`",
+        "source": "bird_question_1",
+        "gt_table": [
+            "frpm"
+        ],
+        "query": "SELECT `Free Meal Count (Ages 5-17)` / `Enrollment (Ages 5-17)` FROM frpm WHERE `Educational Option Type` = 'Continuation School' AND `Free Meal Count (Ages 5-17)` / `Enrollment (Ages 5-17)` IS NOT NULL ORDER BY `Free Meal Count (Ages 5-17)` / `Enrollment (Ages 5-17)` ASC LIMIT 3",
+        "new_query": "SELECT `Free Meal Count (K-12)` / `Enrollment (K-12)` FROM frpm WHERE `Educational Option Type` = 'Continuation School' AND `Free Meal Count (K-12)` / `Enrollment (K-12)` IS NOT NULL ORDER BY `Free Meal Count (K-12)` / `Enrollment (K-12)` ASC LIMIT 3",
+        "db_id": "california_schools",
+        "simplified_ddl": "#frpm(CDSCode, Academic Year, County Code, District Code, School Code, County Name, District Name, School Name, District Type, School Type, Educational Option Type, NSLP Provision Status, Charter School (Y/N), Charter School Number, Charter Funding Type, IRC, Low Grade, High Grade, Enrollment (K-12), Free Meal Count (K-12), Percent (%) Eligible Free (K-12), FRPM Count (K-12), Percent (%) Eligible FRPM (K-12), Enrollment (Ages 5-17), Free Meal Count (Ages 5-17), Percent (%) Eligible Free (Ages 5-17), FRPM Count (Ages 5-17), Percent (%) Eligible FRPM (Ages 5-17), 2013-14 CALPADS Fall 1 Certification Status);\n#satscores(cds, rtype, sname, dname, cname, enroll12, NumTstTakr, AvgScrRead, AvgScrMath, AvgScrWrite, NumGE1500);\n#schools(CDSCode, NCESDist, NCESSchool, StatusType, County, District, School, Street, StreetAbr, City, Zip, State, MailStreet, MailStrAbr, MailCity, MailZip, MailState, Phone, Ext, Website, OpenDate, ClosedDate, Charter, CharterNum, FundingType, DOC, DOCType, SOC, SOCType, EdOpsCode, EdOpsName, EILCode, EILName, GSoffered, GSserved, Virtual, Magnet, Latitude, Longitude, AdmFName1, AdmLName1, AdmEmail1, AdmFName2, AdmLName2, AdmEmail2, AdmFName3, AdmLName3, AdmEmail3, LastUpdate).\n",
+        "difficulty": "moderate"
+    },
+    {
+        "id": "3",
+        "question": "In Los Angeles how many schools have more than 500 free meals but less than 700 free or reduced price meals for K-12?",
+        "new_question": "How many schools in Kings offer over 400 free meals but less than 800 free meals to students aged 5-17?",
+        "source": "bird_question_21",
+        "gt_table": [
+            "frpm"
+        ],
+        "query": "SELECT COUNT(CDSCode) FROM frpm WHERE `County Name` = 'Los Angeles' AND `Free Meal Count (K-12)` > 500 AND `Free Meal Count (K-12)` < 700",
+        "new_query": "SELECT COUNT(CDSCode) FROM frpm WHERE `County Name` = 'Kings' AND `Free Meal Count (Ages 5-17)` > 400 AND `Free Meal Count (Ages 5-17)` < 800",
+        "db_id": "california_schools",
+        "simplified_ddl": "#frpm(CDSCode, Academic Year, County Code, District Code, School Code, County Name, District Name, School Name, District Type, School Type, Educational Option Type, NSLP Provision Status, Charter School (Y/N), Charter School Number, Charter Funding Type, IRC, Low Grade, High Grade, Enrollment (K-12), Free Meal Count (K-12), Percent (%) Eligible Free (K-12), FRPM Count (K-12), Percent (%) Eligible FRPM (K-12), Enrollment (Ages 5-17), Free Meal Count (Ages 5-17), Percent (%) Eligible Free (Ages 5-17), FRPM Count (Ages 5-17), Percent (%) Eligible FRPM (Ages 5-17), 2013-14 CALPADS Fall 1 Certification Status);\n#satscores(cds, rtype, sname, dname, cname, enroll12, NumTstTakr, AvgScrRead, AvgScrMath, AvgScrWrite, NumGE1500);\n#schools(CDSCode, NCESDist, NCESSchool, StatusType, County, District, School, Street, StreetAbr, City, Zip, State, MailStreet, MailStrAbr, MailCity, MailZip, MailState, Phone, Ext, Website, OpenDate, ClosedDate, Charter, CharterNum, FundingType, DOC, DOCType, SOC, SOCType, EdOpsCode, EdOpsName, EILCode, EILName, GSoffered, GSserved, Virtual, Magnet, Latitude, Longitude, AdmFName1, AdmLName1, AdmEmail1, AdmFName2, AdmLName2, AdmEmail2, AdmFName3, AdmLName3, AdmEmail3, LastUpdate).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "4",
+        "question": "Which school in Contra Costa has the highest number of test takers?",
+        "new_question": "Which school in Alameda has the highest average math score? In the database, AvgScrMath means average math score.",
+        "source": "bird_question_22",
+        "gt_table": [
+            "satscores"
+        ],
+        "query": "SELECT sname FROM satscores WHERE cname = 'Contra Costa' AND sname IS NOT NULL ORDER BY NumTstTakr DESC LIMIT 1",
+        "new_query": "SELECT sname FROM satscores WHERE cname = 'Alameda' AND sname IS NOT NULL ORDER BY AvgScrMath DESC LIMIT 1",
+        "db_id": "california_schools",
+        "simplified_ddl": "#frpm(CDSCode, Academic Year, County Code, District Code, School Code, County Name, District Name, School Name, District Type, School Type, Educational Option Type, NSLP Provision Status, Charter School (Y/N), Charter School Number, Charter Funding Type, IRC, Low Grade, High Grade, Enrollment (K-12), Free Meal Count (K-12), Percent (%) Eligible Free (K-12), FRPM Count (K-12), Percent (%) Eligible FRPM (K-12), Enrollment (Ages 5-17), Free Meal Count (Ages 5-17), Percent (%) Eligible Free (Ages 5-17), FRPM Count (Ages 5-17), Percent (%) Eligible FRPM (Ages 5-17), 2013-14 CALPADS Fall 1 Certification Status);\n#satscores(cds, rtype, sname, dname, cname, enroll12, NumTstTakr, AvgScrRead, AvgScrMath, AvgScrWrite, NumGE1500);\n#schools(CDSCode, NCESDist, NCESSchool, StatusType, County, District, School, Street, StreetAbr, City, Zip, State, MailStreet, MailStrAbr, MailCity, MailZip, MailState, Phone, Ext, Website, OpenDate, ClosedDate, Charter, CharterNum, FundingType, DOC, DOCType, SOC, SOCType, EdOpsCode, EdOpsName, EILCode, EILName, GSoffered, GSserved, Virtual, Magnet, Latitude, Longitude, AdmFName1, AdmLName1, AdmEmail1, AdmFName2, AdmLName2, AdmEmail2, AdmFName3, AdmLName3, AdmEmail3, LastUpdate).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "5",
+        "question": "Which different county has the most number of closed schools? Please provide the name of each school as well as the closure date.",
+        "new_question": "Which different county has the highest number of merged schools? Please provide the name of the city where each school is located.In the database, 'Merged' was mentioned in schools.StatusType.",
+        "source": "bird_question_49",
+        "gt_table": [
+            "schools"
+        ],
+        "query": "SELECT DISTINCT County, School, ClosedDate FROM schools WHERE County = ( SELECT County FROM schools WHERE StatusType = 'Closed' GROUP BY County ORDER BY COUNT(School) DESC LIMIT 1 ) AND StatusType = 'Closed' AND school IS NOT NULL",
+        "new_query": "SELECT DISTINCT County, School, City FROM schools WHERE County = ( SELECT County FROM schools WHERE StatusType = 'Merged' GROUP BY County ORDER BY COUNT(School) DESC LIMIT 1 ) AND StatusType = 'Merged' AND school IS NOT NULL",
+        "db_id": "california_schools",
+        "simplified_ddl": "#frpm(CDSCode, Academic Year, County Code, District Code, School Code, County Name, District Name, School Name, District Type, School Type, Educational Option Type, NSLP Provision Status, Charter School (Y/N), Charter School Number, Charter Funding Type, IRC, Low Grade, High Grade, Enrollment (K-12), Free Meal Count (K-12), Percent (%) Eligible Free (K-12), FRPM Count (K-12), Percent (%) Eligible FRPM (K-12), Enrollment (Ages 5-17), Free Meal Count (Ages 5-17), Percent (%) Eligible Free (Ages 5-17), FRPM Count (Ages 5-17), Percent (%) Eligible FRPM (Ages 5-17), 2013-14 CALPADS Fall 1 Certification Status);\n#satscores(cds, rtype, sname, dname, cname, enroll12, NumTstTakr, AvgScrRead, AvgScrMath, AvgScrWrite, NumGE1500);\n#schools(CDSCode, NCESDist, NCESSchool, StatusType, County, District, School, Street, StreetAbr, City, Zip, State, MailStreet, MailStrAbr, MailCity, MailZip, MailState, Phone, Ext, Website, OpenDate, ClosedDate, Charter, CharterNum, FundingType, DOC, DOCType, SOC, SOCType, EdOpsCode, EdOpsName, EILCode, EILName, GSoffered, GSserved, Virtual, Magnet, Latitude, Longitude, AdmFName1, AdmLName1, AdmEmail1, AdmFName2, AdmLName2, AdmEmail2, AdmFName3, AdmLName3, AdmEmail3, LastUpdate).\n",
+        "difficulty": "moderate"
+    },
+    {
+        "id": "6",
+        "question": "Please specify all of the schools and their related mailing zip codes that are under Avetik Atoian's administration.",
+        "new_question": "Please help me check all the schools managed by Paco Furlan and their cities.",
+        "source": "bird_question_54",
+        "gt_table": [
+            "schools"
+        ],
+        "query": "SELECT School, MailZip FROM schools WHERE AdmFName1 = 'Avetik' AND AdmLName1 = 'Atoian'",
+        "new_query": "SELECT School, City FROM schools WHERE AdmFName1 = 'Paco' AND AdmLName1 = 'Furlan'",
+        "db_id": "california_schools",
+        "simplified_ddl": "#frpm(CDSCode, Academic Year, County Code, District Code, School Code, County Name, District Name, School Name, District Type, School Type, Educational Option Type, NSLP Provision Status, Charter School (Y/N), Charter School Number, Charter Funding Type, IRC, Low Grade, High Grade, Enrollment (K-12), Free Meal Count (K-12), Percent (%) Eligible Free (K-12), FRPM Count (K-12), Percent (%) Eligible FRPM (K-12), Enrollment (Ages 5-17), Free Meal Count (Ages 5-17), Percent (%) Eligible Free (Ages 5-17), FRPM Count (Ages 5-17), Percent (%) Eligible FRPM (Ages 5-17), 2013-14 CALPADS Fall 1 Certification Status);\n#satscores(cds, rtype, sname, dname, cname, enroll12, NumTstTakr, AvgScrRead, AvgScrMath, AvgScrWrite, NumGE1500);\n#schools(CDSCode, NCESDist, NCESSchool, StatusType, County, District, School, Street, StreetAbr, City, Zip, State, MailStreet, MailStrAbr, MailCity, MailZip, MailState, Phone, Ext, Website, OpenDate, ClosedDate, Charter, CharterNum, FundingType, DOC, DOCType, SOC, SOCType, EdOpsCode, EdOpsName, EILCode, EILName, GSoffered, GSserved, Virtual, Magnet, Latitude, Longitude, AdmFName1, AdmLName1, AdmEmail1, AdmFName2, AdmLName2, AdmEmail2, AdmFName3, AdmLName3, AdmEmail3, LastUpdate).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "7",
+        "question": "Of the schools with a mailing state address in California, what is the ratio of the schools located in the county of Colusa against the school located in the county of Humboldt?",
+        "new_question": "What is the ratio of the number of closed schools to the number of merged schools in California that have mailing state addresses? In the database, Ratio = count(closed schools) / count(merged schools)",
+        "source": "bird_question_55",
+        "gt_table": [
+            "schools"
+        ],
+        "query": "SELECT CAST(SUM(CASE WHEN County = 'Colusa' THEN 1 ELSE 0 END) AS REAL) / SUM(CASE WHEN County = 'Humboldt' THEN 1 ELSE 0 END) FROM schools WHERE MailState = 'CA'",
+        "new_query": "SELECT CAST(SUM(CASE WHEN StatusType = 'Closed' THEN 1 ELSE 0 END) AS REAL) / SUM(CASE WHEN StatusType = 'Merged' THEN 1 ELSE 0 END) FROM schools WHERE MailState = 'CA'",
+        "db_id": "california_schools",
+        "simplified_ddl": "#frpm(CDSCode, Academic Year, County Code, District Code, School Code, County Name, District Name, School Name, District Type, School Type, Educational Option Type, NSLP Provision Status, Charter School (Y/N), Charter School Number, Charter Funding Type, IRC, Low Grade, High Grade, Enrollment (K-12), Free Meal Count (K-12), Percent (%) Eligible Free (K-12), FRPM Count (K-12), Percent (%) Eligible FRPM (K-12), Enrollment (Ages 5-17), Free Meal Count (Ages 5-17), Percent (%) Eligible Free (Ages 5-17), FRPM Count (Ages 5-17), Percent (%) Eligible FRPM (Ages 5-17), 2013-14 CALPADS Fall 1 Certification Status);\n#satscores(cds, rtype, sname, dname, cname, enroll12, NumTstTakr, AvgScrRead, AvgScrMath, AvgScrWrite, NumGE1500);\n#schools(CDSCode, NCESDist, NCESSchool, StatusType, County, District, School, Street, StreetAbr, City, Zip, State, MailStreet, MailStrAbr, MailCity, MailZip, MailState, Phone, Ext, Website, OpenDate, ClosedDate, Charter, CharterNum, FundingType, DOC, DOCType, SOC, SOCType, EdOpsCode, EdOpsName, EILCode, EILName, GSoffered, GSserved, Virtual, Magnet, Latitude, Longitude, AdmFName1, AdmLName1, AdmEmail1, AdmFName2, AdmLName2, AdmEmail2, AdmFName3, AdmLName3, AdmEmail3, LastUpdate).\n",
+        "difficulty": "moderate"
+    },
+    {
+        "id": "8",
+        "question": "Of all the schools with a mailing state address in California, how many are active in San Joaquin?",
+        "new_question": "Of all the schools with a mailing state address in California, how many schools are located in Colusa County? In the database, mailing state address in California means MailState = 'CA'.",
+        "source": "bird_question_56",
+        "gt_table": [
+            "schools"
+        ],
+        "query": "SELECT COUNT(CDSCode) FROM schools WHERE City = 'San Joaquin' AND MailState = 'CA' AND StatusType = 'Active'",
+        "new_query": "SELECT COUNT(CDSCode) FROM schools WHERE County = 'Colusa' AND MailState = 'CA'",
+        "db_id": "california_schools",
+        "simplified_ddl": "#frpm(CDSCode, Academic Year, County Code, District Code, School Code, County Name, District Name, School Name, District Type, School Type, Educational Option Type, NSLP Provision Status, Charter School (Y/N), Charter School Number, Charter Funding Type, IRC, Low Grade, High Grade, Enrollment (K-12), Free Meal Count (K-12), Percent (%) Eligible Free (K-12), FRPM Count (K-12), Percent (%) Eligible FRPM (K-12), Enrollment (Ages 5-17), Free Meal Count (Ages 5-17), Percent (%) Eligible Free (Ages 5-17), FRPM Count (Ages 5-17), Percent (%) Eligible FRPM (Ages 5-17), 2013-14 CALPADS Fall 1 Certification Status);\n#satscores(cds, rtype, sname, dname, cname, enroll12, NumTstTakr, AvgScrRead, AvgScrMath, AvgScrWrite, NumGE1500);\n#schools(CDSCode, NCESDist, NCESSchool, StatusType, County, District, School, Street, StreetAbr, City, Zip, State, MailStreet, MailStrAbr, MailCity, MailZip, MailState, Phone, Ext, Website, OpenDate, ClosedDate, Charter, CharterNum, FundingType, DOC, DOCType, SOC, SOCType, EdOpsCode, EdOpsName, EILCode, EILName, GSoffered, GSserved, Virtual, Magnet, Latitude, Longitude, AdmFName1, AdmLName1, AdmEmail1, AdmFName2, AdmLName2, AdmEmail2, AdmFName3, AdmLName3, AdmEmail3, LastUpdate).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "9",
+        "question": "What is the phone number and extension number for the school with the zip code 95203-3704? Indicate the school's name.",
+        "new_question": "What is the city and website of the school with a postal code of 95203-3704? Please indicate the name of the school.",
+        "source": "bird_question_58",
+        "gt_table": [
+            "schools"
+        ],
+        "query": "SELECT Phone, Ext, School FROM schools WHERE Zip = '95203-3704'",
+        "new_query": "SELECT City, Website, School FROM schools WHERE Zip = '95203-3704'",
+        "db_id": "california_schools",
+        "simplified_ddl": "#frpm(CDSCode, Academic Year, County Code, District Code, School Code, County Name, District Name, School Name, District Type, School Type, Educational Option Type, NSLP Provision Status, Charter School (Y/N), Charter School Number, Charter Funding Type, IRC, Low Grade, High Grade, Enrollment (K-12), Free Meal Count (K-12), Percent (%) Eligible Free (K-12), FRPM Count (K-12), Percent (%) Eligible FRPM (K-12), Enrollment (Ages 5-17), Free Meal Count (Ages 5-17), Percent (%) Eligible Free (Ages 5-17), FRPM Count (Ages 5-17), Percent (%) Eligible FRPM (Ages 5-17), 2013-14 CALPADS Fall 1 Certification Status);\n#satscores(cds, rtype, sname, dname, cname, enroll12, NumTstTakr, AvgScrRead, AvgScrMath, AvgScrWrite, NumGE1500);\n#schools(CDSCode, NCESDist, NCESSchool, StatusType, County, District, School, Street, StreetAbr, City, Zip, State, MailStreet, MailStrAbr, MailCity, MailZip, MailState, Phone, Ext, Website, OpenDate, ClosedDate, Charter, CharterNum, FundingType, DOC, DOCType, SOC, SOCType, EdOpsCode, EdOpsName, EILCode, EILName, GSoffered, GSserved, Virtual, Magnet, Latitude, Longitude, AdmFName1, AdmLName1, AdmEmail1, AdmFName2, AdmLName2, AdmEmail2, AdmFName3, AdmLName3, AdmEmail3, LastUpdate).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "10",
+        "question": "What is the website for the schools under the administrations of Mike Larson and Dante Alvarez?",
+        "new_question": "Which city are the schools managed by Mike Larson and Dante Alvarez located in respectively?",
+        "source": "bird_question_59",
+        "gt_table": [
+            "schools"
+        ],
+        "query": "SELECT Website FROM schools WHERE (AdmFName1 = 'Mike' AND AdmLName1 = 'Larson') OR (AdmFName1 = 'Dante' AND AdmLName1 = 'Alvarez')",
+        "new_query": "SELECT City FROM schools WHERE (AdmFName1 = 'Mike' AND AdmLName1 = 'Larson') OR (AdmFName1 = 'Dante' AND AdmLName1 = 'Alvarez')",
+        "db_id": "california_schools",
+        "simplified_ddl": "#frpm(CDSCode, Academic Year, County Code, District Code, School Code, County Name, District Name, School Name, District Type, School Type, Educational Option Type, NSLP Provision Status, Charter School (Y/N), Charter School Number, Charter Funding Type, IRC, Low Grade, High Grade, Enrollment (K-12), Free Meal Count (K-12), Percent (%) Eligible Free (K-12), FRPM Count (K-12), Percent (%) Eligible FRPM (K-12), Enrollment (Ages 5-17), Free Meal Count (Ages 5-17), Percent (%) Eligible Free (Ages 5-17), FRPM Count (Ages 5-17), Percent (%) Eligible FRPM (Ages 5-17), 2013-14 CALPADS Fall 1 Certification Status);\n#satscores(cds, rtype, sname, dname, cname, enroll12, NumTstTakr, AvgScrRead, AvgScrMath, AvgScrWrite, NumGE1500);\n#schools(CDSCode, NCESDist, NCESSchool, StatusType, County, District, School, Street, StreetAbr, City, Zip, State, MailStreet, MailStrAbr, MailCity, MailZip, MailState, Phone, Ext, Website, OpenDate, ClosedDate, Charter, CharterNum, FundingType, DOC, DOCType, SOC, SOCType, EdOpsCode, EdOpsName, EILCode, EILName, GSoffered, GSserved, Virtual, Magnet, Latitude, Longitude, AdmFName1, AdmLName1, AdmEmail1, AdmFName2, AdmLName2, AdmEmail2, AdmFName3, AdmLName3, AdmEmail3, LastUpdate).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "11",
+        "question": "In chartered schools with charter number 00D2, what are the names of all the administrators? Include the name of the school and the city to which it belongs",
+        "new_question": "In chartered schools with charter number 0665, what are the names of all the administrators? Including the county where the school is located and the type of school status.In the database, Chartered schools refer to Charter = 1 in the table schools; Full name refers to first name, last name.",
+        "source": "bird_question_63",
+        "gt_table": [
+            "schools"
+        ],
+        "query": "SELECT AdmFName1, AdmLName1, School, City FROM schools WHERE Charter = 1 AND CharterNum = '00D2'",
+        "new_query": "SELECT AdmFName1, AdmLName1, County, StatusType FROM schools WHERE Charter = 1 AND CharterNum = '0665'",
+        "db_id": "california_schools",
+        "simplified_ddl": "#frpm(CDSCode, Academic Year, County Code, District Code, School Code, County Name, District Name, School Name, District Type, School Type, Educational Option Type, NSLP Provision Status, Charter School (Y/N), Charter School Number, Charter Funding Type, IRC, Low Grade, High Grade, Enrollment (K-12), Free Meal Count (K-12), Percent (%) Eligible Free (K-12), FRPM Count (K-12), Percent (%) Eligible FRPM (K-12), Enrollment (Ages 5-17), Free Meal Count (Ages 5-17), Percent (%) Eligible Free (Ages 5-17), FRPM Count (Ages 5-17), Percent (%) Eligible FRPM (Ages 5-17), 2013-14 CALPADS Fall 1 Certification Status);\n#satscores(cds, rtype, sname, dname, cname, enroll12, NumTstTakr, AvgScrRead, AvgScrMath, AvgScrWrite, NumGE1500);\n#schools(CDSCode, NCESDist, NCESSchool, StatusType, County, District, School, Street, StreetAbr, City, Zip, State, MailStreet, MailStrAbr, MailCity, MailZip, MailState, Phone, Ext, Website, OpenDate, ClosedDate, Charter, CharterNum, FundingType, DOC, DOCType, SOC, SOCType, EdOpsCode, EdOpsName, EILCode, EILName, GSoffered, GSserved, Virtual, Magnet, Latitude, Longitude, AdmFName1, AdmLName1, AdmEmail1, AdmFName2, AdmLName2, AdmEmail2, AdmFName3, AdmLName3, AdmEmail3, LastUpdate).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "12",
+        "question": "What is the total amount of Community College District closure in 1989 in the city of San Francisco?",
+        "new_question": "What is the total amount of High School District closure in 1989 in the county of Fresno?",
+        "source": "bird_question_67",
+        "gt_table": [
+            "schools"
+        ],
+        "query": "SELECT COUNT(School) FROM schools WHERE strftime('%Y', ClosedDate) = '1989' AND City = 'San Francisco' AND DOCType = 'Community College District'",
+        "new_query": "SELECT COUNT(School) FROM schools WHERE strftime('%Y', ClosedDate) = '1989' AND County = 'Fresno' AND DOCType = 'High School District'",
+        "db_id": "california_schools",
+        "simplified_ddl": "#frpm(CDSCode, Academic Year, County Code, District Code, School Code, County Name, District Name, School Name, District Type, School Type, Educational Option Type, NSLP Provision Status, Charter School (Y/N), Charter School Number, Charter Funding Type, IRC, Low Grade, High Grade, Enrollment (K-12), Free Meal Count (K-12), Percent (%) Eligible Free (K-12), FRPM Count (K-12), Percent (%) Eligible FRPM (K-12), Enrollment (Ages 5-17), Free Meal Count (Ages 5-17), Percent (%) Eligible Free (Ages 5-17), FRPM Count (Ages 5-17), Percent (%) Eligible FRPM (Ages 5-17), 2013-14 CALPADS Fall 1 Certification Status);\n#satscores(cds, rtype, sname, dname, cname, enroll12, NumTstTakr, AvgScrRead, AvgScrMath, AvgScrWrite, NumGE1500);\n#schools(CDSCode, NCESDist, NCESSchool, StatusType, County, District, School, Street, StreetAbr, City, Zip, State, MailStreet, MailStrAbr, MailCity, MailZip, MailState, Phone, Ext, Website, OpenDate, ClosedDate, Charter, CharterNum, FundingType, DOC, DOCType, SOC, SOCType, EdOpsCode, EdOpsName, EILCode, EILName, GSoffered, GSserved, Virtual, Magnet, Latitude, Longitude, AdmFName1, AdmLName1, AdmEmail1, AdmFName2, AdmLName2, AdmEmail2, AdmFName3, AdmLName3, AdmEmail3, LastUpdate).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "13",
+        "question": "How many active and closed District Community Day Schools are there in the county of Alpine?",
+        "new_question": "How many active and merged District Community Day Schools are there in the city of Clovis?",
+        "source": "bird_question_70",
+        "gt_table": [
+            "schools"
+        ],
+        "query": "SELECT COUNT(School) FROM schools WHERE (StatusType = 'Closed' OR StatusType = 'Active') AND County = 'Alpine'",
+        "new_query": "SELECT COUNT(School) FROM schools WHERE (StatusType = 'Merged' OR StatusType = 'Active') AND City = 'Clovis'",
+        "db_id": "california_schools",
+        "simplified_ddl": "#frpm(CDSCode, Academic Year, County Code, District Code, School Code, County Name, District Name, School Name, District Type, School Type, Educational Option Type, NSLP Provision Status, Charter School (Y/N), Charter School Number, Charter Funding Type, IRC, Low Grade, High Grade, Enrollment (K-12), Free Meal Count (K-12), Percent (%) Eligible Free (K-12), FRPM Count (K-12), Percent (%) Eligible FRPM (K-12), Enrollment (Ages 5-17), Free Meal Count (Ages 5-17), Percent (%) Eligible Free (Ages 5-17), FRPM Count (Ages 5-17), Percent (%) Eligible FRPM (Ages 5-17), 2013-14 CALPADS Fall 1 Certification Status);\n#satscores(cds, rtype, sname, dname, cname, enroll12, NumTstTakr, AvgScrRead, AvgScrMath, AvgScrWrite, NumGE1500);\n#schools(CDSCode, NCESDist, NCESSchool, StatusType, County, District, School, Street, StreetAbr, City, Zip, State, MailStreet, MailStrAbr, MailCity, MailZip, MailState, Phone, Ext, Website, OpenDate, ClosedDate, Charter, CharterNum, FundingType, DOC, DOCType, SOC, SOCType, EdOpsCode, EdOpsName, EILCode, EILName, GSoffered, GSserved, Virtual, Magnet, Latitude, Longitude, AdmFName1, AdmLName1, AdmEmail1, AdmFName2, AdmLName2, AdmEmail2, AdmFName3, AdmLName3, AdmEmail3, LastUpdate).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "14",
+        "question": "What is the administrator's last name that oversees the school with Charter number 40? Indicate the district, the county where the school is situated, and the name of the school.",
+        "new_question": "What is the administrator's first name that oversees the school with Charter number 00D8? Indicate the street, the city where the school is situated, and the name of the school.",
+        "source": "bird_question_86",
+        "gt_table": [
+            "schools"
+        ],
+        "query": "SELECT AdmLName1, District, County, School FROM schools WHERE CharterNum = '0040'",
+        "new_query": "SELECT AdmFName1, Street, City, School FROM schools WHERE CharterNum = '00D8'",
+        "db_id": "california_schools",
+        "simplified_ddl": "#frpm(CDSCode, Academic Year, County Code, District Code, School Code, County Name, District Name, School Name, District Type, School Type, Educational Option Type, NSLP Provision Status, Charter School (Y/N), Charter School Number, Charter Funding Type, IRC, Low Grade, High Grade, Enrollment (K-12), Free Meal Count (K-12), Percent (%) Eligible Free (K-12), FRPM Count (K-12), Percent (%) Eligible FRPM (K-12), Enrollment (Ages 5-17), Free Meal Count (Ages 5-17), Percent (%) Eligible Free (Ages 5-17), FRPM Count (Ages 5-17), Percent (%) Eligible FRPM (Ages 5-17), 2013-14 CALPADS Fall 1 Certification Status);\n#satscores(cds, rtype, sname, dname, cname, enroll12, NumTstTakr, AvgScrRead, AvgScrMath, AvgScrWrite, NumGE1500);\n#schools(CDSCode, NCESDist, NCESSchool, StatusType, County, District, School, Street, StreetAbr, City, Zip, State, MailStreet, MailStrAbr, MailCity, MailZip, MailState, Phone, Ext, Website, OpenDate, ClosedDate, Charter, CharterNum, FundingType, DOC, DOCType, SOC, SOCType, EdOpsCode, EdOpsName, EILCode, EILName, GSoffered, GSserved, Virtual, Magnet, Latitude, Longitude, AdmFName1, AdmLName1, AdmEmail1, AdmFName2, AdmLName2, AdmEmail2, AdmFName3, AdmLName3, AdmEmail3, LastUpdate).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "15",
+        "question": "List out the accounts who have the earliest trading date in 1995 ?",
+        "new_question": "List the accounts and the transaction amount with the earliest transaction date in 1995?",
+        "source": "bird_question_101",
+        "gt_table": [
+            "trans"
+        ],
+        "query": "SELECT account_id FROM trans WHERE STRFTIME('%Y', date) = '1995' ORDER BY date ASC LIMIT 1",
+        "new_query": "SELECT account_id, amount FROM trans WHERE STRFTIME('%Y', date) = '1995' ORDER BY date ASC LIMIT 1",
+        "db_id": "financial",
+        "simplified_ddl": "#account(account_id, district_id, frequency, date);\n#card(card_id, disp_id, type, issued);\n#client(client_id, gender, birth_date, district_id);\n#disp(disp_id, client_id, account_id, type);\n#district(district_id, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16);\n#loan(loan_id, account_id, date, amount, duration, payments, status);\n#order(order_id, account_id, bank_to, account_to, amount, k_symbol);\n#trans(trans_id, account_id, date, type, operation, amount, balance, k_symbol, bank, account).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "16",
+        "question": "How many owner and disponent dispositions are there from account number 1 to account number 10?",
+        "new_question": "How many owner and disponent dispositions are there from client number 20 to client number 30?",
+        "source": "bird_question_172",
+        "gt_table": [
+            "disp"
+        ],
+        "query": "SELECT SUM(type = 'Owner') , SUM(type = 'Disponent') FROM disp WHERE account_id BETWEEN 1 AND 10",
+        "new_query": "SELECT SUM(type = 'OWNER') , SUM(type = 'DISPONENT') FROM disp WHERE client_id BETWEEN 20 AND 30",
+        "db_id": "financial",
+        "simplified_ddl": "#account(account_id, district_id, frequency, date);\n#card(card_id, disp_id, type, issued);\n#client(client_id, gender, birth_date, district_id);\n#disp(disp_id, client_id, account_id, type);\n#district(district_id, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16);\n#loan(loan_id, account_id, date, amount, duration, payments, status);\n#order(order_id, account_id, bank_to, account_to, amount, k_symbol);\n#trans(trans_id, account_id, date, type, operation, amount, balance, k_symbol, bank, account).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "17",
+        "question": "How many triple type bonds are there?",
+        "new_question": "How many  triple-bond molecules are there? In the database, triple type bonds refers to bond_type = '#'.",
+        "source": "bird_question_202",
+        "gt_table": [
+            "bond"
+        ],
+        "query": "SELECT COUNT(T.bond_id) FROM bond AS T WHERE T.bond_type = '#'",
+        "new_query": "SELECT COUNT(T.molecule_id) FROM bond AS T WHERE T.bond_type = '#'",
+        "db_id": "toxicology",
+        "simplified_ddl": "#atom(atom_id, molecule_id, element);\n#bond(bond_id, molecule_id, bond_type);\n#connected(atom_id, atom_id2, bond_id);\n#molecule(molecule_id, label).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "18",
+        "question": "In how many atoms is there no bromine?",
+        "new_question": "How many molecules is there no bromine? In the database, atoms with no bromine refers to element ! = 'br'.",
+        "source": "bird_question_203",
+        "gt_table": [
+            "atom"
+        ],
+        "query": "SELECT COUNT(DISTINCT T.atom_id) FROM atom AS T WHERE T.element <> 'br'",
+        "new_query": "SELECT COUNT(DISTINCT T.molecule_id) FROM atom AS T WHERE T.element <> 'br'",
+        "db_id": "toxicology",
+        "simplified_ddl": "#atom(atom_id, molecule_id, element);\n#bond(bond_id, molecule_id, bond_type);\n#connected(atom_id, atom_id2, bond_id);\n#molecule(molecule_id, label).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "19",
+        "question": "Identify by their ID the molecules in which there is silicon.",
+        "new_question": "What molecules contain silicon? In the database, silicon refers to element = 'si'.",
+        "source": "bird_question_205",
+        "gt_table": [
+            "atom"
+        ],
+        "query": "SELECT T.atom_id FROM atom AS T WHERE T.element = 'si'",
+        "new_query": "SELECT T.molecule_id FROM atom AS T WHERE T.element = 'si'",
+        "db_id": "toxicology",
+        "simplified_ddl": "#atom(atom_id, molecule_id, element);\n#bond(bond_id, molecule_id, bond_type);\n#connected(atom_id, atom_id2, bond_id);\n#molecule(molecule_id, label).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "20",
+        "question": "What are the atom IDs of the bond TR_000_2_5?",
+        "new_question": "What are the bond IDs of the atom TR000_2? In the database, TR000_2 is the atom id.",
+        "source": "bird_question_223",
+        "gt_table": [
+            "connected"
+        ],
+        "query": "SELECT T.atom_id FROM connected AS T WHERE T.bond_id = 'TR000_2_5'",
+        "new_query": "SELECT T.bond_id FROM connected AS T WHERE T.atom_id = 'TR000_2'",
+        "db_id": "toxicology",
+        "simplified_ddl": "#atom(atom_id, molecule_id, element);\n#bond(bond_id, molecule_id, bond_type);\n#connected(atom_id, atom_id2, bond_id);\n#molecule(molecule_id, label).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "21",
+        "question": "What are the bond IDs that have the same atom ID 2 of TR000_2?",
+        "new_question": "What are the atom IDs that have the same atom ID 2 of TR000_2? In the database, TR000_2 is the atom id; atom ID 2 refers to atom_id2.",
+        "source": "bird_question_224",
+        "gt_table": [
+            "connected"
+        ],
+        "query": "SELECT T.bond_id FROM connected AS T WHERE T.atom_id2 = 'TR000_2'",
+        "new_query": "SELECT T.atom_id FROM connected AS T WHERE T.atom_id2 = 'TR000_2'",
+        "db_id": "toxicology",
+        "simplified_ddl": "#atom(atom_id, molecule_id, element);\n#bond(bond_id, molecule_id, bond_type);\n#connected(atom_id, atom_id2, bond_id);\n#molecule(molecule_id, label).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "22",
+        "question": "What is the type of bond that molecule TR000 has when involved in any bonds?",
+        "new_question": "What is the ID of bond that molecule TR000 has when involved in any bonds?In the database, ID of bond refers to bond_id; TR000 is the molecule id.",
+        "source": "bird_question_229",
+        "gt_table": [
+            "bond"
+        ],
+        "query": "SELECT DISTINCT T.bond_type FROM bond AS T WHERE T.molecule_id = 'TR000'",
+        "new_query": "SELECT DISTINCT T.bond_id FROM bond AS T WHERE T.molecule_id = 'TR000'",
+        "db_id": "toxicology",
+        "simplified_ddl": "#atom(atom_id, molecule_id, element);\n#bond(bond_id, molecule_id, bond_type);\n#connected(atom_id, atom_id2, bond_id);\n#molecule(molecule_id, label).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "23",
+        "question": "How many molecules have a triple bond type?",
+        "new_question": "How many bonds have a triple bond type?In the database, triple bond refers to bond_type = '#'.",
+        "source": "bird_question_238",
+        "gt_table": [
+            "bond"
+        ],
+        "query": "SELECT COUNT(DISTINCT T.molecule_id) FROM bond AS T WHERE T.bond_type = '#'",
+        "new_query": "SELECT COUNT(DISTINCT T.bond_id) FROM bond AS T WHERE T.bond_type = '#'",
+        "db_id": "toxicology",
+        "simplified_ddl": "#atom(atom_id, molecule_id, element);\n#bond(bond_id, molecule_id, bond_type);\n#connected(atom_id, atom_id2, bond_id);\n#molecule(molecule_id, label).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "24",
+        "question": "List down the molecule id for non carcinogenic molecules.",
+        "new_question": "List down the molecule id for carcinogenic molecules.In the database, label = '+' means molecules are carcinogenic.",
+        "source": "bird_question_265",
+        "gt_table": [
+            "molecule"
+        ],
+        "query": "SELECT T.molecule_id FROM molecule AS T WHERE T.label = '-'",
+        "new_query": "SELECT T.molecule_id FROM molecule AS T WHERE T.label = '+'",
+        "db_id": "toxicology",
+        "simplified_ddl": "#atom(atom_id, molecule_id, element);\n#bond(bond_id, molecule_id, bond_type);\n#connected(atom_id, atom_id2, bond_id);\n#molecule(molecule_id, label).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "25",
+        "question": "Give me the molecule ID of the double bond type.",
+        "new_question": "Give me the bond ID of the double bond type.In the database, double bond refers to bond_type = ' = '.",
+        "source": "bird_question_275",
+        "gt_table": [
+            "bond"
+        ],
+        "query": "SELECT DISTINCT T.molecule_id FROM bond AS T WHERE T.bond_type = '='",
+        "new_query": "SELECT DISTINCT T.bond_id FROM bond AS T WHERE T.bond_type = '='",
+        "db_id": "toxicology",
+        "simplified_ddl": "#atom(atom_id, molecule_id, element);\n#bond(bond_id, molecule_id, bond_type);\n#connected(atom_id, atom_id2, bond_id);\n#molecule(molecule_id, label).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "26",
+        "question": "Among all chemical compounds that contain molecule TR047, identify the percent that form a double-bond.",
+        "new_question": "Determine the percentage of single bonds formed in all compounds containing the molecule TR013. In the database, TR013 is the molecule id; single bond refers to bond_type = '-'; percentage = DIVIDE(SUM(bond_type = '-'), COUNT(all bond_id)) as percent where molecule_id = 'TR013'.",
+        "source": "bird_question_287",
+        "gt_table": [
+            "bond"
+        ],
+        "query": "SELECT CAST(COUNT(CASE WHEN T.bond_type = '=' THEN T.bond_id ELSE NULL END) AS REAL) * 100 / COUNT(T.bond_id) FROM bond AS T WHERE T.molecule_id = 'TR047'",
+        "new_query": "SELECT CAST(COUNT(CASE WHEN T.bond_type = '-' THEN T.bond_id ELSE NULL END) AS REAL) * 100 / COUNT(T.bond_id) FROM bond AS T WHERE T.molecule_id = 'TR013'",
+        "db_id": "toxicology",
+        "simplified_ddl": "#atom(atom_id, molecule_id, element);\n#bond(bond_id, molecule_id, bond_type);\n#connected(atom_id, atom_id2, bond_id);\n#molecule(molecule_id, label).\n",
+        "difficulty": "moderate"
+    },
+    {
+        "id": "27",
+        "question": "What are the borderless cards available without powerful foils?",
+        "new_question": "How many the black cards available without powerful foils? In the database, 'black' refers to borderColor; poweful foils refers to cardKingdomFoilId paired with cardKingdomId AND cardKingdomId is not null.",
+        "source": "bird_question_341",
+        "gt_table": [
+            "cards"
+        ],
+        "query": "SELECT id FROM cards WHERE borderColor = 'borderless' AND (cardKingdomId IS NULL OR cardKingdomId IS NULL)",
+        "new_query": "SELECT COUNT(id) FROM cards WHERE borderColor = 'black' AND (cardKingdomId IS NULL OR cardKingdomId IS NULL)",
+        "db_id": "card_games",
+        "simplified_ddl": "#cards(id, artist, asciiName, availability, borderColor, cardKingdomFoilId, cardKingdomId, colorIdentity, colorIndicator, colors, convertedManaCost, duelDeck, edhrecRank, faceConvertedManaCost, faceName, flavorName, flavorText, frameEffects, frameVersion, hand, hasAlternativeDeckLimit, hasContentWarning, hasFoil, hasNonFoil, isAlternative, isFullArt, isOnlineOnly, isOversized, isPromo, isReprint, isReserved, isStarter, isStorySpotlight, isTextless, isTimeshifted, keywords, layout, leadershipSkills, life, loyalty, manaCost, mcmId, mcmMetaId, mtgArenaId, mtgjsonV4Id, mtgoFoilId, mtgoId, multiverseId, name, number, originalReleaseDate, originalText, originalType, otherFaceIds, power, printings, promoTypes, purchaseUrls, rarity, scryfallId, scryfallIllustrationId, scryfallOracleId, setCode, side, subtypes, supertypes, tcgplayerProductId, text, toughness, type, types, uuid, variations, watermark);\n#foreign_data(id, flavorText, language, multiverseid, name, text, type, uuid);\n#legalities(id, format, status, uuid);\n#sets(id, baseSetSize, block, booster, code, isFoilOnly, isForeignOnly, isNonFoilOnly, isOnlineOnly, isPartialPreview, keyruneCode, mcmId, mcmIdExtras, mcmName, mtgoCode, name, parentCode, releaseDate, tcgplayerGroupId, totalSetSize, type);\n#set_translations(id, language, setCode, translation);\n#rulings(id, date, text, uuid).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "28",
+        "question": "List the card names with value that cost more converted mana for the face.",
+        "new_question": "List the names and availability of cards that consume more face conversion magic points. In the database, more converted mana for the face refers to Max(faceConvertedManaCost).",
+        "source": "bird_question_342",
+        "gt_table": [
+            "cards"
+        ],
+        "query": "SELECT name FROM cards ORDER BY faceConvertedManaCost LIMIT 1",
+        "new_query": "SELECT name,availability FROM cards ORDER BY faceConvertedManaCost LIMIT 1",
+        "db_id": "card_games",
+        "simplified_ddl": "#cards(id, artist, asciiName, availability, borderColor, cardKingdomFoilId, cardKingdomId, colorIdentity, colorIndicator, colors, convertedManaCost, duelDeck, edhrecRank, faceConvertedManaCost, faceName, flavorName, flavorText, frameEffects, frameVersion, hand, hasAlternativeDeckLimit, hasContentWarning, hasFoil, hasNonFoil, isAlternative, isFullArt, isOnlineOnly, isOversized, isPromo, isReprint, isReserved, isStarter, isStorySpotlight, isTextless, isTimeshifted, keywords, layout, leadershipSkills, life, loyalty, manaCost, mcmId, mcmMetaId, mtgArenaId, mtgjsonV4Id, mtgoFoilId, mtgoId, multiverseId, name, number, originalReleaseDate, originalText, originalType, otherFaceIds, power, printings, promoTypes, purchaseUrls, rarity, scryfallId, scryfallIllustrationId, scryfallOracleId, setCode, side, subtypes, supertypes, tcgplayerProductId, text, toughness, type, types, uuid, variations, watermark);\n#foreign_data(id, flavorText, language, multiverseid, name, text, type, uuid);\n#legalities(id, format, status, uuid);\n#sets(id, baseSetSize, block, booster, code, isFoilOnly, isForeignOnly, isNonFoilOnly, isOnlineOnly, isPartialPreview, keyruneCode, mcmId, mcmIdExtras, mcmName, mtgoCode, name, parentCode, releaseDate, tcgplayerGroupId, totalSetSize, type);\n#set_translations(id, language, setCode, translation);\n#rulings(id, date, text, uuid).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "29",
+        "question": "How many types of cards does the artist Aaron Boyd illustrated about card art?",
+        "new_question": "List the types and availability of cards painted by artist Aaron Boyd for card art? In the database, 'Aaron Boyd' is artist.",
+        "source": "bird_question_354",
+        "gt_table": [
+            "cards"
+        ],
+        "query": "SELECT COUNT(type) FROM cards WHERE artist = 'Aaron Boyd'",
+        "new_query": "SELECT type,availability FROM cards WHERE artist = 'Aaron Boyd'",
+        "db_id": "card_games",
+        "simplified_ddl": "#cards(id, artist, asciiName, availability, borderColor, cardKingdomFoilId, cardKingdomId, colorIdentity, colorIndicator, colors, convertedManaCost, duelDeck, edhrecRank, faceConvertedManaCost, faceName, flavorName, flavorText, frameEffects, frameVersion, hand, hasAlternativeDeckLimit, hasContentWarning, hasFoil, hasNonFoil, isAlternative, isFullArt, isOnlineOnly, isOversized, isPromo, isReprint, isReserved, isStarter, isStorySpotlight, isTextless, isTimeshifted, keywords, layout, leadershipSkills, life, loyalty, manaCost, mcmId, mcmMetaId, mtgArenaId, mtgjsonV4Id, mtgoFoilId, mtgoId, multiverseId, name, number, originalReleaseDate, originalText, originalType, otherFaceIds, power, printings, promoTypes, purchaseUrls, rarity, scryfallId, scryfallIllustrationId, scryfallOracleId, setCode, side, subtypes, supertypes, tcgplayerProductId, text, toughness, type, types, uuid, variations, watermark);\n#foreign_data(id, flavorText, language, multiverseid, name, text, type, uuid);\n#legalities(id, format, status, uuid);\n#sets(id, baseSetSize, block, booster, code, isFoilOnly, isForeignOnly, isNonFoilOnly, isOnlineOnly, isPartialPreview, keyruneCode, mcmId, mcmIdExtras, mcmName, mtgoCode, name, parentCode, releaseDate, tcgplayerGroupId, totalSetSize, type);\n#set_translations(id, language, setCode, translation);\n#rulings(id, date, text, uuid).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "30",
+        "question": "What is the keyword found on card 'Angel of Mercy'?",
+        "new_question": "What is the keyword found on card 'Condemn'? In the database, 'Condemn' is the name of card.",
+        "source": "bird_question_355",
+        "gt_table": [
+            "cards"
+        ],
+        "query": "SELECT DISTINCT keywords FROM cards WHERE name = 'Angel of Mercy'",
+        "new_query": "SELECT DISTINCT keywords FROM cards WHERE name = 'Condemn'",
+        "db_id": "card_games",
+        "simplified_ddl": "#cards(id, artist, asciiName, availability, borderColor, cardKingdomFoilId, cardKingdomId, colorIdentity, colorIndicator, colors, convertedManaCost, duelDeck, edhrecRank, faceConvertedManaCost, faceName, flavorName, flavorText, frameEffects, frameVersion, hand, hasAlternativeDeckLimit, hasContentWarning, hasFoil, hasNonFoil, isAlternative, isFullArt, isOnlineOnly, isOversized, isPromo, isReprint, isReserved, isStarter, isStorySpotlight, isTextless, isTimeshifted, keywords, layout, leadershipSkills, life, loyalty, manaCost, mcmId, mcmMetaId, mtgArenaId, mtgjsonV4Id, mtgoFoilId, mtgoId, multiverseId, name, number, originalReleaseDate, originalText, originalType, otherFaceIds, power, printings, promoTypes, purchaseUrls, rarity, scryfallId, scryfallIllustrationId, scryfallOracleId, setCode, side, subtypes, supertypes, tcgplayerProductId, text, toughness, type, types, uuid, variations, watermark);\n#foreign_data(id, flavorText, language, multiverseid, name, text, type, uuid);\n#legalities(id, format, status, uuid);\n#sets(id, baseSetSize, block, booster, code, isFoilOnly, isForeignOnly, isNonFoilOnly, isOnlineOnly, isPartialPreview, keyruneCode, mcmId, mcmIdExtras, mcmName, mtgoCode, name, parentCode, releaseDate, tcgplayerGroupId, totalSetSize, type);\n#set_translations(id, language, setCode, translation);\n#rulings(id, date, text, uuid).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "31",
+        "question": "How many cards have infinite power?",
+        "new_question": "What is the name of a card with infinite power? In the database, infinite power refers to power = '*'.",
+        "source": "bird_question_356",
+        "gt_table": [
+            "cards"
+        ],
+        "query": "SELECT COUNT(*) FROM cards WHERE power = '*'",
+        "new_query": "SELECT name FROM cards WHERE power = '*'",
+        "db_id": "card_games",
+        "simplified_ddl": "#cards(id, artist, asciiName, availability, borderColor, cardKingdomFoilId, cardKingdomId, colorIdentity, colorIndicator, colors, convertedManaCost, duelDeck, edhrecRank, faceConvertedManaCost, faceName, flavorName, flavorText, frameEffects, frameVersion, hand, hasAlternativeDeckLimit, hasContentWarning, hasFoil, hasNonFoil, isAlternative, isFullArt, isOnlineOnly, isOversized, isPromo, isReprint, isReserved, isStarter, isStorySpotlight, isTextless, isTimeshifted, keywords, layout, leadershipSkills, life, loyalty, manaCost, mcmId, mcmMetaId, mtgArenaId, mtgjsonV4Id, mtgoFoilId, mtgoId, multiverseId, name, number, originalReleaseDate, originalText, originalType, otherFaceIds, power, printings, promoTypes, purchaseUrls, rarity, scryfallId, scryfallIllustrationId, scryfallOracleId, setCode, side, subtypes, supertypes, tcgplayerProductId, text, toughness, type, types, uuid, variations, watermark);\n#foreign_data(id, flavorText, language, multiverseid, name, text, type, uuid);\n#legalities(id, format, status, uuid);\n#sets(id, baseSetSize, block, booster, code, isFoilOnly, isForeignOnly, isNonFoilOnly, isOnlineOnly, isPartialPreview, keyruneCode, mcmId, mcmIdExtras, mcmName, mtgoCode, name, parentCode, releaseDate, tcgplayerGroupId, totalSetSize, type);\n#set_translations(id, language, setCode, translation);\n#rulings(id, date, text, uuid).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "32",
+        "question": "Lists the set code of all cards translated into Spanish.",
+        "new_question": "How many set codes are there for all cards translated into Spanish? In the database, Spanish refer to language; set code refers to setCode.",
+        "source": "bird_question_400",
+        "gt_table": [
+            "set_translations"
+        ],
+        "query": "SELECT setCode FROM set_translations WHERE language = 'Spanish'",
+        "new_query": "SELECT COUNT(setCode) FROM set_translations WHERE language = 'Spanish'",
+        "db_id": "card_games",
+        "simplified_ddl": "#cards(id, artist, asciiName, availability, borderColor, cardKingdomFoilId, cardKingdomId, colorIdentity, colorIndicator, colors, convertedManaCost, duelDeck, edhrecRank, faceConvertedManaCost, faceName, flavorName, flavorText, frameEffects, frameVersion, hand, hasAlternativeDeckLimit, hasContentWarning, hasFoil, hasNonFoil, isAlternative, isFullArt, isOnlineOnly, isOversized, isPromo, isReprint, isReserved, isStarter, isStorySpotlight, isTextless, isTimeshifted, keywords, layout, leadershipSkills, life, loyalty, manaCost, mcmId, mcmMetaId, mtgArenaId, mtgjsonV4Id, mtgoFoilId, mtgoId, multiverseId, name, number, originalReleaseDate, originalText, originalType, otherFaceIds, power, printings, promoTypes, purchaseUrls, rarity, scryfallId, scryfallIllustrationId, scryfallOracleId, setCode, side, subtypes, supertypes, tcgplayerProductId, text, toughness, type, types, uuid, variations, watermark);\n#foreign_data(id, flavorText, language, multiverseid, name, text, type, uuid);\n#legalities(id, format, status, uuid);\n#sets(id, baseSetSize, block, booster, code, isFoilOnly, isForeignOnly, isNonFoilOnly, isOnlineOnly, isPartialPreview, keyruneCode, mcmId, mcmIdExtras, mcmName, mtgoCode, name, parentCode, releaseDate, tcgplayerGroupId, totalSetSize, type);\n#set_translations(id, language, setCode, translation);\n#rulings(id, date, text, uuid).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "33",
+        "question": "What is the language of the card with the multiverse number 149934?",
+        "new_question": "What is the name of the card with the multiverse number 150317? In the database, multiverse number 150317 refers to multiverseid = 150317.",
+        "source": "bird_question_422",
+        "gt_table": [
+            "foreign_data"
+        ],
+        "query": "SELECT language FROM foreign_data WHERE multiverseid = 149934",
+        "new_query": "SELECT name FROM foreign_data WHERE multiverseid = 150317",
+        "db_id": "card_games",
+        "simplified_ddl": "#cards(id, artist, asciiName, availability, borderColor, cardKingdomFoilId, cardKingdomId, colorIdentity, colorIndicator, colors, convertedManaCost, duelDeck, edhrecRank, faceConvertedManaCost, faceName, flavorName, flavorText, frameEffects, frameVersion, hand, hasAlternativeDeckLimit, hasContentWarning, hasFoil, hasNonFoil, isAlternative, isFullArt, isOnlineOnly, isOversized, isPromo, isReprint, isReserved, isStarter, isStorySpotlight, isTextless, isTimeshifted, keywords, layout, leadershipSkills, life, loyalty, manaCost, mcmId, mcmMetaId, mtgArenaId, mtgjsonV4Id, mtgoFoilId, mtgoId, multiverseId, name, number, originalReleaseDate, originalText, originalType, otherFaceIds, power, printings, promoTypes, purchaseUrls, rarity, scryfallId, scryfallIllustrationId, scryfallOracleId, setCode, side, subtypes, supertypes, tcgplayerProductId, text, toughness, type, types, uuid, variations, watermark);\n#foreign_data(id, flavorText, language, multiverseid, name, text, type, uuid);\n#legalities(id, format, status, uuid);\n#sets(id, baseSetSize, block, booster, code, isFoilOnly, isForeignOnly, isNonFoilOnly, isOnlineOnly, isPartialPreview, keyruneCode, mcmId, mcmIdExtras, mcmName, mtgoCode, name, parentCode, releaseDate, tcgplayerGroupId, totalSetSize, type);\n#set_translations(id, language, setCode, translation);\n#rulings(id, date, text, uuid).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "34",
+        "question": "Which foreign language used by 'A Pedra Fellwar'?",
+        "new_question": "What are the names of card games in French? In the database, French refer to language.",
+        "source": "bird_question_440",
+        "gt_table": [
+            "foreign_data"
+        ],
+        "query": "SELECT DISTINCT language FROM foreign_data WHERE name = 'A Pedra Fellwar'",
+        "new_query": "SELECT DISTINCT name FROM foreign_data WHERE language = 'French'",
+        "db_id": "card_games",
+        "simplified_ddl": "#cards(id, artist, asciiName, availability, borderColor, cardKingdomFoilId, cardKingdomId, colorIdentity, colorIndicator, colors, convertedManaCost, duelDeck, edhrecRank, faceConvertedManaCost, faceName, flavorName, flavorText, frameEffects, frameVersion, hand, hasAlternativeDeckLimit, hasContentWarning, hasFoil, hasNonFoil, isAlternative, isFullArt, isOnlineOnly, isOversized, isPromo, isReprint, isReserved, isStarter, isStorySpotlight, isTextless, isTimeshifted, keywords, layout, leadershipSkills, life, loyalty, manaCost, mcmId, mcmMetaId, mtgArenaId, mtgjsonV4Id, mtgoFoilId, mtgoId, multiverseId, name, number, originalReleaseDate, originalText, originalType, otherFaceIds, power, printings, promoTypes, purchaseUrls, rarity, scryfallId, scryfallIllustrationId, scryfallOracleId, setCode, side, subtypes, supertypes, tcgplayerProductId, text, toughness, type, types, uuid, variations, watermark);\n#foreign_data(id, flavorText, language, multiverseid, name, text, type, uuid);\n#legalities(id, format, status, uuid);\n#sets(id, baseSetSize, block, booster, code, isFoilOnly, isForeignOnly, isNonFoilOnly, isOnlineOnly, isPartialPreview, keyruneCode, mcmId, mcmIdExtras, mcmName, mtgoCode, name, parentCode, releaseDate, tcgplayerGroupId, totalSetSize, type);\n#set_translations(id, language, setCode, translation);\n#rulings(id, date, text, uuid).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "35",
+        "question": "What is the display name of the user who has the most number of views?",
+        "new_question": "What is the website URL of the user who has the most number of views? In the database, user who has the most number of view refers to Max(Views).",
+        "source": "bird_question_534",
+        "gt_table": [
+            "users"
+        ],
+        "query": "SELECT DisplayName FROM users WHERE Views = ( SELECT MAX(Views) FROM users )",
+        "new_query": "SELECT WebsiteUrl FROM users WHERE Views = ( SELECT MAX(Views) FROM users )",
+        "db_id": "codebase_community",
+        "simplified_ddl": "#badges(Id, UserId, Name, Date);\n#comments(Id, PostId, Score, Text, CreationDate, UserId, UserDisplayName);\n#postHistory(Id, PostHistoryTypeId, PostId, RevisionGUID, CreationDate, UserId, Text, Comment, UserDisplayName);\n#postLinks(Id, CreationDate, PostId, RelatedPostId, LinkTypeId);\n#posts(Id, PostTypeId, AcceptedAnswerId, CreaionDate, Score, ViewCount, Body, OwnerUserId, LasActivityDate, Title, Tags, AnswerCount, CommentCount, FavoriteCount, LastEditorUserId, LastEditDate, CommunityOwnedDate, ParentId, ClosedDate, OwnerDisplayName, LastEditorDisplayName);\n#tags(Id, TagName, Count, ExcerptPostId, WikiPostId);\n#users(Id, Reputation, CreationDate, DisplayName, LastAccessDate, WebsiteUrl, Location, AboutMe, Views, UpVotes, DownVotes, AccountId, Age, ProfileImageUrl);\n#votes(Id, PostId, VoteTypeId, CreationDate, UserId, BountyAmount).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "36",
+        "question": "How many views did the post titled 'Integration of Weka and/or RapidMiner into Informatica PowerCenter/Developer' get?",
+        "new_question": "What are the tags on the post titled 'What is normality?'?In the database, 'What is normality?' is the Title of post; tags refers to Tags",
+        "source": "bird_question_572",
+        "gt_table": [
+            "posts"
+        ],
+        "query": "SELECT ViewCount FROM posts WHERE Title = 'Integration of Weka and/or RapidMiner into Informatica PowerCenter/Developer'",
+        "new_query": "SELECT Tags FROM posts WHERE Title = 'What is normality?'",
+        "db_id": "codebase_community",
+        "simplified_ddl": "#badges(Id, UserId, Name, Date);\n#comments(Id, PostId, Score, Text, CreationDate, UserId, UserDisplayName);\n#postHistory(Id, PostHistoryTypeId, PostId, RevisionGUID, CreationDate, UserId, Text, Comment, UserDisplayName);\n#postLinks(Id, CreationDate, PostId, RelatedPostId, LinkTypeId);\n#posts(Id, PostTypeId, AcceptedAnswerId, CreaionDate, Score, ViewCount, Body, OwnerUserId, LasActivityDate, Title, Tags, AnswerCount, CommentCount, FavoriteCount, LastEditorUserId, LastEditDate, CommunityOwnedDate, ParentId, ClosedDate, OwnerDisplayName, LastEditorDisplayName);\n#tags(Id, TagName, Count, ExcerptPostId, WikiPostId);\n#users(Id, Reputation, CreationDate, DisplayName, LastAccessDate, WebsiteUrl, Location, AboutMe, Views, UpVotes, DownVotes, AccountId, Age, ProfileImageUrl);\n#votes(Id, PostId, VoteTypeId, CreationDate, UserId, BountyAmount).\n",
+        "difficulty": "moderate"
+    },
+    {
+        "id": "37",
+        "question": "Write the contents of comments with a score of 17.",
+        "new_question": "How many the contents of comments with a score of 10?In the database, score of 10 refers to Score = 10; contents of comments refers to Text.",
+        "source": "bird_question_573",
+        "gt_table": [
+            "comments"
+        ],
+        "query": "SELECT Text FROM comments WHERE Score = 17",
+        "new_query": "SELECT COUNT(Text) FROM comments WHERE Score = 10",
+        "db_id": "codebase_community",
+        "simplified_ddl": "#badges(Id, UserId, Name, Date);\n#comments(Id, PostId, Score, Text, CreationDate, UserId, UserDisplayName);\n#postHistory(Id, PostHistoryTypeId, PostId, RevisionGUID, CreationDate, UserId, Text, Comment, UserDisplayName);\n#postLinks(Id, CreationDate, PostId, RelatedPostId, LinkTypeId);\n#posts(Id, PostTypeId, AcceptedAnswerId, CreaionDate, Score, ViewCount, Body, OwnerUserId, LasActivityDate, Title, Tags, AnswerCount, CommentCount, FavoriteCount, LastEditorUserId, LastEditDate, CommunityOwnedDate, ParentId, ClosedDate, OwnerDisplayName, LastEditorDisplayName);\n#tags(Id, TagName, Count, ExcerptPostId, WikiPostId);\n#users(Id, Reputation, CreationDate, DisplayName, LastAccessDate, WebsiteUrl, Location, AboutMe, Views, UpVotes, DownVotes, AccountId, Age, ProfileImageUrl);\n#votes(Id, PostId, VoteTypeId, CreationDate, UserId, BountyAmount).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "38",
+        "question": "Which user has the website URL listed at 'http://stackoverflow.com'",
+        "new_question": "How many users have visited the website URL listed at 'http://stackoverflow.com'. In the database, 'http://stackoverflow.com' is the WebsiteUrl; user refers to DisplayName.",
+        "source": "bird_question_574",
+        "gt_table": [
+            "users"
+        ],
+        "query": "SELECT DisplayName FROM users WHERE WebsiteUrl = 'http://stackoverflow.com'",
+        "new_query": "SELECT COUNT(DisplayName) FROM users WHERE WebsiteUrl = 'http://stackoverflow.com'",
+        "db_id": "codebase_community",
+        "simplified_ddl": "#badges(Id, UserId, Name, Date);\n#comments(Id, PostId, Score, Text, CreationDate, UserId, UserDisplayName);\n#postHistory(Id, PostHistoryTypeId, PostId, RevisionGUID, CreationDate, UserId, Text, Comment, UserDisplayName);\n#postLinks(Id, CreationDate, PostId, RelatedPostId, LinkTypeId);\n#posts(Id, PostTypeId, AcceptedAnswerId, CreaionDate, Score, ViewCount, Body, OwnerUserId, LasActivityDate, Title, Tags, AnswerCount, CommentCount, FavoriteCount, LastEditorUserId, LastEditDate, CommunityOwnedDate, ParentId, ClosedDate, OwnerDisplayName, LastEditorDisplayName);\n#tags(Id, TagName, Count, ExcerptPostId, WikiPostId);\n#users(Id, Reputation, CreationDate, DisplayName, LastAccessDate, WebsiteUrl, Location, AboutMe, Views, UpVotes, DownVotes, AccountId, Age, ProfileImageUrl);\n#votes(Id, PostId, VoteTypeId, CreationDate, UserId, BountyAmount).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "39",
+        "question": "Give the total number of comments posted by user ID 13.",
+        "new_question": "What are the comments posted by user ID 37?",
+        "source": "bird_question_588",
+        "gt_table": [
+            "comments"
+        ],
+        "query": "SELECT COUNT(Id) FROM comments WHERE UserId = 13",
+        "new_query": "SELECT Text FROM comments WHERE UserId = 37",
+        "db_id": "codebase_community",
+        "simplified_ddl": "#badges(Id, UserId, Name, Date);\n#comments(Id, PostId, Score, Text, CreationDate, UserId, UserDisplayName);\n#postHistory(Id, PostHistoryTypeId, PostId, RevisionGUID, CreationDate, UserId, Text, Comment, UserDisplayName);\n#postLinks(Id, CreationDate, PostId, RelatedPostId, LinkTypeId);\n#posts(Id, PostTypeId, AcceptedAnswerId, CreaionDate, Score, ViewCount, Body, OwnerUserId, LasActivityDate, Title, Tags, AnswerCount, CommentCount, FavoriteCount, LastEditorUserId, LastEditDate, CommunityOwnedDate, ParentId, ClosedDate, OwnerDisplayName, LastEditorDisplayName);\n#tags(Id, TagName, Count, ExcerptPostId, WikiPostId);\n#users(Id, Reputation, CreationDate, DisplayName, LastAccessDate, WebsiteUrl, Location, AboutMe, Views, UpVotes, DownVotes, AccountId, Age, ProfileImageUrl);\n#votes(Id, PostId, VoteTypeId, CreationDate, UserId, BountyAmount).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "40",
+        "question": "How many users obtained the 'Announcer' badge?",
+        "new_question": "What is the user ID who has obtained the 'Announcer' badge?In the database, 'Announcer' is the Name of badge; user refers to UserId.",
+        "source": "bird_question_605",
+        "gt_table": [
+            "badges"
+        ],
+        "query": "SELECT COUNT(id) FROM badges WHERE Name = 'Announcer'",
+        "new_query": "SELECT UserId FROM badges WHERE Name = 'Announcer'",
+        "db_id": "codebase_community",
+        "simplified_ddl": "#badges(Id, UserId, Name, Date);\n#comments(Id, PostId, Score, Text, CreationDate, UserId, UserDisplayName);\n#postHistory(Id, PostHistoryTypeId, PostId, RevisionGUID, CreationDate, UserId, Text, Comment, UserDisplayName);\n#postLinks(Id, CreationDate, PostId, RelatedPostId, LinkTypeId);\n#posts(Id, PostTypeId, AcceptedAnswerId, CreaionDate, Score, ViewCount, Body, OwnerUserId, LasActivityDate, Title, Tags, AnswerCount, CommentCount, FavoriteCount, LastEditorUserId, LastEditDate, CommunityOwnedDate, ParentId, ClosedDate, OwnerDisplayName, LastEditorDisplayName);\n#tags(Id, TagName, Count, ExcerptPostId, WikiPostId);\n#users(Id, Reputation, CreationDate, DisplayName, LastAccessDate, WebsiteUrl, Location, AboutMe, Views, UpVotes, DownVotes, AccountId, Age, ProfileImageUrl);\n#votes(Id, PostId, VoteTypeId, CreationDate, UserId, BountyAmount).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "41",
+        "question": "What is the name of user with the ID of 30?",
+        "new_question": "What is the age of the user with ID 13?",
+        "source": "bird_question_624",
+        "gt_table": [
+            "users"
+        ],
+        "query": "SELECT DisplayName FROM users WHERE Id = 30",
+        "new_query": "SELECT Age FROM users WHERE Id = 13",
+        "db_id": "codebase_community",
+        "simplified_ddl": "#badges(Id, UserId, Name, Date);\n#comments(Id, PostId, Score, Text, CreationDate, UserId, UserDisplayName);\n#postHistory(Id, PostHistoryTypeId, PostId, RevisionGUID, CreationDate, UserId, Text, Comment, UserDisplayName);\n#postLinks(Id, CreationDate, PostId, RelatedPostId, LinkTypeId);\n#posts(Id, PostTypeId, AcceptedAnswerId, CreaionDate, Score, ViewCount, Body, OwnerUserId, LasActivityDate, Title, Tags, AnswerCount, CommentCount, FavoriteCount, LastEditorUserId, LastEditDate, CommunityOwnedDate, ParentId, ClosedDate, OwnerDisplayName, LastEditorDisplayName);\n#tags(Id, TagName, Count, ExcerptPostId, WikiPostId);\n#users(Id, Reputation, CreationDate, DisplayName, LastAccessDate, WebsiteUrl, Location, AboutMe, Views, UpVotes, DownVotes, AccountId, Age, ProfileImageUrl);\n#votes(Id, PostId, VoteTypeId, CreationDate, UserId, BountyAmount).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "42",
+        "question": "How many tags have post count between 5,000 to 7,000?",
+        "new_question": "What are the tag names with a number of post count between 5000 and 7000? In the database, post count between 5,000 to 7,000 refers to Count BETWEEN 5000 and 7000.",
+        "source": "bird_question_659",
+        "gt_table": [
+            "tags"
+        ],
+        "query": "SELECT COUNT(Id) FROM tags WHERE Count BETWEEN 5000 AND 7000",
+        "new_query": "SELECT TagName FROM tags WHERE Count BETWEEN 5000 AND 7000",
+        "db_id": "codebase_community",
+        "simplified_ddl": "#badges(Id, UserId, Name, Date);\n#comments(Id, PostId, Score, Text, CreationDate, UserId, UserDisplayName);\n#postHistory(Id, PostHistoryTypeId, PostId, RevisionGUID, CreationDate, UserId, Text, Comment, UserDisplayName);\n#postLinks(Id, CreationDate, PostId, RelatedPostId, LinkTypeId);\n#posts(Id, PostTypeId, AcceptedAnswerId, CreaionDate, Score, ViewCount, Body, OwnerUserId, LasActivityDate, Title, Tags, AnswerCount, CommentCount, FavoriteCount, LastEditorUserId, LastEditDate, CommunityOwnedDate, ParentId, ClosedDate, OwnerDisplayName, LastEditorDisplayName);\n#tags(Id, TagName, Count, ExcerptPostId, WikiPostId);\n#users(Id, Reputation, CreationDate, DisplayName, LastAccessDate, WebsiteUrl, Location, AboutMe, Views, UpVotes, DownVotes, AccountId, Age, ProfileImageUrl);\n#votes(Id, PostId, VoteTypeId, CreationDate, UserId, BountyAmount).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "43",
+        "question": "Give the publisher ID of Star Trek.",
+        "new_question": "How many publishers are there in total?",
+        "source": "bird_question_745",
+        "gt_table": [
+            "publisher"
+        ],
+        "query": "SELECT id FROM publisher WHERE publisher_name = 'Star Trek'",
+        "new_query": "SELECT COUNT(*) FROM publisher",
+        "db_id": "superhero",
+        "simplified_ddl": "#alignment(id, alignment);\n#attribute(id, attribute_name);\n#colour(id, colour);\n#gender(id, gender);\n#publisher(id, publisher_name);\n#race(id, race);\n#superhero(id, superhero_name, full_name, gender_id, eye_colour_id, hair_colour_id, skin_colour_id, race_id, publisher_id, alignment_id, height_cm, weight_kg);\n#hero_attribute(hero_id, attribute_id, attribute_value);\n#superpower(id, power_name);\n#hero_power(hero_id, power_id).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "44",
+        "question": "Who is the tallest superhero?",
+        "new_question": "Who is the heaviest superhero? In the database, who refers to superhero_name; heaviest superhero refers to MAX(weight_kg);",
+        "source": "bird_question_802",
+        "gt_table": [
+            "superhero"
+        ],
+        "query": "SELECT superhero_name FROM superhero ORDER BY height_cm DESC LIMIT 1",
+        "new_query": "SELECT superhero_name FROM superhero ORDER BY weight_kg DESC LIMIT 1",
+        "db_id": "superhero",
+        "simplified_ddl": "#alignment(id, alignment);\n#attribute(id, attribute_name);\n#colour(id, colour);\n#gender(id, gender);\n#publisher(id, publisher_name);\n#race(id, race);\n#superhero(id, superhero_name, full_name, gender_id, eye_colour_id, hair_colour_id, skin_colour_id, race_id, publisher_id, alignment_id, height_cm, weight_kg);\n#hero_attribute(hero_id, attribute_id, attribute_value);\n#superpower(id, power_name);\n#hero_power(hero_id, power_id).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "45",
+        "question": "Which year was the first Singapore Grand Prix?",
+        "new_question": "Which years do we have the Singapore Grand Prix?",
+        "source": "bird_question_882",
+        "gt_table": [
+            "races"
+        ],
+        "query": "SELECT year FROM races WHERE name = 'Singapore Grand Prix' ORDER BY year ASC LIMIT 1",
+        "new_query": "SELECT year FROM races WHERE name = 'Singapore Grand Prix'",
+        "db_id": "formula_1",
+        "simplified_ddl": "#circuits(circuitId, circuitRef, name, location, country, lat, lng, alt, url);\n#constructors(constructorId, constructorRef, name, nationality, url);\n#drivers(driverId, driverRef, number, code, forename, surname, dob, nationality, url);\n#seasons(year, url);\n#races(raceId, year, round, circuitId, name, date, time, url);\n#constructorResults(constructorResultsId, raceId, constructorId, points, status);\n#constructorStandings(constructorStandingsId, raceId, constructorId, points, position, positionText, wins);\n#driverStandings(driverStandingsId, raceId, driverId, points, position, positionText, wins);\n#lapTimes(raceId, driverId, lap, position, time, milliseconds);\n#pitStops(raceId, driverId, stop, lap, time, duration, milliseconds);\n#qualifying(qualifyId, raceId, driverId, constructorId, number, position, q1, q2, q3);\n#status(statusId, status);\n#results(resultId, raceId, driverId, constructorId, number, grid, position, positionText, positionOrder, points, laps, time, milliseconds, fastestLap, rank, fastestLapTime, fastestLapSpeed, statusId).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "46",
+        "question": "How many races were there in 2005? Name all the races in descending order.",
+        "new_question": "List the names of the 2009 competitions.",
+        "source": "bird_question_883",
+        "gt_table": [
+            "races"
+        ],
+        "query": "SELECT name FROM races WHERE year = 2005 ORDER BY name DESC",
+        "new_query": "SELECT name FROM races WHERE year = 2009",
+        "db_id": "formula_1",
+        "simplified_ddl": "#circuits(circuitId, circuitRef, name, location, country, lat, lng, alt, url);\n#constructors(constructorId, constructorRef, name, nationality, url);\n#drivers(driverId, driverRef, number, code, forename, surname, dob, nationality, url);\n#seasons(year, url);\n#races(raceId, year, round, circuitId, name, date, time, url);\n#constructorResults(constructorResultsId, raceId, constructorId, points, status);\n#constructorStandings(constructorStandingsId, raceId, constructorId, points, position, positionText, wins);\n#driverStandings(driverStandingsId, raceId, driverId, points, position, positionText, wins);\n#lapTimes(raceId, driverId, lap, position, time, milliseconds);\n#pitStops(raceId, driverId, stop, lap, time, duration, milliseconds);\n#qualifying(qualifyId, raceId, driverId, constructorId, number, position, q1, q2, q3);\n#status(statusId, status);\n#results(resultId, raceId, driverId, constructorId, number, grid, position, positionText, positionOrder, points, laps, time, milliseconds, fastestLap, rank, fastestLapTime, fastestLapSpeed, statusId).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "47",
+        "question": "What's the location coordinates of Silverstone Circuit?",
+        "new_question": "What is the location of Bahrain International Circuit?",
+        "source": "bird_question_910",
+        "gt_table": [
+            "circuits"
+        ],
+        "query": "SELECT lat, lng FROM circuits WHERE name = 'Silverstone Circuit'",
+        "new_query": "SELECT location FROM circuits WHERE name = 'Bahrain International Circuit'",
+        "db_id": "formula_1",
+        "simplified_ddl": "#circuits(circuitId, circuitRef, name, location, country, lat, lng, alt, url);\n#constructors(constructorId, constructorRef, name, nationality, url);\n#drivers(driverId, driverRef, number, code, forename, surname, dob, nationality, url);\n#seasons(year, url);\n#races(raceId, year, round, circuitId, name, date, time, url);\n#constructorResults(constructorResultsId, raceId, constructorId, points, status);\n#constructorStandings(constructorStandingsId, raceId, constructorId, points, position, positionText, wins);\n#driverStandings(driverStandingsId, raceId, driverId, points, position, positionText, wins);\n#lapTimes(raceId, driverId, lap, position, time, milliseconds);\n#pitStops(raceId, driverId, stop, lap, time, duration, milliseconds);\n#qualifying(qualifyId, raceId, driverId, constructorId, number, position, q1, q2, q3);\n#status(statusId, status);\n#results(resultId, raceId, driverId, constructorId, number, grid, position, positionText, positionOrder, points, laps, time, milliseconds, fastestLap, rank, fastestLapTime, fastestLapSpeed, statusId).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "48",
+        "question": "How many driver participated in race ID number 18?",
+        "new_question": "List the driver IDs for position number 1.",
+        "source": "bird_question_966",
+        "gt_table": [
+            "driverStandings"
+        ],
+        "query": "SELECT COUNT(driverId) FROM driverStandings WHERE raceId = 18",
+        "new_query": "SELECT driverId FROM driverStandings WHERE position = 1",
+        "db_id": "formula_1",
+        "simplified_ddl": "#circuits(circuitId, circuitRef, name, location, country, lat, lng, alt, url);\n#constructors(constructorId, constructorRef, name, nationality, url);\n#drivers(driverId, driverRef, number, code, forename, surname, dob, nationality, url);\n#seasons(year, url);\n#races(raceId, year, round, circuitId, name, date, time, url);\n#constructorResults(constructorResultsId, raceId, constructorId, points, status);\n#constructorStandings(constructorStandingsId, raceId, constructorId, points, position, positionText, wins);\n#driverStandings(driverStandingsId, raceId, driverId, points, position, positionText, wins);\n#lapTimes(raceId, driverId, lap, position, time, milliseconds);\n#pitStops(raceId, driverId, stop, lap, time, duration, milliseconds);\n#qualifying(qualifyId, raceId, driverId, constructorId, number, position, q1, q2, q3);\n#status(statusId, status);\n#results(resultId, raceId, driverId, constructorId, number, grid, position, positionText, positionOrder, points, laps, time, milliseconds, fastestLap, rank, fastestLapTime, fastestLapSpeed, statusId).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "49",
+        "question": "What is the height of the tallest player? Indicate his name.",
+        "new_question": "What is the height of the tallest player? Indicate his name and api id.In the database, tallest player refers to MAX(height).",
+        "source": "bird_question_1021",
+        "gt_table": [
+            "Player"
+        ],
+        "query": "SELECT player_name FROM Player ORDER BY height DESC LIMIT 1",
+        "new_query": "SELECT player_name, player_api_id FROM Player ORDER BY height DESC LIMIT 1",
+        "db_id": "european_football_2",
+        "simplified_ddl": "#Player_Attributes(id, player_fifa_api_id, player_api_id, date, overall_rating, potential, preferred_foot, attacking_work_rate, defensive_work_rate, crossing, finishing, heading_accuracy, short_passing, volleys, dribbling, curve, free_kick_accuracy, long_passing, ball_control, acceleration, sprint_speed, agility, reactions, balance, shot_power, jumping, stamina, strength, long_shots, aggression, interceptions, positioning, vision, penalties, marking, standing_tackle, sliding_tackle, gk_diving, gk_handling, gk_kicking, gk_positioning, gk_reflexes);\n#Player(id, player_api_id, player_name, player_fifa_api_id, birthday, height, weight);\n#League(id, country_id, name);\n#Country(id, name);\n#Team(id, team_api_id, team_fifa_api_id, team_long_name, team_short_name);\n#Team_Attributes(id, team_fifa_api_id, team_api_id, date, buildUpPlaySpeed, buildUpPlaySpeedClass, buildUpPlayDribbling, buildUpPlayDribblingClass, buildUpPlayPassing, buildUpPlayPassingClass, buildUpPlayPositioningClass, chanceCreationPassing, chanceCreationPassingClass, chanceCreationCrossing, chanceCreationCrossingClass, chanceCreationShooting, chanceCreationShootingClass, chanceCreationPositioningClass, defencePressure, defencePressureClass, defenceAggression, defenceAggressionClass, defenceTeamWidth, defenceTeamWidthClass, defenceDefenderLineClass);\n#Match(id, country_id, league_id, season, stage, date, match_api_id, home_team_api_id, away_team_api_id, home_team_goal, away_team_goal, home_player_X1, home_player_X2, home_player_X3, home_player_X4, home_player_X5, home_player_X6, home_player_X7, home_player_X8, home_player_X9, home_player_X10, home_player_X11, away_player_X1, away_player_X2, away_player_X3, away_player_X4, away_player_X5, away_player_X6, away_player_X7, away_player_X8, away_player_X9, away_player_X10, away_player_X11, home_player_Y1, home_player_Y2, home_player_Y3, home_player_Y4, home_player_Y5, home_player_Y6, home_player_Y7, home_player_Y8, home_player_Y9, home_player_Y10, home_player_Y11, away_player_Y1, away_player_Y2, away_player_Y3, away_player_Y4, away_player_Y5, away_player_Y6, away_player_Y7, away_player_Y8, away_player_Y9, away_player_Y10, away_player_Y11, home_player_1, home_player_2, home_player_3, home_player_4, home_player_5, home_player_6, home_player_7, home_player_8, home_player_9, home_player_10, home_player_11, away_player_1, away_player_2, away_player_3, away_player_4, away_player_5, away_player_6, away_player_7, away_player_8, away_player_9, away_player_10, away_player_11, goal, shoton, shotoff, foulcommit, card, cross, corner, possession, B365H, B365D, B365A, BWH, BWD, BWA, IWH, IWD, IWA, LBH, LBD, LBA, PSH, PSD, PSA, WHH, WHD, WHA, SJH, SJD, SJA, VCH, VCD, VCA, GBH, GBD, GBA, BSH, BSD, BSA).\n",
+        "difficulty": "simple"
+    }
+]

@@ -1,0 +1,119 @@
+evaluate:   0%|                                                                                                                                                                                   | 0/200 [00:00<?, ?it/s]pred_join: set()
+gold_join: set()
+gpt对error的judgement:
+ 1. Condition Filter Error
+evaluate:   1%|█▋                                                                                                                                                                         | 2/200 [00:01<02:05,  1.58it/s]执行sql时发生DBMS汇报的error: no such column: School
+执行sql时发生DBMS汇报的error: near "Name": syntax error
+执行sql时发生DBMS汇报的error: no such column: School
+pred_join: set()
+gold_join: set()
+gpt对error的judgement:
+ 1. Condition Filter Error
+evaluate:   3%|█████▏                                                                                                                                                                     | 6/200 [00:02<01:07,  2.87it/s]pred_join: set()
+gold_join: set()
+gpt对error的judgement:
+ Condition Filter Error
+evaluate:   5%|████████▌                                                                                                                                                                 | 10/200 [00:08<02:58,  1.07it/s]pred_join: set()
+gold_join: set()
+gpt对error的judgement:
+ Data Processing Error
+evaluate:   6%|██████████▏                                                                                                                                                               | 12/200 [00:08<02:27,  1.28it/s]pred_join: set()
+gold_join: set()
+gpt对error的judgement:
+ Condition Filter Error
+evaluate:   7%|███████████▉                                                                                                                                                              | 14/200 [00:09<02:01,  1.53it/s]pred_join: {'a.account_id = t.account_id'}
+gold_join: set()
+evaluate:   8%|█████████████▌                                                                                                                                                            | 16/200 [00:10<01:39,  1.84it/s]pred_join: set()
+gold_join: set()
+gpt对error的judgement:
+ 1. Condition Filter Error
+evaluate:   9%|███████████████▎                                                                                                                                                          | 18/200 [00:10<01:28,  2.06it/s]pred_join: set()
+gold_join: set()
+gpt对error的judgement:
+ Condition Filter Error
+evaluate:  10%|████████████████▏                                                                                                                                                         | 19/200 [00:11<01:33,  1.94it/s]pred_join: set()
+gold_join: set()
+gpt对error的judgement:
+ 1. Condition Filter Error
+evaluate:  13%|██████████████████████                                                                                                                                                    | 26/200 [00:12<00:44,  3.87it/s]pred_join: set()
+gold_join: set()
+gpt对error的judgement:
+ 1. Condition Filter Error
+evaluate:  14%|███████████████████████▊                                                                                                                                                  | 28/200 [00:12<00:48,  3.55it/s]pred_join: set()
+gold_join: set()
+gpt对error的judgement:
+ Data Processing Error
+evaluate:  14%|████████████████████████▋                                                                                                                                                 | 29/200 [00:15<01:40,  1.70it/s]pred_join: set()
+gold_join: set()
+gpt对error的judgement:
+ 1. Condition Filter Error
+evaluate:  20%|██████████████████████████████████                                                                                                                                        | 40/200 [00:16<00:26,  6.09it/s]执行sql时发生DBMS汇报的error: near "Count": syntax error
+evaluate:  26%|█████████████████████████████████████████████                                                                                                                             | 53/200 [00:17<00:08, 17.99it/s]执行sql时发生DBMS汇报的error: no such column: s.CDSCode
+pred_join: set()
+gold_join: {'satscores.cds = schools.cdscode'}
+执行sql时发生DBMS汇报的error: no such column: NCESSchool
+evaluate:  32%|█████████████████████████████████████████████████████▌                                                                                                                    | 63/200 [00:17<00:04, 27.77it/s]pred_join: {'b.molecule_id = m.molecule_id', 'a.molecule_id = m.molecule_id'}
+gold_join: {'atom.molecule_id = bond.molecule_id'}
+pred_join: set()
+gold_join: {'atom.molecule_id = molecule.molecule_id'}
+pred_join: set()
+gold_join: {'cards.uuid = rulings.uuid'}
+evaluate:  38%|███████████████████████████████████████████████████████████████▊                                                                                                          | 75/200 [00:21<00:23,  5.40it/s]pred_join: {'c.uuid = r.uuid'}
+gold_join: {'cards.uuid = rulings.uuid'}
+evaluate:  40%|███████████████████████████████████████████████████████████████████▏                                                                                                      | 79/200 [00:22<00:20,  5.80it/s]pred_join: set()
+gold_join: {'cards.uuid = rulings.uuid'}
+evaluate:  42%|███████████████████████████████████████████████████████████████████████▍                                                                                                  | 84/200 [00:26<00:38,  3.02it/s]执行sql时发生DBMS汇报的error: no such column: st.type
+执行sql时发生DBMS汇报的error: no such column: foreign_data.setCode
+evaluate:  46%|███████████████████████████████████████████████████████████████████████████████                                                                                           | 93/200 [00:26<00:19,  5.48it/s]pred_join: {'c.uuid = f.uuid'}
+gold_join: {'foreign_data.uuid = cards.uuid'}
+pred_join: {'s.code = st.setcode'}
+gold_join: {'set_translations.setcode = sets.code'}
+pred_join: {'c.uuid = f.uuid'}
+gold_join: {'foreign_data.uuid = cards.uuid'}
+evaluate:  48%|█████████████████████████████████████████████████████████████████████████████████▌                                                                                        | 96/200 [00:27<00:20,  5.17it/s]执行sql时发生DBMS汇报的error: no such column: UserId
+evaluate:  50%|█████████████████████████████████████████████████████████████████████████████████████▎                                                                                   | 101/200 [00:27<00:14,  6.70it/s]pred_join: {'c.client_id = a.account_id', 'a.account_id = l.account_id'}
+gold_join: {'account.district_id = client.district_id', 'loan.account_id = account.account_id'}
+执行sql时发生DBMS汇报的error: ambiguous column name: date
+执行sql时发生DBMS汇报的error: no such column: district_id
+evaluate:  54%|███████████████████████████████████████████████████████████████████████████████████████████▎                                                                             | 108/200 [00:28<00:09,  9.29it/s]pred_join: {'c.client_id = d.client_id', 'd.disp_id = ca.disp_id'}
+gold_join: {'disp.client_id = client.client_id', 'card.disp_id = disp.disp_id'}
+evaluate:  56%|██████████████████████████████████████████████████████████████████████████████████████████████▋                                                                          | 112/200 [00:28<00:10,  8.56it/s]执行sql时发生DBMS汇报的error: no such column: cards.isFullArt
+evaluate:  57%|████████████████████████████████████████████████████████████████████████████████████████████████▎                                                                        | 114/200 [00:28<00:09,  8.91it/s]执行sql时发生DBMS汇报的error: misuse of aggregate function SUM()
+evaluate:  60%|█████████████████████████████████████████████████████████████████████████████████████████████████████▍                                                                   | 120/200 [00:29<00:09,  8.61it/s]pred_join: {'superhero.id = hero_attribute.hero_id', 'superhero.gender_id = gender.id', 'hero_attribute.attribute_id = attribute.id'}
+gold_join: {'superhero.id = hero_attribute.hero_id', 'hero_attribute.attribute_id = attribute.id'}
+pred_join: {'hp.power_id = sp.id', 's.id = hp.hero_id', 'p.id = s.publisher_id'}
+gold_join: {'hero_power.power_id = superpower.id', 'superhero.id = hero_power.hero_id'}
+执行sql时发生DBMS汇报的error: no such column: driver.code
+evaluate:  65%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████▊                                                           | 130/200 [00:29<00:03, 17.67it/s]执行sql时发生DBMS汇报的error: ambiguous column name: driverId
+evaluate:  68%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████▉                                                      | 136/200 [00:29<00:02, 24.03it/s]执行sql时发生DBMS汇报的error: no such column: Player.country_id
+执行sql时发生DBMS汇报的error: no such column: p.country_id
+执行sql时发生DBMS汇报的error: near "s": syntax error
+执行sql时发生DBMS汇报的error: no such column: cost
+evaluate:  72%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▋                                               | 144/200 [00:30<00:01, 34.64it/s]执行sql时发生DBMS汇报的error: near "s": syntax error
+pred_join: {'e.link_to_budget = b.budget_id', 'b.link_to_event = ev.event_id'}
+gold_join: {'event.event_id = budget.link_to_event', 'budget.budget_id = expense.link_to_budget'}
+evaluate:  78%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▊                                     | 156/200 [00:30<00:02, 20.65it/s]pred_join: {'s.id = ha.hero_id', 'ha.attribute_id = a.id', 's.publisher_id = p.id'}
+gold_join: {'superhero.id = hero_attribute.hero_id', 'attribute.id = hero_attribute.attribute_id', 'publisher.id = superhero.publisher_id'}
+evaluate:  80%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▏                                 | 160/200 [00:30<00:01, 22.28it/s]pred_join: {'hp.power_id = sp.id', 's.id = hp.hero_id', 's.gender_id = g.id'}
+gold_join: {'superhero.gender_id = gender.id', 'hero_power.power_id = superpower.id', 'superhero.id = hero_power.hero_id'}
+pred_join: {'ds.raceid = r.raceid', 'r.circuitid = c.circuitid', 'ds.driverid = d.driverid'}
+gold_join: {'races.raceid = driverstandings.raceid', 'circuits.circuitid = races.circuitid', 'driverstandings.driverid = drivers.driverid'}
+evaluate:  82%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▌                              | 164/200 [00:31<00:01, 23.01it/s]pred_join: {'l.country_id = c.id', 'm.league_id = l.id', 'm.away_team_api_id = t.team_api_id'}
+gold_join: {'country.id = match.country_id', 'league.id = match.league_id', 'match.away_team_api_id = team.team_api_id'}
+执行sql时发生DBMS汇报的error: no such column: p.country_id
+evaluate:  84%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████                            | 167/200 [00:31<00:01, 21.01it/s]pred_join: {'e.link_to_budget = b.budget_id', 'm.member_id = e.link_to_member', 'b.link_to_event = ev.event_id'}
+gold_join: {'expense.link_to_budget = budget.budget_id', 'budget.link_to_event = event.event_id', 'expense.link_to_member = member.member_id'}
+执行sql时发生DBMS汇报的error: no such column: s.publisher_name
+pred_join: {'hp.power_id = sp.id', 's.id = hp.hero_id', 's.race_id = r.id'}
+gold_join: {'hero_power.power_id = superpower.id', 'superhero.race_id = race.id', 'superhero.id = hero_power.hero_id'}
+执行sql时发生DBMS汇报的error: ambiguous column name: driverId
+执行sql时发生DBMS汇报的error: no such column: r.points
+evaluate:  92%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▍             | 184/200 [00:31<00:00, 45.80it/s]pred_join: {'r.circuitid = cir.circuitid', 'cr.raceid = r.raceid', 'c.constructorid = cr.constructorid'}
+gold_join: {'races.circuitid = circuits.circuitid', 'constructorresults.constructorid = constructors.constructorid', 'races.raceid = constructorresults.raceid'}
+evaluate:  96%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▍       | 191/200 [00:31<00:00, 42.04it/s]执行sql时发生DBMS汇报的error: no such column: a.link_to_member
+pred_join: {'c.district_id = d.district_id', 'a.account_id = c.client_id'}
+gold_join: {'account.account_id = loan.account_id', 'account.district_id = district.district_id'}
+pred_join: {'a.district_id = d.district_id', 'a.district_id = c.district_id', 'a.account_id = l.account_id'}
+gold_join: {'account.district_id = district.district_id', 'account.account_id = loan.account_id', 'client.district_id = account.district_id'}
+evaluate: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 200/200 [00:32<00:00,  6.22it/s]
+Accuracy: 38.50%

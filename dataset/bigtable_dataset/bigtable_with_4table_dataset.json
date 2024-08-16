@@ -1,0 +1,852 @@
+[
+    {
+        "id": "150",
+        "question": "Who are the female account holders who own credit cards and also have loans?",
+        "new_question": "Who are the account holders from district with the id 18 and own credit cards and also have loans?",
+        "source": "bird_question_146",
+        "gt_table": [
+            "client",
+            "disp",
+            "loan",
+            "card"
+        ],
+        "query": "SELECT T1.client_id FROM client AS T1 INNER JOIN disp AS T2 ON T1.client_id = T2.client_id INNER JOIN loan AS T3 ON T2.account_id = T3.account_id INNER JOIN card AS T4 ON T2.disp_id = T4.disp_id WHERE T1.gender = 'F'",
+        "new_query": "SELECT T1.client_id FROM client AS T1 INNER JOIN disp AS T2 ON T1.client_id = T2.client_id INNER JOIN loan AS T3 ON T2.account_id = T3.account_id INNER JOIN card AS T4 ON T2.disp_id = T4.disp_id WHERE T1.district_id = 18",
+        "db_id": "financial",
+        "simplified_ddl": "#account(account_id, district_id, frequency, date);\n#card(card_id, disp_id, type, issued);\n#client(client_id, gender, birth_date, district_id);\n#disp(disp_id, client_id, account_id, type);\n#district(district_id, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16);\n#loan(loan_id, account_id, date, amount, duration, payments, status);\n#order(order_id, account_id, bank_to, account_to, amount, k_symbol);\n#trans(trans_id, account_id, date, type, operation, amount, balance, k_symbol, bank, account).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "151",
+        "question": "List all the withdrawals in cash transactions that the client with the id 3356 makes.",
+        "new_question": "What is the total amount withdrawals in cash transactions that the client with the id 3356 makes.In the database, operation = 'VYBER' refers to withdrawal in cash.",
+        "source": "bird_question_159",
+        "gt_table": [
+            "client",
+            "disp",
+            "account",
+            "trans"
+        ],
+        "query": "SELECT T4.trans_id FROM client AS T1 INNER JOIN disp AS T2 ON T1.client_id = T2.client_id INNER JOIN account AS T3 ON T2.account_id = T3.account_id INNER JOIN trans AS T4 ON T3.account_id = T4.account_id WHERE T1.client_id = 3356 AND T4.operation = 'VYBER'",
+        "new_query": "SELECT SUM(T4.amount) FROM client AS T1 INNER JOIN disp AS T2 ON T1.client_id = T2.client_id INNER JOIN account AS T3 ON T2.account_id = T3.account_id INNER JOIN trans AS T4 ON T3.account_id = T4.account_id WHERE T1.client_id = 3356 AND T4.operation = 'VYBER'",
+        "db_id": "financial",
+        "simplified_ddl": "#account(account_id, district_id, frequency, date);\n#card(card_id, disp_id, type, issued);\n#client(client_id, gender, birth_date, district_id);\n#disp(disp_id, client_id, account_id, type);\n#district(district_id, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16);\n#loan(loan_id, account_id, date, amount, duration, payments, status);\n#order(order_id, account_id, bank_to, account_to, amount, k_symbol);\n#trans(trans_id, account_id, date, type, operation, amount, balance, k_symbol, bank, account).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "152",
+        "question": "What was the growth rate of the total amount of loans across all accounts for a male client between 1996 and 1997?",
+        "new_question": "What was the growth rate of the total amount of loans across all accounts for a client from district with the id 73?",
+        "source": "bird_question_169",
+        "gt_table": [
+            "loan",
+            "account",
+            "disp",
+            "client"
+        ],
+        "query": "SELECT CAST((SUM(CASE WHEN STRFTIME('%Y', T1.date) = '1997' THEN T1.amount ELSE 0 END) - SUM(CASE WHEN STRFTIME('%Y', T1.date) = '1996' THEN T1.amount ELSE 0 END)) AS REAL) * 100 / SUM(CASE WHEN STRFTIME('%Y', T1.date) = '1996' THEN T1.amount ELSE 0 END) FROM loan AS T1 INNER JOIN account AS T2 ON T1.account_id = T2.account_id INNER JOIN disp AS T3 ON T3.account_id = T2.account_id INNER JOIN client AS T4 ON T4.client_id = T3.client_id WHERE T4.gender = 'M' AND T3.type = 'OWNER'",
+        "new_query": "SELECT CAST((SUM(CASE WHEN STRFTIME('%Y', T1.date) = '1997' THEN T1.amount ELSE 0 END) - SUM(CASE WHEN STRFTIME('%Y', T1.date) = '1996' THEN T1.amount ELSE 0 END)) AS REAL) * 100 / SUM(CASE WHEN STRFTIME('%Y', T1.date) = '1996' THEN T1.amount ELSE 0 END) FROM loan AS T1 INNER JOIN account AS T2 ON T1.account_id = T2.account_id INNER JOIN disp AS T3 ON T3.account_id = T2.account_id INNER JOIN client AS T4 ON T4.client_id = T3.client_id WHERE T4.district_id = 73 AND T3.type = 'OWNER'",
+        "db_id": "financial",
+        "simplified_ddl": "#account(account_id, district_id, frequency, date);\n#card(card_id, disp_id, type, issued);\n#client(client_id, gender, birth_date, district_id);\n#disp(disp_id, client_id, account_id, type);\n#district(district_id, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16);\n#loan(loan_id, account_id, date, amount, duration, payments, status);\n#order(order_id, account_id, bank_to, account_to, amount, k_symbol);\n#trans(trans_id, account_id, date, type, operation, amount, balance, k_symbol, bank, account).\n",
+        "difficulty": "challenging"
+    },
+    {
+        "id": "153",
+        "question": "How many posts by Matt Parker have more than 4 votes?",
+        "new_question": "What is the average score of posts posted by Matt Parker and have more than 4 votes? In the database, more than 4 votes refer to PostId > 4; DisplayName = 'Matt Parker'.",
+        "source": "bird_question_635",
+        "gt_table": [
+            "users",
+            "postHistory",
+            "posts",
+            "votes"
+        ],
+        "query": "SELECT COUNT(T1.Id) FROM users AS T1 INNER JOIN postHistory AS T2 ON T1.Id = T2.UserId INNER JOIN posts AS T3 ON T2.PostId = T3.Id INNER JOIN votes AS T4 ON T4.PostId = T3.Id WHERE T1.DisplayName = 'Matt Parker' GROUP BY T2.PostId, T4.Id HAVING COUNT(T4.Id) > 4",
+        "new_query": "SELECT AVG(T3.Score) FROM users AS T1 INNER JOIN postHistory AS T2 ON T1.Id = T2.UserId INNER JOIN posts AS T3 ON T2.PostId = T3.Id INNER JOIN votes AS T4 ON T4.PostId = T3.Id WHERE T1.DisplayName = 'Matt Parker' GROUP BY T2.PostId, T4.Id HAVING COUNT(T4.Id) > 4",
+        "db_id": "codebase_community",
+        "simplified_ddl": "#badges(Id, UserId, Name, Date);\n#comments(Id, PostId, Score, Text, CreationDate, UserId, UserDisplayName);\n#postHistory(Id, PostHistoryTypeId, PostId, RevisionGUID, CreationDate, UserId, Text, Comment, UserDisplayName);\n#postLinks(Id, CreationDate, PostId, RelatedPostId, LinkTypeId);\n#posts(Id, PostTypeId, AcceptedAnswerId, CreaionDate, Score, ViewCount, Body, OwnerUserId, LasActivityDate, Title, Tags, AnswerCount, CommentCount, FavoriteCount, LastEditorUserId, LastEditDate, CommunityOwnedDate, ParentId, ClosedDate, OwnerDisplayName, LastEditorDisplayName);\n#tags(Id, TagName, Count, ExcerptPostId, WikiPostId);\n#users(Id, Reputation, CreationDate, DisplayName, LastAccessDate, WebsiteUrl, Location, AboutMe, Views, UpVotes, DownVotes, AccountId, Age, ProfileImageUrl);\n#votes(Id, PostId, VoteTypeId, CreationDate, UserId, BountyAmount).\n",
+        "difficulty": "moderate"
+    },
+    {
+        "id": "154",
+        "question": "Among the superheroes with blue eyes, how many of them have the super power of 'Agility'?",
+        "new_question": "List the superheroes with blue eyes and have the super power of 'Agility'.In the database, blue eyes refers to colour = 'Blue' and eye_colour_id = colour.id; super power of 'Agility' refers to power_name = 'Agility'.",
+        "source": "bird_question_723",
+        "gt_table": [
+            "superhero",
+            "hero_power",
+            "superpower",
+            "colour"
+        ],
+        "query": "SELECT COUNT(T1.id) FROM superhero AS T1 INNER JOIN hero_power AS T2 ON T1.id = T2.hero_id INNER JOIN superpower AS T3 ON T2.power_id = T3.id INNER JOIN colour AS T4 ON T1.eye_colour_id = T4.id WHERE T3.power_name = 'Agility' AND T4.colour = 'Blue'",
+        "new_query": "SELECT T1.superhero_name FROM superhero AS T1 INNER JOIN hero_power AS T2 ON T1.id = T2.hero_id INNER JOIN superpower AS T3 ON T2.power_id = T3.id INNER JOIN colour AS T4 ON T1.eye_colour_id = T4.id WHERE T3.power_name = 'Agility' AND T4.colour = 'Blue'",
+        "db_id": "superhero",
+        "simplified_ddl": "#alignment(id, alignment);\n#attribute(id, attribute_name);\n#colour(id, colour);\n#gender(id, gender);\n#publisher(id, publisher_name);\n#race(id, race);\n#superhero(id, superhero_name, full_name, gender_id, eye_colour_id, hair_colour_id, skin_colour_id, race_id, publisher_id, alignment_id, height_cm, weight_kg);\n#hero_attribute(hero_id, attribute_id, attribute_value);\n#superpower(id, power_name);\n#hero_power(hero_id, power_id).\n",
+        "difficulty": "moderate"
+    },
+    {
+        "id": "155",
+        "question": "Among the superheroes from Marvel Comics, what is the percentage of those who have the super power of 'Super Strength'?",
+        "new_question": "Among the superheroes from Marvel Comics, How many of them have the super power of 'Super Strength'?In the database, the superheroes from Marvel Comics refers to publisher_name = 'Marvel Comics'; super power of 'Super Strength' refers to power_name = 'Super Strength'.",
+        "source": "bird_question_730",
+        "gt_table": [
+            "superhero",
+            "hero_power",
+            "superpower",
+            "publisher"
+        ],
+        "query": "SELECT CAST(COUNT(CASE WHEN T3.power_name = 'Super Strength' THEN T1.id ELSE NULL END) AS REAL) * 100 / COUNT(T1.id) FROM superhero AS T1 INNER JOIN hero_power AS T2 ON T1.id = T2.hero_id INNER JOIN superpower AS T3 ON T2.power_id = T3.id INNER JOIN publisher AS T4 ON T1.publisher_id = T4.id WHERE T4.publisher_name = 'Marvel Comics'",
+        "new_query": "SELECT COUNT(T1.id) FROM superhero AS T1 INNER JOIN hero_power AS T2 ON T1.id = T2.hero_id INNER JOIN superpower AS T3 ON T2.power_id = T3.id INNER JOIN publisher AS T4 ON T1.publisher_id = T4.id WHERE T4.publisher_name = 'Marvel Comics' AND T3.power_name = 'Super Strength'",
+        "db_id": "superhero",
+        "simplified_ddl": "#alignment(id, alignment);\n#attribute(id, attribute_name);\n#colour(id, colour);\n#gender(id, gender);\n#publisher(id, publisher_name);\n#race(id, race);\n#superhero(id, superhero_name, full_name, gender_id, eye_colour_id, hair_colour_id, skin_colour_id, race_id, publisher_id, alignment_id, height_cm, weight_kg);\n#hero_attribute(hero_id, attribute_id, attribute_value);\n#superpower(id, power_name);\n#hero_power(hero_id, power_id).\n",
+        "difficulty": "challenging"
+    },
+    {
+        "id": "156",
+        "question": "Which publisher published the slowest superhero?",
+        "new_question": "Which publisher published the most intelligent superhero? In the database, the most intelligent superhero refers to attribute_name = 'Intelligence' where MAX(attribute_value).",
+        "source": "bird_question_732",
+        "gt_table": [
+            "superhero",
+            "publisher",
+            "hero_attribute",
+            "attribute"
+        ],
+        "query": "SELECT T2.publisher_name FROM superhero AS T1 INNER JOIN publisher AS T2 ON T1.publisher_id = T2.id INNER JOIN hero_attribute AS T3 ON T1.id = T3.hero_id INNER JOIN attribute AS T4 ON T3.attribute_id = T4.id WHERE T4.attribute_name = 'Speed' ORDER BY T3.attribute_value LIMIT 1",
+        "new_query": "SELECT T2.publisher_name FROM superhero AS T1 INNER JOIN publisher AS T2 ON T1.publisher_id = T2.id INNER JOIN hero_attribute AS T3 ON T1.id = T3.hero_id INNER JOIN attribute AS T4 ON T3.attribute_id = T4.id WHERE T4.attribute_name = 'Intelligence' ORDER BY T3.attribute_value DESC LIMIT 1",
+        "db_id": "superhero",
+        "simplified_ddl": "#alignment(id, alignment);\n#attribute(id, attribute_name);\n#colour(id, colour);\n#gender(id, gender);\n#publisher(id, publisher_name);\n#race(id, race);\n#superhero(id, superhero_name, full_name, gender_id, eye_colour_id, hair_colour_id, skin_colour_id, race_id, publisher_id, alignment_id, height_cm, weight_kg);\n#hero_attribute(hero_id, attribute_id, attribute_value);\n#superpower(id, power_name);\n#hero_power(hero_id, power_id).\n",
+        "difficulty": "moderate"
+    },
+    {
+        "id": "157",
+        "question": "How many female superheroes have a strength value of 100?",
+        "new_question": "How many male superheroes have a intelligence value bigger than 95? In the database, male refers to gender = 'Male';intelligence value bigger than 100 refers to attribute_name = 'Intelligence' AND attribute_value > 95.",
+        "source": "bird_question_740",
+        "gt_table": [
+            "superhero",
+            "hero_attribute",
+            "attribute",
+            "gender"
+        ],
+        "query": "SELECT COUNT(T1.id) FROM superhero AS T1 INNER JOIN hero_attribute AS T2 ON T1.id = T2.hero_id INNER JOIN attribute AS T3 ON T2.attribute_id = T3.id INNER JOIN gender AS T4 ON T1.gender_id = T4.id WHERE T3.attribute_name = 'Strength' AND T2.attribute_value = 100 AND T4.gender = 'Female'",
+        "new_query": "SELECT COUNT(T1.id) FROM superhero AS T1 INNER JOIN hero_attribute AS T2 ON T1.id = T2.hero_id INNER JOIN attribute AS T3 ON T2.attribute_id = T3.id INNER JOIN gender AS T4 ON T1.gender_id = T4.id WHERE T3.attribute_name = 'Intelligence' AND T2.attribute_value > 95 AND T4.gender = 'Male'",
+        "db_id": "superhero",
+        "simplified_ddl": "#alignment(id, alignment);\n#attribute(id, attribute_name);\n#colour(id, colour);\n#gender(id, gender);\n#publisher(id, publisher_name);\n#race(id, race);\n#superhero(id, superhero_name, full_name, gender_id, eye_colour_id, hair_colour_id, skin_colour_id, race_id, publisher_id, alignment_id, height_cm, weight_kg);\n#hero_attribute(hero_id, attribute_id, attribute_value);\n#superpower(id, power_name);\n#hero_power(hero_id, power_id).\n",
+        "difficulty": "moderate"
+    },
+    {
+        "id": "158",
+        "question": "List down at least five superpowers of male superheroes.",
+        "new_question": "How many superpowers does female superheroes have? In the database, female refers to gender = 'Female'.",
+        "source": "bird_question_751",
+        "gt_table": [
+            "superhero",
+            "hero_power",
+            "superpower",
+            "gender"
+        ],
+        "query": "SELECT T3.power_name FROM superhero AS T1 INNER JOIN hero_power AS T2 ON T1.id = T2.hero_id INNER JOIN superpower AS T3 ON T3.id = T2.power_id INNER JOIN gender AS T4 ON T4.id = T1.gender_id WHERE T4.gender = 'Male' LIMIT 5",
+        "new_query": "SELECT COUNT(T3.power_name) FROM superhero AS T1 INNER JOIN hero_power AS T2 ON T1.id = T2.hero_id INNER JOIN superpower AS T3 ON T3.id = T2.power_id INNER JOIN gender AS T4 ON T4.id = T1.gender_id WHERE T4.gender = 'Female'",
+        "db_id": "superhero",
+        "simplified_ddl": "#alignment(id, alignment);\n#attribute(id, attribute_name);\n#colour(id, colour);\n#gender(id, gender);\n#publisher(id, publisher_name);\n#race(id, race);\n#superhero(id, superhero_name, full_name, gender_id, eye_colour_id, hair_colour_id, skin_colour_id, race_id, publisher_id, alignment_id, height_cm, weight_kg);\n#hero_attribute(hero_id, attribute_id, attribute_value);\n#superpower(id, power_name);\n#hero_power(hero_id, power_id).\n",
+        "difficulty": "moderate"
+    },
+    {
+        "id": "159",
+        "question": "Which superhero has the most durability published by Dark Horse Comics?",
+        "new_question": "Which superhero has the lowest combat published by Dark Horse Comics? In the database, lowest combat refers to MIN(attribute_value) WHERE attribute_name = 'Combat'.",
+        "source": "bird_question_769",
+        "gt_table": [
+            "superhero",
+            "hero_attribute",
+            "attribute",
+            "publisher"
+        ],
+        "query": "SELECT T1.superhero_name FROM superhero AS T1 INNER JOIN hero_attribute AS T2 ON T1.id = T2.hero_id INNER JOIN attribute AS T3 ON T3.id = T2.attribute_id INNER JOIN publisher AS T4 ON T4.id = T1.publisher_id WHERE T4.publisher_name = 'Dark Horse Comics' AND T3.attribute_name = 'Durability' ORDER BY T2.attribute_value DESC LIMIT 1",
+        "new_query": "SELECT T1.superhero_name FROM superhero AS T1 INNER JOIN hero_attribute AS T2 ON T1.id = T2.hero_id INNER JOIN attribute AS T3 ON T3.id = T2.attribute_id INNER JOIN publisher AS T4 ON T4.id = T1.publisher_id WHERE T4.publisher_name = 'Dark Horse Comics' AND T3.attribute_name = 'Combat' ORDER BY T2.attribute_value ASC LIMIT 1",
+        "db_id": "superhero",
+        "simplified_ddl": "#alignment(id, alignment);\n#attribute(id, attribute_name);\n#colour(id, colour);\n#gender(id, gender);\n#publisher(id, publisher_name);\n#race(id, race);\n#superhero(id, superhero_name, full_name, gender_id, eye_colour_id, hair_colour_id, skin_colour_id, race_id, publisher_id, alignment_id, height_cm, weight_kg);\n#hero_attribute(hero_id, attribute_id, attribute_value);\n#superpower(id, power_name);\n#hero_power(hero_id, power_id).\n",
+        "difficulty": "challenging"
+    },
+    {
+        "id": "160",
+        "question": "Give the race of the blue-haired male superhero.",
+        "new_question": "List the distinct race of the brown-haired male superhero. In the database, brown-haired refers to colour.colour = 'Brown' WHERE hair_colour_id = colour.id; male refers to gender = 'Male'.",
+        "source": "bird_question_817",
+        "gt_table": [
+            "superhero",
+            "colour",
+            "race",
+            "gender"
+        ],
+        "query": "SELECT T3.race FROM superhero AS T1 INNER JOIN colour AS T2 ON T1.hair_colour_id = T2.id INNER JOIN race AS T3 ON T1.race_id = T3.id INNER JOIN gender AS T4 ON T1.gender_id = T4.id WHERE T2.colour = 'Blue' AND T4.gender = 'Male'",
+        "new_query": "SELECT DISTINCT T3.race FROM superhero AS T1 INNER JOIN colour AS T2 ON T1.hair_colour_id = T2.id INNER JOIN race AS T3 ON T1.race_id = T3.id INNER JOIN gender AS T4 ON T1.gender_id = T4.id WHERE T2.colour = 'Brown' AND T4.gender = 'Male'",
+        "db_id": "superhero",
+        "simplified_ddl": "#alignment(id, alignment);\n#attribute(id, attribute_name);\n#colour(id, colour);\n#gender(id, gender);\n#publisher(id, publisher_name);\n#race(id, race);\n#superhero(id, superhero_name, full_name, gender_id, eye_colour_id, hair_colour_id, skin_colour_id, race_id, publisher_id, alignment_id, height_cm, weight_kg);\n#hero_attribute(hero_id, attribute_id, attribute_value);\n#superpower(id, power_name);\n#hero_power(hero_id, power_id).\n",
+        "difficulty": "moderate"
+    },
+    {
+        "id": "161",
+        "question": "Identify the gender of the superhero who has the ability of Phoenix Force.",
+        "new_question": "List thr superhero name of female superheroes who has the ability of Phoenix Force. In the database,ability of Phoenix Force refers to power_name = 'Phoenix Force'.",
+        "source": "bird_question_825",
+        "gt_table": [
+            "superhero",
+            "hero_power",
+            "superpower",
+            "gender"
+        ],
+        "query": "SELECT T4.gender FROM superhero AS T1 INNER JOIN hero_power AS T2 ON T1.id = T2.hero_id INNER JOIN superpower AS T3 ON T2.power_id = T3.id INNER JOIN gender AS T4 ON T1.gender_id = T4.id WHERE T3.power_name = 'Phoenix Force'",
+        "new_query": "SELECT T1.superhero_name FROM superhero AS T1 INNER JOIN hero_power AS T2 ON T1.id = T2.hero_id INNER JOIN superpower AS T3 ON T2.power_id = T3.id INNER JOIN gender AS T4 ON T1.gender_id = T4.id WHERE T3.power_name = 'Phoenix Force' AND T4.gender = 'Female'",
+        "db_id": "superhero",
+        "simplified_ddl": "#alignment(id, alignment);\n#attribute(id, attribute_name);\n#colour(id, colour);\n#gender(id, gender);\n#publisher(id, publisher_name);\n#race(id, race);\n#superhero(id, superhero_name, full_name, gender_id, eye_colour_id, hair_colour_id, skin_colour_id, race_id, publisher_id, alignment_id, height_cm, weight_kg);\n#hero_attribute(hero_id, attribute_id, attribute_value);\n#superpower(id, power_name);\n#hero_power(hero_id, power_id).\n",
+        "difficulty": "moderate"
+    },
+    {
+        "id": "162",
+        "question": "How many times did Michael Schumacher won from races hosted in Sepang International Circuit?",
+        "new_question": "How many times did Michael Schumacher won from races hosted in the location of Shanghai?In the database, win from races refers to wins=1.",
+        "source": "bird_question_903",
+        "gt_table": [
+            "drivers",
+            "driverStandings",
+            "races",
+            "circuits"
+        ],
+        "query": "SELECT SUM(T2.wins) FROM drivers AS T1 INNER JOIN driverStandings AS T2 ON T2.driverId = T1.driverId INNER JOIN races AS T3 ON T3.raceId = T2.raceId INNER JOIN circuits AS T4 ON T4.circuitId = T3.circuitId WHERE T1.forename = 'Michael' AND T1.surname = 'Schumacher' AND T4.name = 'Sepang International Circuit'",
+        "new_query": "SELECT SUM(T2.wins) FROM drivers AS T1 INNER JOIN driverStandings AS T2 ON T2.driverId = T1.driverId INNER JOIN races AS T3 ON T3.raceId = T2.raceId INNER JOIN circuits AS T4 ON T4.circuitId = T3.circuitId WHERE T1.forename = 'Michael' AND T1.surname = 'Schumacher' AND T4.location = 'Shanghai'",
+        "db_id": "formula_1",
+        "simplified_ddl": "#circuits(circuitId, circuitRef, name, location, country, lat, lng, alt, url);\n#constructors(constructorId, constructorRef, name, nationality, url);\n#drivers(driverId, driverRef, number, code, forename, surname, dob, nationality, url);\n#seasons(year, url);\n#races(raceId, year, round, circuitId, name, date, time, url);\n#constructorResults(constructorResultsId, raceId, constructorId, points, status);\n#constructorStandings(constructorStandingsId, raceId, constructorId, points, position, positionText, wins);\n#driverStandings(driverStandingsId, raceId, driverId, points, position, positionText, wins);\n#lapTimes(raceId, driverId, lap, position, time, milliseconds);\n#pitStops(raceId, driverId, stop, lap, time, duration, milliseconds);\n#qualifying(qualifyId, raceId, driverId, constructorId, number, position, q1, q2, q3);\n#status(statusId, status);\n#results(resultId, raceId, driverId, constructorId, number, grid, position, positionText, positionOrder, points, laps, time, milliseconds, fastestLap, rank, fastestLapTime, fastestLapSpeed, statusId).\n",
+        "difficulty": "moderate"
+    },
+    {
+        "id": "163",
+        "question": "What is full name of the racer who ranked 1st in the 3rd qualifying race held in the Marina Bay Street Circuit in 2008?",
+        "new_question": "What is nationality of the racer who ranked 1st in the 3rd qualifying race held in the Marina Bay Street Circuit in 2008?In the database, Ranked 1st in the 3rd qualifying race refer to MIN(q3); 2008 is the year of race.",
+        "source": "bird_question_1001",
+        "gt_table": [
+            "qualifying",
+            "drivers",
+            "races",
+            "circuits"
+        ],
+        "query": "SELECT T2.forename, T2.surname FROM qualifying AS T1 INNER JOIN drivers AS T2 on T1.driverId = T2.driverId INNER JOIN races AS T3 ON T1.raceid = T3.raceid WHERE q3 IS NOT NULL AND T3.year = 2008 AND T3.circuitId IN ( SELECT circuitId FROM circuits WHERE name = 'Marina Bay Street Circuit' ) ORDER BY CAST(SUBSTR(q3, 1, INSTR(q3, ':') - 1) AS INTEGER) * 60 + CAST(SUBSTR(q3, INSTR(q3, ':') + 1, INSTR(q3, '.') - INSTR(q3, ':') - 1) AS REAL) + CAST(SUBSTR(q3, INSTR(q3, '.') + 1) AS REAL) / 1000 ASC LIMIT 1",
+        "new_query": "SELECT T2.nationality FROM qualifying AS T1 INNER JOIN drivers AS T2 on T1.driverId = T2.driverId INNER JOIN races AS T3 ON T1.raceid = T3.raceid WHERE q3 IS NOT NULL AND T3.year = 2008 AND T3.circuitId IN ( SELECT circuitId FROM circuits WHERE name = 'Marina Bay Street Circuit' ) ORDER BY CAST(SUBSTR(q3, 1, INSTR(q3, ':') - 1) AS INTEGER) * 60 + CAST(SUBSTR(q3, INSTR(q3, ':') + 1, INSTR(q3, '.') - INSTR(q3, ':') - 1) AS REAL) + CAST(SUBSTR(q3, INSTR(q3, '.') + 1) AS REAL) / 1000 ASC LIMIT 1",
+        "db_id": "formula_1",
+        "simplified_ddl": "#circuits(circuitId, circuitRef, name, location, country, lat, lng, alt, url);\n#constructors(constructorId, constructorRef, name, nationality, url);\n#drivers(driverId, driverRef, number, code, forename, surname, dob, nationality, url);\n#seasons(year, url);\n#races(raceId, year, round, circuitId, name, date, time, url);\n#constructorResults(constructorResultsId, raceId, constructorId, points, status);\n#constructorStandings(constructorStandingsId, raceId, constructorId, points, position, positionText, wins);\n#driverStandings(driverStandingsId, raceId, driverId, points, position, positionText, wins);\n#lapTimes(raceId, driverId, lap, position, time, milliseconds);\n#pitStops(raceId, driverId, stop, lap, time, duration, milliseconds);\n#qualifying(qualifyId, raceId, driverId, constructorId, number, position, q1, q2, q3);\n#status(statusId, status);\n#results(resultId, raceId, driverId, constructorId, number, grid, position, positionText, positionOrder, points, laps, time, milliseconds, fastestLap, rank, fastestLapTime, fastestLapSpeed, statusId).\n",
+        "difficulty": "challenging"
+    },
+    {
+        "id": "164",
+        "question": "In Scotland Premier League, which away team won the most during the 2010 season?",
+        "new_question": "In Scotland Premier League, which away team won the most during the 2010 season and which country do they belong to?In the database,Scotland Premier League refers to League.name = 'Scotland Premier League'; away team refers to away_team_api_id; away team that won the most refers to MAX(SUBTRACT(away_team_goal, home_team_goal) > 0); 2010 season refers to season = '2009/2010';",
+        "source": "bird_question_1028",
+        "gt_table": [
+            "League",
+            "Match",
+            "Country",
+            "Team"
+        ],
+        "query": "SELECT teamInfo.team_long_name FROM League AS leagueData INNER JOIN Match AS matchData ON leagueData.id = matchData.league_id INNER JOIN Team AS teamInfo ON matchData.away_team_api_id = teamInfo.team_api_id WHERE leagueData.name = 'Scotland Premier League' AND matchData.season = '2009/2010' AND matchData.away_team_goal - matchData.home_team_goal > 0 GROUP BY matchData.away_team_api_id ORDER BY COUNT(*) DESC LIMIT 1",
+        "new_query": "SELECT teamInfo.team_long_name,country.name FROM League AS leagueData INNER JOIN Match AS matchData ON leagueData.id = matchData.league_id INNER JOIN Country AS country ON country.id = matchData.country_id  INNER JOIN Team AS teamInfo ON matchData.away_team_api_id = teamInfo.team_api_id WHERE leagueData.name = 'Scotland Premier League' AND matchData.season = '2009/2010' AND matchData.away_team_goal - matchData.home_team_goal > 0 GROUP BY matchData.away_team_api_id ORDER BY COUNT(*) DESC LIMIT 1",
+        "db_id": "european_football_2",
+        "simplified_ddl": "#Player_Attributes(id, player_fifa_api_id, player_api_id, date, overall_rating, potential, preferred_foot, attacking_work_rate, defensive_work_rate, crossing, finishing, heading_accuracy, short_passing, volleys, dribbling, curve, free_kick_accuracy, long_passing, ball_control, acceleration, sprint_speed, agility, reactions, balance, shot_power, jumping, stamina, strength, long_shots, aggression, interceptions, positioning, vision, penalties, marking, standing_tackle, sliding_tackle, gk_diving, gk_handling, gk_kicking, gk_positioning, gk_reflexes);\n#Player(id, player_api_id, player_name, player_fifa_api_id, birthday, height, weight);\n#League(id, country_id, name);\n#Country(id, name);\n#Team(id, team_api_id, team_fifa_api_id, team_long_name, team_short_name);\n#Team_Attributes(id, team_fifa_api_id, team_api_id, date, buildUpPlaySpeed, buildUpPlaySpeedClass, buildUpPlayDribbling, buildUpPlayDribblingClass, buildUpPlayPassing, buildUpPlayPassingClass, buildUpPlayPositioningClass, chanceCreationPassing, chanceCreationPassingClass, chanceCreationCrossing, chanceCreationCrossingClass, chanceCreationShooting, chanceCreationShootingClass, chanceCreationPositioningClass, defencePressure, defencePressureClass, defenceAggression, defenceAggressionClass, defenceTeamWidth, defenceTeamWidthClass, defenceDefenderLineClass);\n#Match(id, country_id, league_id, season, stage, date, match_api_id, home_team_api_id, away_team_api_id, home_team_goal, away_team_goal, home_player_X1, home_player_X2, home_player_X3, home_player_X4, home_player_X5, home_player_X6, home_player_X7, home_player_X8, home_player_X9, home_player_X10, home_player_X11, away_player_X1, away_player_X2, away_player_X3, away_player_X4, away_player_X5, away_player_X6, away_player_X7, away_player_X8, away_player_X9, away_player_X10, away_player_X11, home_player_Y1, home_player_Y2, home_player_Y3, home_player_Y4, home_player_Y5, home_player_Y6, home_player_Y7, home_player_Y8, home_player_Y9, home_player_Y10, home_player_Y11, away_player_Y1, away_player_Y2, away_player_Y3, away_player_Y4, away_player_Y5, away_player_Y6, away_player_Y7, away_player_Y8, away_player_Y9, away_player_Y10, away_player_Y11, home_player_1, home_player_2, home_player_3, home_player_4, home_player_5, home_player_6, home_player_7, home_player_8, home_player_9, home_player_10, home_player_11, away_player_1, away_player_2, away_player_3, away_player_4, away_player_5, away_player_6, away_player_7, away_player_8, away_player_9, away_player_10, away_player_11, goal, shoton, shotoff, foulcommit, card, cross, corner, possession, B365H, B365D, B365A, BWH, BWD, BWA, IWH, IWD, IWA, LBH, LBD, LBA, PSH, PSD, PSA, WHH, WHD, WHA, SJH, SJD, SJA, VCH, VCD, VCA, GBH, GBD, GBA, BSH, BSD, BSA).\n",
+        "difficulty": "challenging"
+    },
+    {
+        "id": "165",
+        "question": "Locate players with vision scores of 90 and above, state the country of these players.",
+        "new_question": "Locate players with crossing scores of 70 and above, state the country of these players.In the database, crossing scores of 70 and above refers to crossing > 69.",
+        "source": "bird_question_1127",
+        "gt_table": [
+            "Player_Attributes",
+            "Player",
+            "Match",
+            "Country"
+        ],
+        "query": "SELECT DISTINCT t4.name FROM Player_Attributes AS t1 INNER JOIN Player AS t2 ON t1.player_api_id = t2.player_api_id INNER JOIN Match AS t3 ON t2.player_api_id = t3.home_player_8 INNER JOIN Country AS t4 ON t3.country_id = t4.id WHERE t1.vision > 89",
+        "new_query": "SELECT DISTINCT t4.name FROM Player_Attributes AS t1 INNER JOIN Player AS t2 ON t1.player_api_id = t2.player_api_id INNER JOIN Match AS t3 ON t2.player_api_id = t3.home_player_8 INNER JOIN Country AS t4 ON t3.country_id = t4.id WHERE t1.crossing > 69",
+        "db_id": "european_football_2",
+        "simplified_ddl": "#Player_Attributes(id, player_fifa_api_id, player_api_id, date, overall_rating, potential, preferred_foot, attacking_work_rate, defensive_work_rate, crossing, finishing, heading_accuracy, short_passing, volleys, dribbling, curve, free_kick_accuracy, long_passing, ball_control, acceleration, sprint_speed, agility, reactions, balance, shot_power, jumping, stamina, strength, long_shots, aggression, interceptions, positioning, vision, penalties, marking, standing_tackle, sliding_tackle, gk_diving, gk_handling, gk_kicking, gk_positioning, gk_reflexes);\n#Player(id, player_api_id, player_name, player_fifa_api_id, birthday, height, weight);\n#League(id, country_id, name);\n#Country(id, name);\n#Team(id, team_api_id, team_fifa_api_id, team_long_name, team_short_name);\n#Team_Attributes(id, team_fifa_api_id, team_api_id, date, buildUpPlaySpeed, buildUpPlaySpeedClass, buildUpPlayDribbling, buildUpPlayDribblingClass, buildUpPlayPassing, buildUpPlayPassingClass, buildUpPlayPositioningClass, chanceCreationPassing, chanceCreationPassingClass, chanceCreationCrossing, chanceCreationCrossingClass, chanceCreationShooting, chanceCreationShootingClass, chanceCreationPositioningClass, defencePressure, defencePressureClass, defenceAggression, defenceAggressionClass, defenceTeamWidth, defenceTeamWidthClass, defenceDefenderLineClass);\n#Match(id, country_id, league_id, season, stage, date, match_api_id, home_team_api_id, away_team_api_id, home_team_goal, away_team_goal, home_player_X1, home_player_X2, home_player_X3, home_player_X4, home_player_X5, home_player_X6, home_player_X7, home_player_X8, home_player_X9, home_player_X10, home_player_X11, away_player_X1, away_player_X2, away_player_X3, away_player_X4, away_player_X5, away_player_X6, away_player_X7, away_player_X8, away_player_X9, away_player_X10, away_player_X11, home_player_Y1, home_player_Y2, home_player_Y3, home_player_Y4, home_player_Y5, home_player_Y6, home_player_Y7, home_player_Y8, home_player_Y9, home_player_Y10, home_player_Y11, away_player_Y1, away_player_Y2, away_player_Y3, away_player_Y4, away_player_Y5, away_player_Y6, away_player_Y7, away_player_Y8, away_player_Y9, away_player_Y10, away_player_Y11, home_player_1, home_player_2, home_player_3, home_player_4, home_player_5, home_player_6, home_player_7, home_player_8, home_player_9, home_player_10, home_player_11, away_player_1, away_player_2, away_player_3, away_player_4, away_player_5, away_player_6, away_player_7, away_player_8, away_player_9, away_player_10, away_player_11, goal, shoton, shotoff, foulcommit, card, cross, corner, possession, B365H, B365D, B365A, BWH, BWD, BWA, IWH, IWD, IWA, LBH, LBD, LBA, PSH, PSD, PSA, WHH, WHD, WHA, SJH, SJD, SJA, VCH, VCD, VCA, GBH, GBD, GBA, BSH, BSD, BSA).\n",
+        "difficulty": "moderate"
+    },
+    {
+        "id": "166",
+        "question": "Among the students majored in interior design, who have attended the Community Theater event?",
+        "new_question": "Among the students majored in interior design, who have attended the event located at 'MU 215'? In the database, majored in interior design refers to major_name = 'Interior Design'.",
+        "source": "bird_question_1382",
+        "gt_table": [
+            "major",
+            "member",
+            "attendance",
+            "event"
+        ],
+        "query": "SELECT T2.first_name, T2.last_name FROM major AS T1 INNER JOIN member AS T2 ON T1.major_id = T2.link_to_major INNER JOIN attendance AS T3 ON T2.member_id = T3.link_to_member INNER JOIN event AS T4 ON T3.link_to_event = T4.event_id WHERE T4.event_name = 'Community Theater' AND T1.major_name = 'Interior Design'",
+        "new_query": "SELECT T2.first_name, T2.last_name FROM major AS T1 INNER JOIN member AS T2 ON T1.major_id = T2.link_to_major INNER JOIN attendance AS T3 ON T2.member_id = T3.link_to_member INNER JOIN event AS T4 ON T3.link_to_event = T4.event_id WHERE T4.location = 'MU 215' AND T1.major_name = 'Interior Design'",
+        "db_id": "student_club",
+        "simplified_ddl": "#event(event_id, event_name, event_date, type, notes, location, status);\n#major(major_id, major_name, department, college);\n#zip_code(zip_code, type, city, county, state, short_state);\n#attendance(link_to_event, link_to_member);\n#budget(budget_id, category, spent, remaining, amount, event_status, link_to_event);\n#expense(expense_id, expense_description, expense_date, cost, approved, link_to_member, link_to_budget);\n#income(income_id, date_received, amount, source, notes, link_to_member);\n#member(member_id, first_name, last_name, email, position, t_shirt_size, phone, zip, link_to_major).\n",
+        "difficulty": "moderate"
+    },
+    {
+        "id": "167",
+        "question": "Which student has been entrusted to manage the budget for the Yearly Kickoff?",
+        "new_question": "Which student has been entrusted to manage the budget for the event with status 'Open'?",
+        "source": "bird_question_1387",
+        "gt_table": [
+            "event",
+            "budget",
+            "expense",
+            "member"
+        ],
+        "query": "SELECT T4.first_name, T4.last_name FROM event AS T1 INNER JOIN budget AS T2 ON T1.event_id = T2.link_to_event INNER JOIN expense AS T3 ON T2.budget_id = T3.link_to_budget INNER JOIN member AS T4 ON T3.link_to_member = T4.member_id WHERE T1.event_name = 'Yearly Kickoff'",
+        "new_query": "SELECT T4.first_name, T4.last_name FROM event AS T1 INNER JOIN budget AS T2 ON T1.event_id = T2.link_to_event INNER JOIN expense AS T3 ON T2.budget_id = T3.link_to_budget INNER JOIN member AS T4 ON T3.link_to_member = T4.member_id WHERE T1.status = 'Open'",
+        "db_id": "student_club",
+        "simplified_ddl": "#event(event_id, event_name, event_date, type, notes, location, status);\n#major(major_id, major_name, department, college);\n#zip_code(zip_code, type, city, county, state, short_state);\n#attendance(link_to_event, link_to_member);\n#budget(budget_id, category, spent, remaining, amount, event_status, link_to_event);\n#expense(expense_id, expense_description, expense_date, cost, approved, link_to_member, link_to_budget);\n#income(income_id, date_received, amount, source, notes, link_to_member);\n#member(member_id, first_name, last_name, email, position, t_shirt_size, phone, zip, link_to_major).\n",
+        "difficulty": "moderate"
+    },
+    {
+        "id": "168",
+        "question": "Among the members who incurred expenses in more than one event, who paid the most amount?",
+        "new_question": "List the members who incurred expenses in more than one event with the type 'Meeting', ordered by the amount from low to high.",
+        "source": "bird_question_1451",
+        "gt_table": [
+            "expense",
+            "member",
+            "budget",
+            "event"
+        ],
+        "query": "SELECT T2.member_id FROM expense AS T1 INNER JOIN member AS T2 ON T1.link_to_member = T2.member_id INNER JOIN budget AS T3 ON T1.link_to_budget = T3.budget_id INNER JOIN event AS T4 ON T3.link_to_event = T4.event_id GROUP BY T2.member_id HAVING COUNT(DISTINCT T4.event_id) > 1 ORDER BY SUM(T1.cost) DESC LIMIT 1",
+        "new_query": "SELECT T2.member_id FROM expense AS T1 INNER JOIN member AS T2 ON T1.link_to_member = T2.member_id INNER JOIN budget AS T3 ON T1.link_to_budget = T3.budget_id INNER JOIN event AS T4 ON T3.link_to_event = T4.event_id WHERE T4.type = 'Meeting' GROUP BY T2.member_id HAVING COUNT(DISTINCT T4.event_id) > 1 ORDER BY T1.cost",
+        "db_id": "student_club",
+        "simplified_ddl": "#event(event_id, event_name, event_date, type, notes, location, status);\n#major(major_id, major_name, department, college);\n#zip_code(zip_code, type, city, county, state, short_state);\n#attendance(link_to_event, link_to_member);\n#budget(budget_id, category, spent, remaining, amount, event_status, link_to_event);\n#expense(expense_id, expense_description, expense_date, cost, approved, link_to_member, link_to_budget);\n#income(income_id, date_received, amount, source, notes, link_to_member);\n#member(member_id, first_name, last_name, email, position, t_shirt_size, phone, zip, link_to_major).\n",
+        "difficulty": "challenging"
+    },
+    {
+        "id": "169",
+        "question": "Write the full names of students who received funds on the date of 9/9/2019 and include the amount received.",
+        "new_question": "Write the phone of students who received funds on the date of 9/9/2019 and include the amount received.In the database, amount of funds received refers to amount, received funds on date refers to date_received.",
+        "source": "bird_question_1464",
+        "gt_table": [
+            "event",
+            "attendance",
+            "member",
+            "income"
+        ],
+        "query": "SELECT DISTINCT T3.first_name, T3.last_name, T4.amount FROM event AS T1 INNER JOIN attendance AS T2 ON T1.event_id = T2.link_to_event INNER JOIN member AS T3 ON T3.member_id = T2.link_to_member INNER JOIN income AS T4 ON T4.link_to_member = T3.member_id WHERE T4.date_received = '2019-09-09'",
+        "new_query": "SELECT DISTINCT T3.phone, T4.amount FROM event AS T1 INNER JOIN attendance AS T2 ON T1.event_id = T2.link_to_event INNER JOIN member AS T3 ON T3.member_id = T2.link_to_member INNER JOIN income AS T4 ON T4.link_to_member = T3.member_id WHERE T4.date_received = '2019-09-09'",
+        "db_id": "student_club",
+        "simplified_ddl": "#event(event_id, event_name, event_date, type, notes, location, status);\n#major(major_id, major_name, department, college);\n#zip_code(zip_code, type, city, county, state, short_state);\n#attendance(link_to_event, link_to_member);\n#budget(budget_id, category, spent, remaining, amount, event_status, link_to_event);\n#expense(expense_id, expense_description, expense_date, cost, approved, link_to_member, link_to_budget);\n#income(income_id, date_received, amount, source, notes, link_to_member);\n#member(member_id, first_name, last_name, email, position, t_shirt_size, phone, zip, link_to_major).\n",
+        "difficulty": "challenging"
+    },
+    {
+        "id": "170",
+        "question": "Among the superheroes with the super power of 'Super Strength', how many of them have a height of over 200cm?",
+        "new_question": "Among the superheroes with the super power of 'Super Strength', how many of them have a height of over 200cm and have blue eyes? In the database, blue eyes refers to colour = 'Blue' and eye_colour_id = colour.id",
+        "source": "bird_question_719",
+        "gt_table": [
+            "superhero",
+            "hero_power",
+            "superpower",
+            "colour"
+        ],
+        "query": "SELECT COUNT(T1.id) FROM superhero AS T1 INNER JOIN hero_power AS T2 ON T1.id = T2.hero_id INNER JOIN superpower AS T3 ON T2.power_id = T3.id WHERE T3.power_name = 'Super Strength' AND T1.height_cm > 200",
+        "new_query": "SELECT COUNT(T1.id) FROM superhero AS T1 INNER JOIN hero_power AS T2 ON T1.id = T2.hero_id INNER JOIN superpower AS T3 ON T2.power_id = T3.id INNER JOIN colour AS T4 on T1.eye_colour_id = T4.id WHERE T3.power_name = 'Super Strength' AND T1.height_cm > 200 AND T4.colour = 'Blue'",
+        "db_id": "superhero",
+        "simplified_ddl": "#alignment(id, alignment);\n#attribute(id, attribute_name);\n#colour(id, colour);\n#gender(id, gender);\n#publisher(id, publisher_name);\n#race(id, race);\n#superhero(id, superhero_name, full_name, gender_id, eye_colour_id, hair_colour_id, skin_colour_id, race_id, publisher_id, alignment_id, height_cm, weight_kg);\n#hero_attribute(hero_id, attribute_id, attribute_value);\n#superpower(id, power_name);\n#hero_power(hero_id, power_id).\n",
+        "difficulty": "moderate"
+    },
+    {
+        "id": "171",
+        "question": "Among the superheroes from Marvel Comics, how many of them have blue eyes?",
+        "new_question": "Among the female superheroes from Marvel Comics, how many of them have blue eyes? In the database, the superheroes from Marvel Comics refers to publisher_name = 'Marvel Comics'; blue eyes refers to colour = 'Blue' and eye_colour_id = colour.id; female refers to gender = 'Female'",
+        "source": "bird_question_728",
+        "gt_table": [
+            "superhero",
+            "publisher",
+            "colour",
+            "gender"
+        ],
+        "query": "SELECT COUNT(T1.id) FROM superhero AS T1 INNER JOIN publisher AS T2 ON T1.publisher_id = T2.id INNER JOIN colour AS T3 ON T1.eye_colour_id = T3.id WHERE T2.publisher_name = 'Marvel Comics' AND T3.colour = 'Blue'",
+        "new_query": "SELECT COUNT(T1.id) FROM superhero AS T1 INNER JOIN publisher AS T2 ON T1.publisher_id = T2.id INNER JOIN colour AS T3 ON T1.eye_colour_id = T3.id INNER JOIN gender AS T4 on T1.gender_id = T4.id WHERE T2.publisher_name = 'Marvel Comics' AND T3.colour = 'Blue' AND T4.gender = 'Female'",
+        "db_id": "superhero",
+        "simplified_ddl": "#alignment(id, alignment);\n#attribute(id, attribute_name);\n#colour(id, colour);\n#gender(id, gender);\n#publisher(id, publisher_name);\n#race(id, race);\n#superhero(id, superhero_name, full_name, gender_id, eye_colour_id, hair_colour_id, skin_colour_id, race_id, publisher_id, alignment_id, height_cm, weight_kg);\n#hero_attribute(hero_id, attribute_id, attribute_value);\n#superpower(id, power_name);\n#hero_power(hero_id, power_id).\n",
+        "difficulty": "moderate"
+    },
+    {
+        "id": "172",
+        "question": "Provide the hair colour of the human superhero who is 185 cm tall.",
+        "new_question": "Provide the hair colour of the human superhero who is 185 cm tall and published by Universal Studios.",
+        "source": "bird_question_758",
+        "gt_table": [
+            "superhero",
+            "race",
+            "colour",
+            "publisher"
+        ],
+        "query": "SELECT DISTINCT T3.colour FROM superhero AS T1 INNER JOIN race AS T2 ON T1.race_id = T2.id INNER JOIN colour AS T3 ON T1.hair_colour_id = T3.id WHERE T1.height_cm = 185 AND T2.race = 'Human'",
+        "new_query": "SELECT DISTINCT T3.colour FROM superhero AS T1 INNER JOIN race AS T2 ON T1.race_id = T2.id INNER JOIN colour AS T3 ON T1.hair_colour_id = T3.id INNER JOIN publisher AS T4 on T1.publisher_id = T4.id WHERE T1.height_cm = 185 AND T2.race = 'Human' AND T4.publisher_name = 'Universal Studios'",
+        "db_id": "superhero",
+        "simplified_ddl": "#alignment(id, alignment);\n#attribute(id, attribute_name);\n#colour(id, colour);\n#gender(id, gender);\n#publisher(id, publisher_name);\n#race(id, race);\n#superhero(id, superhero_name, full_name, gender_id, eye_colour_id, hair_colour_id, skin_colour_id, race_id, publisher_id, alignment_id, height_cm, weight_kg);\n#hero_attribute(hero_id, attribute_id, attribute_value);\n#superpower(id, power_name);\n#hero_power(hero_id, power_id).\n",
+        "difficulty": "moderate"
+    },
+    {
+        "id": "173",
+        "question": "What is the hero's full name with the highest attribute in strength?",
+        "new_question": "What is the hero's full name and publisher with the highest attribute in strength?In the database,strength attribute refers to attribute_name = 'Strength'.",
+        "source": "bird_question_766",
+        "gt_table": [
+            "superhero",
+            "hero_attribute",
+            "attribute",
+            "publisher"
+        ],
+        "query": "SELECT T1.full_name FROM superhero AS T1 INNER JOIN hero_attribute AS T2 ON T1.id = T2.hero_id INNER JOIN attribute AS T3 ON T2.attribute_id = T3.id WHERE T3.attribute_name = 'Strength' ORDER BY T2.attribute_value DESC LIMIT 1",
+        "new_query": "SELECT T1.full_name, T4.publisher_name FROM superhero AS T1 INNER JOIN hero_attribute AS T2 ON T1.id = T2.hero_id INNER JOIN attribute AS T3 ON T2.attribute_id = T3.id INNER JOIN publisher AS T4 on T1.publisher_id = T4.id WHERE T3.attribute_name = 'Strength' ORDER BY T2.attribute_value DESC LIMIT 1",
+        "db_id": "superhero",
+        "simplified_ddl": "#alignment(id, alignment);\n#attribute(id, attribute_name);\n#colour(id, colour);\n#gender(id, gender);\n#publisher(id, publisher_name);\n#race(id, race);\n#superhero(id, superhero_name, full_name, gender_id, eye_colour_id, hair_colour_id, skin_colour_id, race_id, publisher_id, alignment_id, height_cm, weight_kg);\n#hero_attribute(hero_id, attribute_id, attribute_value);\n#superpower(id, power_name);\n#hero_power(hero_id, power_id).\n",
+        "difficulty": "moderate"
+    },
+    {
+        "id": "174",
+        "question": "List the name of superheroes with flight power.",
+        "new_question": "List the name and race of superheroes with flight power.",
+        "source": "bird_question_771",
+        "gt_table": [
+            "superhero",
+            "hero_power",
+            "superpower",
+            "race"
+        ],
+        "query": "SELECT T1.superhero_name, T4.race FROM superhero AS T1 INNER JOIN hero_power AS T2 ON T1.id = T2.hero_id INNER JOIN superpower AS T3 ON T2.power_id = T3.id WHERE T3.power_name = 'Flight'",
+        "new_query": "SELECT T1.superhero_name, T4.race FROM superhero AS T1 INNER JOIN hero_power AS T2 ON T1.id = T2.hero_id INNER JOIN superpower AS T3 ON T2.power_id = T3.id INNER JOIN race AS T4 on T1.race_id = T4.id WHERE T3.power_name = 'Flight'",
+        "db_id": "superhero",
+        "simplified_ddl": "#alignment(id, alignment);\n#attribute(id, attribute_name);\n#colour(id, colour);\n#gender(id, gender);\n#publisher(id, publisher_name);\n#race(id, race);\n#superhero(id, superhero_name, full_name, gender_id, eye_colour_id, hair_colour_id, skin_colour_id, race_id, publisher_id, alignment_id, height_cm, weight_kg);\n#hero_attribute(hero_id, attribute_id, attribute_value);\n#superpower(id, power_name);\n#hero_power(hero_id, power_id).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "175",
+        "question": "Provide superheroes' names who have the adaptation power.",
+        "new_question": "Provide superheroes' names and hair colours who have the adaptation power. In the database, hair colour refers to colour where hair_colour_id = colour.id;adaptation power refers to power_name = 'Adaptation'",
+        "source": "bird_question_778",
+        "gt_table": [
+            "superhero",
+            "hero_power",
+            "superpower",
+            "colour"
+        ],
+        "query": "SELECT T1.superhero_name FROM superhero AS T1 INNER JOIN hero_power AS T2 ON T1.id = T2.hero_id INNER JOIN superpower AS T3 ON T2.power_id = T3.id WHERE T3.power_name = 'Adaptation'",
+        "new_query": "SELECT T1.superhero_name, T4.colour FROM superhero AS T1 INNER JOIN hero_power AS T2 ON T1.id = T2.hero_id INNER JOIN superpower AS T3 ON T2.power_id = T3.id INNER JOIN colour AS T4 on T1.hair_colour_id = T4.id WHERE T3.power_name = 'Adaptation'",
+        "db_id": "superhero",
+        "simplified_ddl": "#alignment(id, alignment);\n#attribute(id, attribute_name);\n#colour(id, colour);\n#gender(id, gender);\n#publisher(id, publisher_name);\n#race(id, race);\n#superhero(id, superhero_name, full_name, gender_id, eye_colour_id, hair_colour_id, skin_colour_id, race_id, publisher_id, alignment_id, height_cm, weight_kg);\n#hero_attribute(hero_id, attribute_id, attribute_value);\n#superpower(id, power_name);\n#hero_power(hero_id, power_id).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "176",
+        "question": "Among the superheroes with the race of god/eternal, how many of them are male",
+        "new_question": "Among the superheroes with the race of god/eternal, how many of them are male and are published by ABC Studios?",
+        "source": "bird_question_793",
+        "gt_table": [
+            "superhero",
+            "race",
+            "gender",
+            "publisher"
+        ],
+        "query": "SELECT COUNT(*) FROM superhero AS T1 INNER JOIN race AS T2 ON T1.race_id = T2.id INNER JOIN gender AS T3 ON T3.id = T1.gender_id WHERE T1.race_id = 21 AND T1.gender_id = 1",
+        "new_query": "SELECT COUNT(*) FROM superhero AS T1 INNER JOIN race AS T2 ON T1.race_id = T2.id INNER JOIN gender AS T3 ON T3.id = T1.gender_id INNER JOIN publisher AS T4 on T1.publisher_id = T4.id WHERE T1.race_id = 21 AND T1.gender_id = 1 AND T4.publisher_name = 'ABC Studios'",
+        "db_id": "superhero",
+        "simplified_ddl": "#alignment(id, alignment);\n#attribute(id, attribute_name);\n#colour(id, colour);\n#gender(id, gender);\n#publisher(id, publisher_name);\n#race(id, race);\n#superhero(id, superhero_name, full_name, gender_id, eye_colour_id, hair_colour_id, skin_colour_id, race_id, publisher_id, alignment_id, height_cm, weight_kg);\n#hero_attribute(hero_id, attribute_id, attribute_value);\n#superpower(id, power_name);\n#hero_power(hero_id, power_id).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "177",
+        "question": "Which hero was the fastest?",
+        "new_question": "Which hero was the fastest? What is his/her race?",
+        "source": "bird_question_794",
+        "gt_table": [
+            "superhero",
+            "hero_attribute",
+            "attribute",
+            "race"
+        ],
+        "query": "SELECT T1.superhero_name FROM superhero AS T1 INNER JOIN hero_attribute AS T2 ON T1.id = T2.hero_id INNER JOIN attribute AS T3 ON T2.attribute_id = T3.id WHERE T3.attribute_name = 'Speed' ORDER BY T2.attribute_value DESC LIMIT 1",
+        "new_query": "SELECT T1.superhero_name, T4.race FROM superhero AS T1 INNER JOIN hero_attribute AS T2 ON T1.id = T2.hero_id INNER JOIN attribute AS T3 ON T2.attribute_id = T3.id INNER JOIN race AS T4 on T1.race_id = T4.id WHERE T3.attribute_name = 'Speed' ORDER BY T2.attribute_value DESC LIMIT 1",
+        "db_id": "superhero",
+        "simplified_ddl": "#alignment(id, alignment);\n#attribute(id, attribute_name);\n#colour(id, colour);\n#gender(id, gender);\n#publisher(id, publisher_name);\n#race(id, race);\n#superhero(id, superhero_name, full_name, gender_id, eye_colour_id, hair_colour_id, skin_colour_id, race_id, publisher_id, alignment_id, height_cm, weight_kg);\n#hero_attribute(hero_id, attribute_id, attribute_value);\n#superpower(id, power_name);\n#hero_power(hero_id, power_id).\n",
+        "difficulty": "moderate"
+    },
+    {
+        "id": "178",
+        "question": "What is the race of the superhero with maximum attribute value?",
+        "new_question": "What is the race and the gender of the superhero with maximum attribute value?In the database,maximum attribute value refers to MAX(attribute_value).",
+        "source": "bird_question_810",
+        "gt_table": [
+            "superhero",
+            "hero_attribute",
+            "race",
+            "gender"
+        ],
+        "query": "SELECT T3.race FROM superhero AS T1 INNER JOIN hero_attribute AS T2 ON T1.id = T2.hero_id INNER JOIN race AS T3 ON T1.race_id = T3.id ORDER BY T2.attribute_value DESC LIMIT 1",
+        "new_query": "SELECT T3.race, T4.gender FROM superhero AS T1 INNER JOIN hero_attribute AS T2 ON T1.id = T2.hero_id INNER JOIN race AS T3 ON T1.race_id = T3.id INNER JOIN gender AS T4 on T1.gender_id = T4.id ORDER BY T2.attribute_value DESC LIMIT 1",
+        "db_id": "superhero",
+        "simplified_ddl": "#alignment(id, alignment);\n#attribute(id, attribute_name);\n#colour(id, colour);\n#gender(id, gender);\n#publisher(id, publisher_name);\n#race(id, race);\n#superhero(id, superhero_name, full_name, gender_id, eye_colour_id, hair_colour_id, skin_colour_id, race_id, publisher_id, alignment_id, height_cm, weight_kg);\n#hero_attribute(hero_id, attribute_id, attribute_value);\n#superpower(id, power_name);\n#hero_power(hero_id, power_id).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "179",
+        "question": "Among the bad superheroes, what is the percentage of female superheroes?",
+        "new_question": "Among the bad superheroes, what is the percentage of female superheroes with black eyes? In the database, black eyes refers to colour = 'Black' and eye_colour_id = colour.id.",
+        "source": "bird_question_818",
+        "gt_table": [
+            "superhero",
+            "alignment",
+            "gender",
+            "colour"
+        ],
+        "query": "SELECT CAST(COUNT(CASE WHEN T3.gender = 'Female' THEN T1.id ELSE NULL END) AS REAL) * 100 / COUNT(T1.id) FROM superhero AS T1 INNER JOIN alignment AS T2 ON T1.alignment_id = T2.id INNER JOIN gender AS T3 ON T1.gender_id = T3.id WHERE T2.alignment = 'Bad'",
+        "new_query": "SELECT CAST(COUNT(CASE WHEN T3.gender = 'Female' THEN T1.id ELSE NULL END) AS REAL) * 100 / COUNT(T1.id) FROM superhero AS T1 INNER JOIN alignment AS T2 ON T1.alignment_id = T2.id INNER JOIN gender AS T3 ON T1.gender_id = T3.id INNER JOIN colour AS T4 on T1.hair_colour_id = T4.id WHERE T2.alignment = 'Bad' AND T4.colour = 'Black'",
+        "db_id": "superhero",
+        "simplified_ddl": "#alignment(id, alignment);\n#attribute(id, attribute_name);\n#colour(id, colour);\n#gender(id, gender);\n#publisher(id, publisher_name);\n#race(id, race);\n#superhero(id, superhero_name, full_name, gender_id, eye_colour_id, hair_colour_id, skin_colour_id, race_id, publisher_id, alignment_id, height_cm, weight_kg);\n#hero_attribute(hero_id, attribute_id, attribute_value);\n#superpower(id, power_name);\n#hero_power(hero_id, power_id).\n",
+        "difficulty": "challenging"
+    },
+    {
+        "id": "180",
+        "question": "Who finished second in the San Marino Grand Prix in 2006?",
+        "new_question": "List the name of drivers who finished first in the Yas Marina Circuit in 2010.In the database,finished first refers to position = 1.",
+        "source": "bird_question_874",
+        "gt_table": [
+            "races",
+            "results",
+            "drivers",
+            "circuits"
+        ],
+        "query": "SELECT T3.forename, T3.surname FROM races AS T1 INNER JOIN results AS T2 ON T2.raceId = T1.raceId INNER JOIN drivers AS T3 ON T3.driverId = T2.driverId WHERE T1.year = 2006 AND T1.name = 'San Marino Grand Prix' AND T2.position = 2",
+        "new_query": "SELECT T3.forename, T3.surname FROM races AS T1 INNER JOIN results AS T2 ON T2.raceId = T1.raceId INNER JOIN drivers AS T3 ON T3.driverId = T2.driverId INNER JOIN circuits AS T4 ON T1.circuitId = T4.circuitId WHERE T1.year = 2010 AND T4.name = 'Yas Marina Circuit' AND T2.position = 1",
+        "db_id": "formula_1",
+        "simplified_ddl": "#circuits(circuitId, circuitRef, name, location, country, lat, lng, alt, url);\n#constructors(constructorId, constructorRef, name, nationality, url);\n#drivers(driverId, driverRef, number, code, forename, surname, dob, nationality, url);\n#seasons(year, url);\n#races(raceId, year, round, circuitId, name, date, time, url);\n#constructorResults(constructorResultsId, raceId, constructorId, points, status);\n#constructorStandings(constructorStandingsId, raceId, constructorId, points, position, positionText, wins);\n#driverStandings(driverStandingsId, raceId, driverId, points, position, positionText, wins);\n#lapTimes(raceId, driverId, lap, position, time, milliseconds);\n#pitStops(raceId, driverId, stop, lap, time, duration, milliseconds);\n#qualifying(qualifyId, raceId, driverId, constructorId, number, position, q1, q2, q3);\n#status(statusId, status);\n#results(resultId, raceId, driverId, constructorId, number, grid, position, positionText, positionOrder, points, laps, time, milliseconds, fastestLap, rank, fastestLapTime, fastestLapSpeed, statusId).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "181",
+        "question": "From 2000 to 2005, what percentage of drivers who were born before 1985 and the lap numbers were over 50?",
+        "new_question": "From 2000 to 2005, what percentage of drivers who were born before 1985 and the lap numbers were over 50 and the status were finished?",
+        "source": "bird_question_962",
+        "gt_table": [
+            "results",
+            "races",
+            "drivers",
+            "status"
+        ],
+        "query": "SELECT CAST(SUM(IIF(STRFTIME('%Y', T3.dob) < '1985' AND T1.laps > 50, 1, 0)) AS REAL) * 100 / COUNT(*) FROM results AS T1 INNER JOIN races AS T2 on T1.raceId = T2.raceId INNER JOIN drivers AS T3 on T1.driverId = T3.driverId WHERE T2.year BETWEEN 2000 AND 2005",
+        "new_query": "SELECT CAST(SUM(IIF(STRFTIME('%Y', T3.dob) < '1985' AND T1.laps > 50 AND T4.status = 'Finished', 1, 0)) AS REAL) * 100 / COUNT(*) FROM results AS T1 INNER JOIN races AS T2 on T1.raceId = T2.raceId INNER JOIN drivers AS T3 on T1.driverId = T3.driverId INNER JOIN status as T4 on T1.statusId = T4.statusId WHERE T2.year BETWEEN 2000 AND 2005",
+        "db_id": "formula_1",
+        "simplified_ddl": "#circuits(circuitId, circuitRef, name, location, country, lat, lng, alt, url);\n#constructors(constructorId, constructorRef, name, nationality, url);\n#drivers(driverId, driverRef, number, code, forename, surname, dob, nationality, url);\n#seasons(year, url);\n#races(raceId, year, round, circuitId, name, date, time, url);\n#constructorResults(constructorResultsId, raceId, constructorId, points, status);\n#constructorStandings(constructorStandingsId, raceId, constructorId, points, position, positionText, wins);\n#driverStandings(driverStandingsId, raceId, driverId, points, position, positionText, wins);\n#lapTimes(raceId, driverId, lap, position, time, milliseconds);\n#pitStops(raceId, driverId, stop, lap, time, duration, milliseconds);\n#qualifying(qualifyId, raceId, driverId, constructorId, number, position, q1, q2, q3);\n#status(statusId, status);\n#results(resultId, raceId, driverId, constructorId, number, grid, position, positionText, positionOrder, points, laps, time, milliseconds, fastestLap, rank, fastestLapTime, fastestLapSpeed, statusId).\n",
+        "difficulty": "challenging"
+    },
+    {
+        "id": "182",
+        "question": "On what year did the youngest driver had his first qualifying race? State the name, date and time of the race.",
+        "new_question": "On what year did the youngest driver had his first qualifying race? State the result in terms of points about him in the race.In the database,youngest driver refers to Max (year(dob));",
+        "source": "bird_question_981",
+        "gt_table": [
+            "qualifying",
+            "drivers",
+            "races",
+            "results"
+        ],
+        "query": "SELECT T3.year, T3.name, T3.date, T3.time FROM qualifying AS T1 INNER JOIN drivers AS T2 on T1.driverId = T2.driverId INNER JOIN races AS T3 on T1.raceId = T3.raceId WHERE T1.driverId = ( SELECT driverId FROM drivers ORDER BY dob DESC LIMIT 1 ) ORDER BY T3.date ASC LIMIT 1",
+        "new_query": "SELECT T3.year, T4.points FROM qualifying AS T1 INNER JOIN drivers AS T2 on T1.driverId = T2.driverId INNER JOIN races AS T3 on T1.raceId = T3.raceId INNER JOIN results as T4 on T2.driverId = T4.driverId WHERE T1.driverId = ( SELECT driverId FROM drivers ORDER BY dob DESC LIMIT 1 ) ORDER BY T3.date ASC LIMIT 1",
+        "db_id": "formula_1",
+        "simplified_ddl": "#circuits(circuitId, circuitRef, name, location, country, lat, lng, alt, url);\n#constructors(constructorId, constructorRef, name, nationality, url);\n#drivers(driverId, driverRef, number, code, forename, surname, dob, nationality, url);\n#seasons(year, url);\n#races(raceId, year, round, circuitId, name, date, time, url);\n#constructorResults(constructorResultsId, raceId, constructorId, points, status);\n#constructorStandings(constructorStandingsId, raceId, constructorId, points, position, positionText, wins);\n#driverStandings(driverStandingsId, raceId, driverId, points, position, positionText, wins);\n#lapTimes(raceId, driverId, lap, position, time, milliseconds);\n#pitStops(raceId, driverId, stop, lap, time, duration, milliseconds);\n#qualifying(qualifyId, raceId, driverId, constructorId, number, position, q1, q2, q3);\n#status(statusId, status);\n#results(resultId, raceId, driverId, constructorId, number, grid, position, positionText, positionOrder, points, laps, time, milliseconds, fastestLap, rank, fastestLapTime, fastestLapSpeed, statusId).\n",
+        "difficulty": "moderate"
+    },
+    {
+        "id": "183",
+        "question": "How many American drivers have been disqualified from the race.",
+        "new_question": "How many American drivers have been disqualified from the race named 'Monaco Grand Prix'? In the database, disqualified refers to statusID = 2;",
+        "source": "bird_question_982",
+        "gt_table": [
+            "drivers",
+            "results",
+            "status",
+            "races"
+        ],
+        "query": "SELECT COUNT(T1.driverId) FROM drivers AS T1 INNER JOIN results AS T2 on T1.driverId = T2.driverId INNER JOIN status AS T3 on T2.statusId = T3.statusId WHERE T3.status = 2 AND T1.nationality = 'American'",
+        "new_query": "SELECT COUNT(T1.driverId) FROM drivers AS T1 INNER JOIN results AS T2 on T1.driverId = T2.driverId INNER JOIN status AS T3 on T2.statusId = T3.statusId INNER JOIN races AS T4 ON T2.raceId = T4.raceId WHERE T3.status = 'Disqualified' AND T1.nationality = 'American' AND T4.name = 'Monaco Grand Prix'",
+        "db_id": "formula_1",
+        "simplified_ddl": "#circuits(circuitId, circuitRef, name, location, country, lat, lng, alt, url);\n#constructors(constructorId, constructorRef, name, nationality, url);\n#drivers(driverId, driverRef, number, code, forename, surname, dob, nationality, url);\n#seasons(year, url);\n#races(raceId, year, round, circuitId, name, date, time, url);\n#constructorResults(constructorResultsId, raceId, constructorId, points, status);\n#constructorStandings(constructorStandingsId, raceId, constructorId, points, position, positionText, wins);\n#driverStandings(driverStandingsId, raceId, driverId, points, position, positionText, wins);\n#lapTimes(raceId, driverId, lap, position, time, milliseconds);\n#pitStops(raceId, driverId, stop, lap, time, duration, milliseconds);\n#qualifying(qualifyId, raceId, driverId, constructorId, number, position, q1, q2, q3);\n#status(statusId, status);\n#results(resultId, raceId, driverId, constructorId, number, grid, position, positionText, positionOrder, points, laps, time, milliseconds, fastestLap, rank, fastestLapTime, fastestLapSpeed, statusId).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "184",
+        "question": "What is the constructor reference name of the champion in the 2009 Singapore Grand Prix? Please give its website.",
+        "new_question": "List the website of the constructor of the drivers whose status is collision in the 2009 Singapore Grand Prix.",
+        "source": "bird_question_990",
+        "gt_table": [
+            "results",
+            "races",
+            "constructors",
+            "status"
+        ],
+        "query": "SELECT T3.constructorRef, T3.url FROM results AS T1 INNER JOIN races AS T2 on T1.raceId = T2.raceId INNER JOIN constructors AS T3 on T1.constructorId = T3.constructorId WHERE T2.name = 'Singapore Grand Prix' AND T2.year = 2009 AND T1.time LIKE '_:%:__.___'",
+        "new_query": "SELECT T3.constructorRef, T3.url FROM results AS T1 INNER JOIN races AS T2 on T1.raceId = T2.raceId INNER JOIN constructors AS T3 on T1.constructorId = T3.constructorId INNER JOIN status as T4 on T1.statusId = T4.statusId WHERE T2.name = 'Singapore Grand Prix' AND T2.year = 2009 AND T4.status = 'Collision'",
+        "db_id": "formula_1",
+        "simplified_ddl": "#circuits(circuitId, circuitRef, name, location, country, lat, lng, alt, url);\n#constructors(constructorId, constructorRef, name, nationality, url);\n#drivers(driverId, driverRef, number, code, forename, surname, dob, nationality, url);\n#seasons(year, url);\n#races(raceId, year, round, circuitId, name, date, time, url);\n#constructorResults(constructorResultsId, raceId, constructorId, points, status);\n#constructorStandings(constructorStandingsId, raceId, constructorId, points, position, positionText, wins);\n#driverStandings(driverStandingsId, raceId, driverId, points, position, positionText, wins);\n#lapTimes(raceId, driverId, lap, position, time, milliseconds);\n#pitStops(raceId, driverId, stop, lap, time, duration, milliseconds);\n#qualifying(qualifyId, raceId, driverId, constructorId, number, position, q1, q2, q3);\n#status(statusId, status);\n#results(resultId, raceId, driverId, constructorId, number, grid, position, positionText, positionOrder, points, laps, time, milliseconds, fastestLap, rank, fastestLapTime, fastestLapSpeed, statusId).\n",
+        "difficulty": "challenging"
+    },
+    {
+        "id": "185",
+        "question": "Which constructor scored most points from Monaco Grand Prix between 1980 and 2010? List the score, name and nationality of this Team.",
+        "new_question": "Which constructor scored most points from Baku City Circuit between 2010 and 2020? List the score, name and nationality of this Team.",
+        "source": "bird_question_994",
+        "gt_table": [
+            "constructorResults",
+            "constructors",
+            "races",
+            "circuits"
+        ],
+        "query": "SELECT SUM(T1.points), T2.name, T2.nationality FROM constructorResults AS T1 INNER JOIN constructors AS T2 ON T1.constructorId = T2.constructorId INNER JOIN races AS T3 ON T3.raceid = T1.raceid WHERE T3.name = 'Monaco Grand Prix' AND T3.year BETWEEN 1980 AND 2010 GROUP BY T2.name ORDER BY SUM(T1.points) DESC LIMIT 1",
+        "new_query": "SELECT SUM(T1.points), T2.name, T2.nationality FROM constructorResults AS T1 INNER JOIN constructors AS T2 ON T1.constructorId = T2.constructorId INNER JOIN races AS T3 ON T3.raceid = T1.raceid INNER JOIN circuits AS T4 ON T3.circuitId = T4.circuitId WHERE T4.name = 'Baku City Circuit' AND T3.year BETWEEN 2010 AND 2020 GROUP BY T2.name ORDER BY SUM(T1.points) DESC LIMIT 1",
+        "db_id": "formula_1",
+        "simplified_ddl": "#circuits(circuitId, circuitRef, name, location, country, lat, lng, alt, url);\n#constructors(constructorId, constructorRef, name, nationality, url);\n#drivers(driverId, driverRef, number, code, forename, surname, dob, nationality, url);\n#seasons(year, url);\n#races(raceId, year, round, circuitId, name, date, time, url);\n#constructorResults(constructorResultsId, raceId, constructorId, points, status);\n#constructorStandings(constructorStandingsId, raceId, constructorId, points, position, positionText, wins);\n#driverStandings(driverStandingsId, raceId, driverId, points, position, positionText, wins);\n#lapTimes(raceId, driverId, lap, position, time, milliseconds);\n#pitStops(raceId, driverId, stop, lap, time, duration, milliseconds);\n#qualifying(qualifyId, raceId, driverId, constructorId, number, position, q1, q2, q3);\n#status(statusId, status);\n#results(resultId, raceId, driverId, constructorId, number, grid, position, positionText, positionOrder, points, laps, time, milliseconds, fastestLap, rank, fastestLapTime, fastestLapSpeed, statusId).\n",
+        "difficulty": "challenging"
+    },
+    {
+        "id": "186",
+        "question": "What is the average score of Lewis Hamilton among all the Turkish Grand Prix?",
+        "new_question": "What is the average score of Lewis Hamilton among all the circuits located at Monte-Carlo?In the database,average score = AVG(points).",
+        "source": "bird_question_995",
+        "gt_table": [
+            "drivers",
+            "driverStandings",
+            "races",
+            "circuits"
+        ],
+        "query": "SELECT AVG(T2.points) FROM drivers AS T1 INNER JOIN driverStandings AS T2 ON T1.driverId = T2.driverId INNER JOIN races AS T3 ON T3.raceId = T2.raceId WHERE T1.forename = 'Lewis' AND T1.surname = 'Hamilton' AND T3.name = 'Turkish Grand Prix'",
+        "new_query": "SELECT AVG(T2.points) FROM drivers AS T1 INNER JOIN driverStandings AS T2 ON T1.driverId = T2.driverId INNER JOIN races AS T3 ON T3.raceId = T2.raceId INNER JOIN circuits AS T4 ON T3.circuitId = T4.circuitId WHERE T1.forename = 'Lewis' AND T1.surname = 'Hamilton' AND T4.location = 'Monte-Carlo'",
+        "db_id": "formula_1",
+        "simplified_ddl": "#circuits(circuitId, circuitRef, name, location, country, lat, lng, alt, url);\n#constructors(constructorId, constructorRef, name, nationality, url);\n#drivers(driverId, driverRef, number, code, forename, surname, dob, nationality, url);\n#seasons(year, url);\n#races(raceId, year, round, circuitId, name, date, time, url);\n#constructorResults(constructorResultsId, raceId, constructorId, points, status);\n#constructorStandings(constructorStandingsId, raceId, constructorId, points, position, positionText, wins);\n#driverStandings(driverStandingsId, raceId, driverId, points, position, positionText, wins);\n#lapTimes(raceId, driverId, lap, position, time, milliseconds);\n#pitStops(raceId, driverId, stop, lap, time, duration, milliseconds);\n#qualifying(qualifyId, raceId, driverId, constructorId, number, position, q1, q2, q3);\n#status(statusId, status);\n#results(resultId, raceId, driverId, constructorId, number, grid, position, positionText, positionOrder, points, laps, time, milliseconds, fastestLap, rank, fastestLapTime, fastestLapSpeed, statusId).\n",
+        "difficulty": "moderate"
+    },
+    {
+        "id": "187",
+        "question": "As of the present, what is the full name of the youngest racer? Indicate her nationality and the name of the race to which he/she first joined.",
+        "new_question": "As of the present, what is the full name of the youngest racer? Indicate her nationality and her constructor's name and the id of the race to which he/she first joined.In the database,full name refers to forename+surname; youngest racer = MAX(dob).",
+        "source": "bird_question_1002",
+        "gt_table": [
+            "drivers",
+            "driverStandings",
+            "races",
+            "constructorResults",
+            "constructors"
+        ],
+        "query": "SELECT T1.forename, T1.surname, T1.nationality, T3.name FROM drivers AS T1 INNER JOIN driverStandings AS T2 on T1.driverId = T2.driverId INNER JOIN races AS T3 on T2.raceId = T3.raceId ORDER BY JULIANDAY(T1.dob) DESC LIMIT 1",
+        "new_query": "SELECT T1.forename, T1.surname, T1.nationality, T3.raceId, T5.name FROM drivers AS T1 INNER JOIN driverStandings AS T2 on T1.driverId = T2.driverId INNER JOIN races AS T3 on T2.raceId = T3.raceId INNER JOIN constructorResults AS T4 on T3.raceId = T4.raceId INNER JOIN constructors AS T5 on T4.constructorId = T5.constructorId ORDER BY JULIANDAY(T1.dob) DESC LIMIT 1",
+        "db_id": "formula_1",
+        "simplified_ddl": "#circuits(circuitId, circuitRef, name, location, country, lat, lng, alt, url);\n#constructors(constructorId, constructorRef, name, nationality, url);\n#drivers(driverId, driverRef, number, code, forename, surname, dob, nationality, url);\n#seasons(year, url);\n#races(raceId, year, round, circuitId, name, date, time, url);\n#constructorResults(constructorResultsId, raceId, constructorId, points, status);\n#constructorStandings(constructorStandingsId, raceId, constructorId, points, position, positionText, wins);\n#driverStandings(driverStandingsId, raceId, driverId, points, position, positionText, wins);\n#lapTimes(raceId, driverId, lap, position, time, milliseconds);\n#pitStops(raceId, driverId, stop, lap, time, duration, milliseconds);\n#qualifying(qualifyId, raceId, driverId, constructorId, number, position, q1, q2, q3);\n#status(statusId, status);\n#results(resultId, raceId, driverId, constructorId, number, grid, position, positionText, positionOrder, points, laps, time, milliseconds, fastestLap, rank, fastestLapTime, fastestLapSpeed, statusId).\n",
+        "difficulty": "moderate"
+    },
+    {
+        "id": "188",
+        "question": "How many accidents did the driver who had the highest number accidents in the Canadian Grand Prix have?",
+        "new_question": "How many accidents did the driver who had the highest number accidents in the circuit Fuji Speedway have?",
+        "source": "bird_question_1003",
+        "gt_table": [
+            "results",
+            "races",
+            "status",
+            "circuits"
+        ],
+        "query": "SELECT COUNT(T1.driverId) FROM results AS T1 INNER JOIN races AS T2 on T1.raceId = T2.raceId INNER JOIN status AS T3 on T1.statusId = T3.statusId WHERE T3.statusId = 3 AND T2.name = 'Canadian Grand Prix' GROUP BY T1.driverId ORDER BY COUNT(T1.driverId) DESC LIMIT 1",
+        "new_query": "SELECT COUNT(T1.driverId) FROM results AS T1 INNER JOIN races AS T2 on T1.raceId = T2.raceId INNER JOIN status AS T3 on T1.statusId = T3.statusId INNER JOIN circuits AS T4 ON T2.circuitId = T4.circuitId WHERE T3.statusId = 3 AND T4.name = 'Fuji Speedway' GROUP BY T1.driverId ORDER BY COUNT(T1.driverId) DESC LIMIT 1",
+        "db_id": "formula_1",
+        "simplified_ddl": "#circuits(circuitId, circuitRef, name, location, country, lat, lng, alt, url);\n#constructors(constructorId, constructorRef, name, nationality, url);\n#drivers(driverId, driverRef, number, code, forename, surname, dob, nationality, url);\n#seasons(year, url);\n#races(raceId, year, round, circuitId, name, date, time, url);\n#constructorResults(constructorResultsId, raceId, constructorId, points, status);\n#constructorStandings(constructorStandingsId, raceId, constructorId, points, position, positionText, wins);\n#driverStandings(driverStandingsId, raceId, driverId, points, position, positionText, wins);\n#lapTimes(raceId, driverId, lap, position, time, milliseconds);\n#pitStops(raceId, driverId, stop, lap, time, duration, milliseconds);\n#qualifying(qualifyId, raceId, driverId, constructorId, number, position, q1, q2, q3);\n#status(statusId, status);\n#results(resultId, raceId, driverId, constructorId, number, grid, position, positionText, positionOrder, points, laps, time, milliseconds, fastestLap, rank, fastestLapTime, fastestLapSpeed, statusId).\n",
+        "difficulty": "moderate"
+    },
+    {
+        "id": "189",
+        "question": "Please provide links to events for members who have paid more than 50 dollar.",
+        "new_question": "Please provide name of events for members who have paid more than 50 dollar.In the database,have paid more than 50 dollar refers to cost > 50.",
+        "source": "bird_question_1436",
+        "gt_table": [
+            "expense",
+            "member",
+            "attendance",
+            "event"
+        ],
+        "query": "SELECT DISTINCT T3.link_to_event FROM expense AS T1 INNER JOIN member AS T2 ON T1.link_to_member = T2.member_id INNER JOIN attendance AS T3 ON T2.member_id = T3.link_to_member WHERE T1.cost > 50",
+        "new_query": "SELECT DISTINCT T4.event_name FROM expense AS T1 INNER JOIN member AS T2 ON T1.link_to_member = T2.member_id INNER JOIN attendance AS T3 ON T2.member_id = T3.link_to_member INNER JOIN event as T4 ON T3.link_to_event = T4.event_id WHERE T1.cost > 50",
+        "db_id": "student_club",
+        "simplified_ddl": "#event(event_id, event_name, event_date, type, notes, location, status);\n#major(major_id, major_name, department, college);\n#zip_code(zip_code, type, city, county, state, short_state);\n#attendance(link_to_event, link_to_member);\n#budget(budget_id, category, spent, remaining, amount, event_status, link_to_event);\n#expense(expense_id, expense_description, expense_date, cost, approved, link_to_member, link_to_budget);\n#income(income_id, date_received, amount, source, notes, link_to_member);\n#member(member_id, first_name, last_name, email, position, t_shirt_size, phone, zip, link_to_major).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "190",
+        "question": "Which members who were approved from 1/10/2019 to 11/19/2019? Please identify the member who attended the event and the link to their event.",
+        "new_question": "Which members who were approved from 1/10/2019 to 11/19/2019? Please identify the member who attended the event and the link to their event, provide the major name of him. In the database,approved from 1/10/2019 to 11/19/2019 refers to approved = 'true' and expense_date BETWEEN '2019-01-10' and '2019-11-19'.",
+        "source": "bird_question_1437",
+        "gt_table": [
+            "expense",
+            "member",
+            "attendance",
+            "major"
+        ],
+        "query": "SELECT DISTINCT T1.link_to_member, T3.link_to_event FROM expense AS T1 INNER JOIN member AS T2 ON T1.link_to_member = T2.member_id INNER JOIN attendance AS T3 ON T2.member_id = T3.link_to_member WHERE date(SUBSTR(T1.expense_date, 1, 10)) BETWEEN '2019-01-10' AND '2019-11-19' AND T1.approved = 'true'",
+        "new_query": "SELECT DISTINCT T1.link_to_member, T3.link_to_event, T4.major_name FROM expense AS T1 INNER JOIN member AS T2 ON T1.link_to_member = T2.member_id INNER JOIN attendance AS T3 ON T2.member_id = T3.link_to_member INNER JOIN major as T4 on T2.link_to_major = T4.major_id WHERE date(SUBSTR(T1.expense_date, 1, 10)) BETWEEN '2019-01-10' AND '2019-11-19' AND T1.approved = 'true'",
+        "db_id": "student_club",
+        "simplified_ddl": "#event(event_id, event_name, event_date, type, notes, location, status);\n#major(major_id, major_name, department, college);\n#zip_code(zip_code, type, city, county, state, short_state);\n#attendance(link_to_event, link_to_member);\n#budget(budget_id, category, spent, remaining, amount, event_status, link_to_event);\n#expense(expense_id, expense_description, expense_date, cost, approved, link_to_member, link_to_budget);\n#income(income_id, date_received, amount, source, notes, link_to_member);\n#member(member_id, first_name, last_name, email, position, t_shirt_size, phone, zip, link_to_major).\n",
+        "difficulty": "challenging"
+    },
+    {
+        "id": "191",
+        "question": "What is the name and major of members who had to spend more than a hundred dollars on an expense?",
+        "new_question": "What is the name and major of members who had to spend more than a hundred dollars on an expense? which county does his/her from?",
+        "source": "bird_question_1449",
+        "gt_table": [
+            "member",
+            "major",
+            "expense",
+            "zip_code"
+        ],
+        "query": "SELECT DISTINCT T1.first_name, T1.last_name, T2.major_name FROM member AS T1 INNER JOIN major AS T2 ON T2.major_id = T1.link_to_major INNER JOIN expense AS T3 ON T1.member_id = T3.link_to_member WHERE T3.cost > 100",
+        "new_query": "SELECT DISTINCT T1.first_name, T1.last_name, T2.major_name, T4.county FROM member AS T1 INNER JOIN major AS T2 ON T2.major_id = T1.link_to_major INNER JOIN expense AS T3 ON T1.member_id = T3.link_to_member INNER JOIN zip_code AS T4 on T1.zip = T4.zip_code WHERE T3.cost > 100",
+        "db_id": "student_club",
+        "simplified_ddl": "#event(event_id, event_name, event_date, type, notes, location, status);\n#major(major_id, major_name, department, college);\n#zip_code(zip_code, type, city, county, state, short_state);\n#attendance(link_to_event, link_to_member);\n#budget(budget_id, category, spent, remaining, amount, event_status, link_to_event);\n#expense(expense_id, expense_description, expense_date, cost, approved, link_to_member, link_to_budget);\n#income(income_id, date_received, amount, source, notes, link_to_member);\n#member(member_id, first_name, last_name, email, position, t_shirt_size, phone, zip, link_to_major).\n",
+        "difficulty": "moderate"
+    },
+    {
+        "id": "192",
+        "question": "List the name of events with less than average parking cost.",
+        "new_question": "For events with less than average parking cost, list the events name and the link to their member.In the database,less than average parking cost refers to cost < DIVIDE(SUM(cost), COUNT(event_id)) where category = 'Parking'.",
+        "source": "bird_question_1453",
+        "gt_table": [
+            "event",
+            "budget",
+            "expense",
+            "attendance"
+        ],
+        "query": "SELECT T1.event_name FROM event AS T1 INNER JOIN budget AS T2 ON T1.event_id = T2.link_to_event INNER JOIN expense AS T3 ON T2.budget_id = T3.link_to_budget WHERE T2.category = 'Parking' AND T3.cost < (SELECT AVG(cost) FROM expense)",
+        "new_query": "SELECT T1.event_name, T4.link_to_member FROM event AS T1 INNER JOIN budget AS T2 ON T1.event_id = T2.link_to_event INNER JOIN expense AS T3 ON T2.budget_id = T3.link_to_budget INNER JOIN attendance as T4 on T1.event_id = T4.link_to_event WHERE T2.category = 'Parking' AND T3.cost < (SELECT AVG(cost) FROM expense)",
+        "db_id": "student_club",
+        "simplified_ddl": "#event(event_id, event_name, event_date, type, notes, location, status);\n#major(major_id, major_name, department, college);\n#zip_code(zip_code, type, city, county, state, short_state);\n#attendance(link_to_event, link_to_member);\n#budget(budget_id, category, spent, remaining, amount, event_status, link_to_event);\n#expense(expense_id, expense_description, expense_date, cost, approved, link_to_member, link_to_budget);\n#income(income_id, date_received, amount, source, notes, link_to_member);\n#member(member_id, first_name, last_name, email, position, t_shirt_size, phone, zip, link_to_major).\n",
+        "difficulty": "moderate"
+    },
+    {
+        "id": "193",
+        "question": "List the full name of the top five members who spend the most money in the descending order of spending.",
+        "new_question": "List the full name and the major name of the top five members who spend the most money in the descending order of spending.",
+        "source": "bird_question_1456",
+        "gt_table": [
+            "expense",
+            "budget",
+            "member",
+            "major"
+        ],
+        "query": "SELECT T3.first_name, T3.last_name FROM expense AS T1 INNER JOIN budget AS T2 ON T1.link_to_budget = T2.budget_id INNER JOIN member AS T3 ON T1.link_to_member = T3.member_id ORDER BY T2.spent DESC LIMIT 5",
+        "new_query": "SELECT T3.first_name, T3.last_name, T4.major_name FROM expense AS T1 INNER JOIN budget AS T2 ON T1.link_to_budget = T2.budget_id INNER JOIN member AS T3 ON T1.link_to_member = T3.member_id INNER JOIN major as T4 on T3.link_to_major = T4.major_id ORDER BY T2.spent DESC LIMIT 5",
+        "db_id": "student_club",
+        "simplified_ddl": "#event(event_id, event_name, event_date, type, notes, location, status);\n#major(major_id, major_name, department, college);\n#zip_code(zip_code, type, city, county, state, short_state);\n#attendance(link_to_event, link_to_member);\n#budget(budget_id, category, spent, remaining, amount, event_status, link_to_event);\n#expense(expense_id, expense_description, expense_date, cost, approved, link_to_member, link_to_budget);\n#income(income_id, date_received, amount, source, notes, link_to_member);\n#member(member_id, first_name, last_name, email, position, t_shirt_size, phone, zip, link_to_major).\n",
+        "difficulty": "moderate"
+    },
+    {
+        "id": "194",
+        "question": "Give the full name and contact number of members who had to spend more than average on each expense.",
+        "new_question": "For the members who had to spend more than average on each expense, which city do they come from?In the database,had spent more than average on each expense refers to cost > AVG(cost).",
+        "source": "bird_question_1457",
+        "gt_table": [
+            "expense",
+            "budget",
+            "member"
+        ],
+        "query": "SELECT DISTINCT T3.first_name, T3.last_name, T3.phone FROM expense AS T1 INNER JOIN budget AS T2 ON T1.link_to_budget = T2.budget_id INNER JOIN member AS T3 ON T3.member_id = T1.link_to_member WHERE T1.cost > ( SELECT AVG(T1.cost) FROM expense AS T1 INNER JOIN budget AS T2 ON T1.link_to_budget = T2.budget_id INNER JOIN member AS T3 ON T3.member_id = T1.link_to_member )",
+        "new_query": "SELECT DISTINCT T4.city FROM expense AS T1 INNER JOIN budget AS T2 ON T1.link_to_budget = T2.budget_id INNER JOIN member AS T3 ON T3.member_id = T1.link_to_member INNER JOIN zip_code as T4 on T3.zip = T4.zip_code WHERE T1.cost > ( SELECT AVG(T1.cost) FROM expense AS T1 INNER JOIN budget AS T2 ON T1.link_to_budget = T2.budget_id INNER JOIN member AS T3 ON T3.member_id = T1.link_to_member )",
+        "db_id": "student_club",
+        "simplified_ddl": "#event(event_id, event_name, event_date, type, notes, location, status);\n#major(major_id, major_name, department, college);\n#zip_code(zip_code, type, city, county, state, short_state);\n#attendance(link_to_event, link_to_member);\n#budget(budget_id, category, spent, remaining, amount, event_status, link_to_event);\n#expense(expense_id, expense_description, expense_date, cost, approved, link_to_member, link_to_budget);\n#income(income_id, date_received, amount, source, notes, link_to_member);\n#member(member_id, first_name, last_name, email, position, t_shirt_size, phone, zip, link_to_major).\n",
+        "difficulty": "challenging"
+    },
+    {
+        "id": "195",
+        "question": "How many accounts who have region in Prague are eligible for loans?",
+        "new_question": "How many female accounts in the south Bohemia region are eligible for loans?In the database, A3 contains the data of region.",
+        "source": "bird_question_90",
+        "gt_table": [
+            "account",
+            "loan",
+            "district",
+            "client"
+        ],
+        "query": "SELECT COUNT(T1.account_id) FROM account AS T1 INNER JOIN loan AS T2 ON T1.account_id = T2.account_id INNER JOIN district AS T3 ON T1.district_id = T3.district_id WHERE T3.A3 = 'Prague'",
+        "new_query": "SELECT COUNT(T1.account_id) FROM account AS T1 INNER JOIN loan AS T2 ON T1.account_id = T2.account_id INNER JOIN district AS T3 ON T1.district_id = T3.district_id WHERE T3.A3 = 'south Bohemia' AND T3.district_id = ( SELECT district_id FROM client WHERE gender = 'F')",
+        "db_id": "financial",
+        "simplified_ddl": "#account(account_id, district_id, frequency, date);\n#card(card_id, disp_id, type, issued);\n#client(client_id, gender, birth_date, district_id);\n#disp(disp_id, client_id, account_id, type);\n#district(district_id, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16);\n#loan(loan_id, account_id, date, amount, duration, payments, status);\n#order(order_id, account_id, bank_to, account_to, amount, k_symbol);\n#trans(trans_id, account_id, date, type, operation, amount, balance, k_symbol, bank, account).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "196",
+        "question": "For the client who applied 98832 USD loan in 1996/1/3, when was his/her birthday?",
+        "new_question": "When is the birthday of a client who applied 98832 USD loan in East Bohemia in 1996/1/3?",
+        "source": "bird_question_113",
+        "gt_table": [
+            "loan",
+            "account",
+            "client",
+            "district"
+        ],
+        "query": "SELECT T3.birth_date FROM loan AS T1 INNER JOIN account AS T2 ON T1.account_id = T2.account_id INNER JOIN client AS T3 ON T2.district_id = T3.district_id WHERE T1.date = '1996-01-03' AND T1.amount = 98832",
+        "new_query": "SELECT T3.birth_date FROM loan AS T1 INNER JOIN account AS T2 ON T1.account_id = T2.account_id INNER JOIN client AS T3 ON T2.district_id = T3.district_id WHERE T1.date = '1996-01-03' AND T1.amount = 98832 AND T3.district_id = (SELECT district_id FROM district WHERE A3 = 'east Bohemia' )",
+        "db_id": "financial",
+        "simplified_ddl": "#account(account_id, district_id, frequency, date);\n#card(card_id, disp_id, type, issued);\n#client(client_id, gender, birth_date, district_id);\n#disp(disp_id, client_id, account_id, type);\n#district(district_id, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16);\n#loan(loan_id, account_id, date, amount, duration, payments, status);\n#order(order_id, account_id, bank_to, account_to, amount, k_symbol);\n#trans(trans_id, account_id, date, type, operation, amount, balance, k_symbol, bank, account).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "197",
+        "question": "State the district and region for loan ID '4990'.",
+        "new_question": "State the district and type of loan ID '4990'.In the database, A2, A3 contains the information about district and region respectively.",
+        "source": "bird_question_122",
+        "gt_table": [
+            "account",
+            "district",
+            "loan",
+            "disp"
+        ],
+        "query": "SELECT T2.A2, T2.A3 FROM account AS T1 INNER JOIN district AS T2 ON T1.district_id = T2.district_id INNER JOIN loan AS T3 ON T1.account_id = T3.account_id WHERE T3.loan_id = 4990",
+        "new_query": "SELECT T2.A2, T2.A3, T4.'type'  FROM account AS T1 INNER JOIN district AS T2 ON T1.district_id = T2.district_id INNER JOIN disp AS T4 ON T1.account_id = T4.account_id INNER JOIN loan AS T3 ON T4.account_id = T3.account_id WHERE T3.loan_id = 4990",
+        "db_id": "financial",
+        "simplified_ddl": "#account(account_id, district_id, frequency, date);\n#card(card_id, disp_id, type, issued);\n#client(client_id, gender, birth_date, district_id);\n#disp(disp_id, client_id, account_id, type);\n#district(district_id, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16);\n#loan(loan_id, account_id, date, amount, duration, payments, status);\n#order(order_id, account_id, bank_to, account_to, amount, k_symbol);\n#trans(trans_id, account_id, date, type, operation, amount, balance, k_symbol, bank, account).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "198",
+        "question": "Provide the account ID, district and region for loan amount greater than USD300,000.",
+        "new_question": "Provide the account ID, user gender，district and region for loan amount greater than USD300,000.In the database, A2 contains district names and A3 contains region names.",
+        "source": "bird_question_123",
+        "gt_table": [
+            "account",
+            "district",
+            "loan",
+            "client"
+        ],
+        "query": "SELECT T1.account_id, T2.A2, T2.A3 FROM account AS T1 INNER JOIN district AS T2 ON T1.district_id = T2.district_id INNER JOIN loan AS T3 ON T1.account_id = T3.account_id WHERE T3.amount > 300000",
+        "new_query": "SELECT T1.account_id, T2.A2, T2.A3, T4.gender FROM account AS T1 INNER JOIN district AS T2 ON T1.district_id = T2.district_id INNER JOIN client AS T4 ON T4.district_id = T1.district_id INNER JOIN loan AS T3 ON T1.account_id = T3.account_id WHERE T3.amount > 300000",
+        "db_id": "financial",
+        "simplified_ddl": "#account(account_id, district_id, frequency, date);\n#card(card_id, disp_id, type, issued);\n#client(client_id, gender, birth_date, district_id);\n#disp(disp_id, client_id, account_id, type);\n#district(district_id, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16);\n#loan(loan_id, account_id, date, amount, duration, payments, status);\n#order(order_id, account_id, bank_to, account_to, amount, k_symbol);\n#trans(trans_id, account_id, date, type, operation, amount, balance, k_symbol, bank, account).\n",
+        "difficulty": "simple"
+    },
+    {
+        "id": "199",
+        "question": "List the loan ID, district and average salary for loan with duration of 60 months.",
+        "new_question": "List the loan ID, bank, district and average salary loan with duration of 60 months.In the database, A3 refers to regions; A11 refers to average salary.",
+        "source": "bird_question_124",
+        "gt_table": [
+            "account",
+            "district",
+            "loan",
+            "order"
+        ],
+        "query": "SELECT T3.loan_id, T2.A2, T2.A11 FROM account AS T1 INNER JOIN district AS T2 ON T1.district_id = T2.district_id INNER JOIN loan AS T3 ON T1.account_id = T3.account_id WHERE T3.duration = 60",
+        "new_query": "SELECT T3.loan_id, T2.A2, T2.A11, T4.bank_to FROM account AS T1 INNER JOIN district AS T2 ON T1.district_id = T2.district_id INNER JOIN 'order' AS T4 ON T4.account_id = T1.account_id INNER JOIN loan AS T3 ON T1.account_id = T3.account_id WHERE T3.duration = 60",
+        "db_id": "financial",
+        "simplified_ddl": "#account(account_id, district_id, frequency, date);\n#card(card_id, disp_id, type, issued);\n#client(client_id, gender, birth_date, district_id);\n#disp(disp_id, client_id, account_id, type);\n#district(district_id, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16);\n#loan(loan_id, account_id, date, amount, duration, payments, status);\n#order(order_id, account_id, bank_to, account_to, amount, k_symbol);\n#trans(trans_id, account_id, date, type, operation, amount, balance, k_symbol, bank, account).\n",
+        "difficulty": "simple"
+    }
+]

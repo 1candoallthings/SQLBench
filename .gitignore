@@ -1,0 +1,9 @@
+/.vscode/
+**/__pycache__/
+
+/dataset/bigtable_dataset/preprocessed_data/
+
+*_debug.json
+
+/src/yyx_utils/
+/src/text2sql_results/
